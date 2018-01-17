@@ -53,6 +53,7 @@ public class TaskListModelImp implements TaskListModelInter,BaseNetDataBiz.Reque
             listener.loadFailure(BaseConsts.BASE_URL_TASK, ErrorCode.PARAMA_EMPTY);
             return;
         }
-        biz.getHomeData(BaseConsts.BASE_URL_TASK+"?merUserId="+merUserId+"&check_state="+check_state+"&task_name="+taskName,BaseConsts.BASE_URL_TASK);
+//        biz.getHomeData(BaseConsts.BASE_URL_TASK+"?merUserId="+merUserId+"&check_state="+check_state+"&task_name="+taskName,BaseConsts.BASE_URL_TASK);
+        biz.getHomeData(BaseConsts.BASE_URL_TASK+"?merUserId="+merUserId,BaseConsts.BASE_URL_TASK);
     }
 }

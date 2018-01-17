@@ -113,7 +113,6 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
     @Override
     public void doSuccess(Object tag,String json) {
         if (tag.equals(BaseConsts.BASE_URL_TASK)) {
-            Log.e("我的json", json);
             try {
                 Gson gson = new Gson();
                 TaskBean bean = gson.fromJson(json, TaskBean.class);

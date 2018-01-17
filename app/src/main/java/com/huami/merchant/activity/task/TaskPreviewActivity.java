@@ -1,9 +1,11 @@
 package com.huami.merchant.activity.task;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.huami.merchant.R;
+import com.huami.merchant.activity.paper.PaperPendingDetailActivity;
 import com.huami.merchant.activity.task.adapter.TaskPreviewAdapter;
 import com.huami.merchant.activity.task.presenter.TaskPreviewPresenter;
 import com.huami.merchant.activity.task.viewInter.TaskPreviewInter;
@@ -14,6 +16,9 @@ import com.huami.merchant.designView.recycle.XRecyclerView;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -23,9 +28,12 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
     private TaskPreviewAdapter adapter;
     @BindView(R.id.task_preview_recycle)
     XRecyclerView task_preview_recycle;
+    @BindView(R.id.task_preview_count)
+    TextView task_preview_count;
     private int page=1;
     private String task_name;
     private String task_id;
+    private int count;
     @Override
     protected TaskPreviewPresenter getPresenter() {
         return new TaskPreviewPresenter();
@@ -58,6 +66,20 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
     }
     @Override
     public void viewLoadSuccess(Object tag, String json) {
+        Log.e("TaskPreviewActivity", json);
+        try {
+            JSONObject object = new JSONObject(json);
+            count = object.getInt("count");
+            task_preview_count.setText(""+count);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        endLoading();
+        if (page == 1) {
+            task_preview_recycle.refreshComplete();
+        } else {
+            task_preview_recycle.loadMoreComplete();
+        }
         if (tag.equals(BaseConsts.BASE_URL_PREVIEW_TASK)) {
             adapter.notifyDataSetChanged();
         }
@@ -75,7 +97,7 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
                 showToast("数据出错,请稍后尝试");
                 break;
             case ACTION_FAILURE:
-
+                showToast("数据出错,请稍后尝试");
                 break;
             case NET_FAILURE:
                 showToast("网络出错,请检查网络后尝试");
@@ -95,6 +117,33 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
     }
     @Override
     public void onItemClick(View v, int position) {
-
+        TaskPreviewData data = datas.get(position);
+        startActivity(this,PaperPendingDetailActivity.class,
+                new String[]{
+                        "taskPaperId",
+                        "usercase_id",
+                        "isHistory",
+                        "uca_check_usercase_id",
+                        "pass",
+                        "shop_id_str","shop_name_str",
+                        "shop_price_str",
+                        "shop_region_str",
+                        "shop_address_str",
+                        "checkTimes","checkState","already"},
+                new Object[]{
+                        String.valueOf(data.getTaskpaper_id()),
+                        String.valueOf(data.getUsercase_id()),
+                        "2",
+                        String.valueOf(data.getUca_check_usercase_id()),
+                        "",
+                        String.valueOf(data.getShop_id()),
+                        data.getShop_name(),
+                        String.valueOf(data.getPrice()),
+                        data.getRegion_name(),
+                        data.getShop_address(),
+                        data.getCheck_times(),
+                        data.getState(),
+                        false
+                });
     }
 }

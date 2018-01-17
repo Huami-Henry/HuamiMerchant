@@ -1,6 +1,10 @@
 [
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxhdpi-v4\\ic_launcher.png",
-        "source": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxhdpi-v4\\ic_launcher.png"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\mipmap-xxhdpi-v4\\ic_launcher.png",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\bundles\\debug\\res\\mipmap-xxhdpi-v4\\ic_launcher.png"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/mipmap-xxhdpi-v4/ic_launcher.png",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/bundles/debug/res/mipmap-xxhdpi-v4/ic_launcher.png"
     }
 ]

@@ -1,5 +1,6 @@
 package com.huami.merchant.activity.task.model;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.huami.merchant.bean.TaskPreviewBean;
@@ -23,16 +24,19 @@ public class TaskPreviewModelImp implements TaskPreviewModelInter,BaseNetDataBiz
     private BaseNetDataBiz biz = new BaseNetDataBiz(this);
     private InterLoadListener listener;
     private List<TaskPreviewData> tasks;
+    private String page;
     @Override
     public void getPreviewTask(List<TaskPreviewData> tasks, String uuid, String task_id,String page,String task_name, InterLoadListener listener) {
         this.listener = listener;
+        this.page=page;
         if (TextUtils.isEmpty(uuid)) {
             listener.loadFailure(BaseConsts.BASE_URL_PREVIEW_TASK, ErrorCode.PARAMA_EMPTY);
             return;
         }
         this.tasks = tasks;
-        String[] keys = new String[]{"uuid", "page","task_id","number","name"};
+        String[] keys = new String[]{"merUserId", "page","task_id","number","name"};
         String[] values = new String[]{uuid, page,task_id, "10",task_name};
+        Log.e("TaskPreviewModelImp", BaseConsts.BASE_URL_PREVIEW_TASK + "?merUserId=" + uuid + "&task_id=" + task_id);
         biz.getMainThread(BaseConsts.BASE_URL_PREVIEW_TASK,keys,values,BaseConsts.BASE_URL_PREVIEW_TASK);
     }
     @Override
@@ -43,9 +47,17 @@ public class TaskPreviewModelImp implements TaskPreviewModelInter,BaseNetDataBiz
             JSONObject object = new JSONObject(json);
             int code = object.getInt("code");
             if (code == 0) {
-                TaskPreviewBean bean = gson.fromJson(json, TaskPreviewBean.class);
-                for (TaskPreviewData data : bean.getData()) {
-                    tasks.add(data);
+                if ("1".equals(page)) {
+                    tasks.clear();
+                    TaskPreviewBean bean = gson.fromJson(json, TaskPreviewBean.class);
+                    for (TaskPreviewData data : bean.getData()) {
+                        tasks.add(data);
+                    }
+                } else {
+                    TaskPreviewBean bean = gson.fromJson(json, TaskPreviewBean.class);
+                    for (TaskPreviewData data : bean.getData()) {
+                        tasks.add(data);
+                    }
                 }
             }
             listener.loadSuccess(model.getTag(), json);

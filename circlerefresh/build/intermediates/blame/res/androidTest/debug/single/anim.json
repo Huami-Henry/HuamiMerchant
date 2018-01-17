@@ -1,42 +1,82 @@
 [
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_out.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_fade_out.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_fade_out.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_top.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_out_top.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_out.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_fade_out.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_bottom.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_out_bottom.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_out_top.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_exit.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_popup_exit.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_top.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_in_top.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_exit.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_popup_exit.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_bottom.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_in_bottom.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_in_top.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_exit.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_popup_exit.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_slide_in_bottom.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_enter.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_popup_enter.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
     },
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_in.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_fade_in.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_in.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_enter.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_enter.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_top.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_in.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_top.xml",
+        "source": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/anim/abc_slide_in_top.xml"
     }
 ]

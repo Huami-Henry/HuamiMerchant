@@ -126,15 +126,25 @@ public class TaskPaperPendingBean {
                 private String type;
                 private String sort;
                 private String hint;
-                private List<Body> body;
+                private String postil;
 
-                public int getQId() {
+                public int getqId() {
                     return qId;
                 }
 
-                public void setQId(int qId) {
+                public void setqId(int qId) {
                     this.qId = qId;
                 }
+
+                public String getPostil() {
+                    return postil;
+                }
+
+                public void setPostil(String postil) {
+                    this.postil = postil;
+                }
+
+                private List<Body> body;
 
                 public String getTitle() {
                     return title;
@@ -426,7 +436,6 @@ public class TaskPaperPendingBean {
             private int state;
             private int question_id;
             private int body_id;
-
             public String getAnswer() {
                 return answer;
             }

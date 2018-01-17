@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v14\\values-v14.xml",
+        "outputFile": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v14\\values-v14.xml",
         "map": [
             {
                 "to": {
@@ -12,7 +12,7 @@
                     "endOffset": 326
                 },
                 "from": {
-                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -32,7 +32,7 @@
                     "endOffset": 397
                 },
                 "from": {
-                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -51,7 +51,7 @@
                     "endOffset": 480
                 },
                 "from": {
-                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -71,7 +71,7 @@
                     "endOffset": 890
                 },
                 "from": {
-                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -92,7 +92,113 @@
                     "endOffset": 1312
                 },
                 "from": {
-                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-v14\\values.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 1382,
+                        "endLine": 24,
+                        "endColumn": 12,
+                        "endOffset": 1799
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 6,
+                    "endColumn": 12,
+                    "endOffset": 326
+                },
+                "from": {
+                    "file": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/values-v14/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 301,
+                        "endLine": 8,
+                        "endColumn": 12,
+                        "endOffset": 572
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 331,
+                    "endColumn": 70,
+                    "endOffset": 397
+                },
+                "from": {
+                    "file": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/values-v14/values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 818,
+                        "endColumn": 70,
+                        "endOffset": 884
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 402,
+                    "endColumn": 82,
+                    "endOffset": 480
+                },
+                "from": {
+                    "file": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/values-v14/values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 889,
+                        "endColumn": 82,
+                        "endOffset": 967
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 485,
+                    "endLine": 14,
+                    "endColumn": 12,
+                    "endOffset": 890
+                },
+                "from": {
+                    "file": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/values-v14/values.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 972,
+                        "endLine": 18,
+                        "endColumn": 12,
+                        "endOffset": 1377
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 895,
+                    "endLine": 20,
+                    "endColumn": 12,
+                    "endOffset": 1312
+                },
+                "from": {
+                    "file": "/Users/henry/.android/build-cache/49e03f74ea5b51e3edcd7b7366de83d2af191518/output/res/values-v14/values.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,

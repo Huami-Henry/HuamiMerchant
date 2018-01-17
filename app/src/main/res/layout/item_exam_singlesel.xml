@@ -44,11 +44,21 @@
                 >
             </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:id="@+id/postil"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/add_postil"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/postil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+
+                />
+        </FrameLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

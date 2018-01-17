@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,31 @@
                     "endOffset": 2184
                 },
                 "from": {
-                    "file": "F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 2141,
+                        "endColumn": 47,
+                        "endOffset": 2184
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/Users/henry/Desktop/Android/HuamiMerchant/vplibrary/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 2141,
+                    "endColumn": 47,
+                    "endOffset": 2184
+                },
+                "from": {
+                    "file": "/Users/henry/Desktop/Android/HuamiMerchant/vplibrary/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
                         "startLine": 23,
                         "startColumn": 4,

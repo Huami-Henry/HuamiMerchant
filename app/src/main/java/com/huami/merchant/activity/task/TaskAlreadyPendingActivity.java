@@ -1,6 +1,7 @@
 package com.huami.merchant.activity.task;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,7 @@ import com.huami.merchant.designView.recycle.XRecyclerView;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
+import com.huami.merchant.util.AuditUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +77,9 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
         sp_check_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                showLoading();
+                checkTimes = String.valueOf(position + 1);
+                presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -85,7 +89,9 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
         sp_check_result.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                showLoading();
+                passState = String.valueOf(position + 2);
+                presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -99,6 +105,7 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     }
     @Override
     public void viewLoadSuccess(Object tag, String json) {
+        endLoading();
         if (tag.equals(BaseConsts.BASE_URL_ALREADY_REVIEW_TASK)) {
             adapter.notifyDataSetChanged();
         } else {
@@ -108,7 +115,7 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
                 if (code == 0) {
                     int maxAudit = object.getInt("maxAudit");
                     for (int i=0;i<maxAudit;i++) {
-                        String s = upCase(i+1);
+                        String s = AuditUtil.upCase(i+1);
                         auditTimes.add(s);
                     }
                     pass.add("通过");
@@ -125,53 +132,6 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-    }
-    /**
-     * 获取审核状态
-     * @param state
-     * @return
-     */
-    public String getState(int state){
-        switch (state) {
-            case 1:
-                return "待审";
-            case 2:
-                return "通过";
-            case 3:
-                return "不通过";
-            default:
-                return "错误";
-        }
-    }
-    /**
-     * 转化成大写
-     * @param number
-     * @return
-     */
-    public String upCase(int number){
-        switch (number) {
-            case 1:
-                return "一审";
-            case 2:
-                return "二审";
-            case 3:
-                return "三审";
-            case 4:
-                return "四审";
-            case 5:
-                return "五审";
-            case 6:
-                return "六审";
-            case 7:
-                return "七审";
-            case 8:
-                return "八审";
-            case 9:
-                return "九审";
-            default:
-                return "N审";
-
         }
     }
     @Override
@@ -195,7 +155,7 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
         }
     }
     @Override
-    public void onRefresh() {
+    public void onRefresh(){
         page = 1;
         datas.clear();
         presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
@@ -211,7 +171,9 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
             case R.id.pending_task:
                 TaskPreviewData data = datas.get(position);
                 startActivity(this,PaperPendingDetailActivity.class,
-                        new String[]{"usercase_id",
+                        new String[]{
+                                "taskPaperId",
+                                "usercase_id",
                                 "isHistory",
                                 "uca_check_usercase_id",
                                 "pass",
@@ -221,6 +183,7 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
                                 "shop_address_str",
                                 "checkTimes","checkState","already"},
                         new Object[]{
+                                String.valueOf(data.getTaskpaper_id()),
                                 String.valueOf(data.getUsercase_id()),
                                 "2",
                                 "",

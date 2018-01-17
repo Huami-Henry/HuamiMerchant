@@ -33,10 +33,13 @@ public class TaskAlreadyPendingModelImp implements TaskAlreadyPendingModelInter,
             int code = object.getInt("code");
             if (BaseConsts.BASE_URL_ALREADY_REVIEW_TASK.equals(model.getTag())) {
                 if (code == 0) {
+                    tasks.clear();
                     TaskPreviewBean bean = gson.fromJson(json, TaskPreviewBean.class);
                     for (TaskPreviewData data : bean.getData()) {
                         tasks.add(data);
                     }
+                } else {
+                    listener.loadFailure(model.getTag(), ErrorCode.ACTION_FAILURE);
                 }
             }
             listener.loadSuccess(model.getTag(), json);
@@ -56,7 +59,7 @@ public class TaskAlreadyPendingModelImp implements TaskAlreadyPendingModelInter,
             return;
         }
         this.tasks = tasks;
-        String[] keys = new String[]{"uuid", "page","task_id","pass_state","check_times","name","number"};
+        String[] keys = new String[]{"merUserId", "page","task_id","pass_state","check_times","name","number"};
         String[] values = new String[]{uuid, page,task_id,pass_state,check_times,task_name,"10"};
         biz.getMainThread(url,keys,values,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK);
     }

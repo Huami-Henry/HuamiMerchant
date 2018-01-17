@@ -96,7 +96,8 @@
             android:name=".activity.task.TaskPointConfigureActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.task.TaskPointActivity" />
-        <activity android:name=".activity.paper.PaperPendingDetailActivity"></activity>
+        <activity android:name=".activity.paper.PaperPendingDetailActivity" />
+        <activity android:name=".activity.task.AuditLastStepActivity"></activity>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.huami.merchant.R;
 import com.huami.merchant.bean.TaskPreviewBean.TaskPreviewData;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
+import com.huami.merchant.util.AuditUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,13 +43,19 @@ public class TaskPreviewAdapter extends RecyclerView.Adapter<TaskPreviewAdapter.
             holder.bottom_preview.setVisibility(View.GONE);
         }
         TaskPreviewData data = datas.get(position);
-        holder.task_preview_count.setText(data.getCheck_times()+"审");
-        holder.user_case_id.setText(data.getUsercase_id()+"");
+        String check_state= AuditUtil.getState(data.getCheck_times(),data.getState());
+        holder.task_preview_count.setText(check_state);
+        holder.user_case_id.setText("000"+data.getUsercase_id()+"");
         holder.shop_id.setText("000"+position);
         holder.shop_name.setText(data.getShop_name());
-//        holder.task_price.setText(data.get());
+        holder.task_price.setText(""+data.getPrice()+"元");
+        holder.task_address.setText(""+data.getShop_address());
+        holder.task_region.setText(data.getRegion_name());
         if (data.getLast_mod() != 0) {
             holder.task_upload_time.setText(format.format(new Date(data.getLast_mod())));
+        }
+        if (data.getCheck_end_date() != 0) {
+            holder.task_end_preview_date.setText(format.format(new Date(data.getCheck_end_date())));
         }
         holder.pending_task.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +66,7 @@ public class TaskPreviewAdapter extends RecyclerView.Adapter<TaskPreviewAdapter.
     }
     @Override
     public int getItemCount() {
-        return datas.size()==0?20:datas.size();
+        return datas.size();
     }
     public class TaskPreviewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.bottom_preview)

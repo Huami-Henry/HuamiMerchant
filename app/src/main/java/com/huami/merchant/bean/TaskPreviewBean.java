@@ -82,6 +82,15 @@ public class TaskPreviewBean {
         private String shop_name;
         private String shop_address;
         private int price;
+        private int taskpaper_id;
+
+        public int getTaskpaper_id() {
+            return taskpaper_id;
+        }
+
+        public void setTaskpaper_id(int taskpaper_id) {
+            this.taskpaper_id = taskpaper_id;
+        }
 
         public int getShop_id() {
             return shop_id;

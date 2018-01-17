@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.huami.merchant.R;
 import com.huami.merchant.bean.TaskPaperPendingBean.TaskPaperData.CheckCaseIdListInfo;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
+import com.huami.merchant.util.AuditUtil;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,9 +36,7 @@ public class PaperBannerAdapter extends RecyclerView.Adapter<PaperBannerAdapter.
     @Override
     public void onBindViewHolder(PaperBannerHolder holder, final int position) {
         CheckCaseIdListInfo info = checkCaseIdListInfos.get(position);
-        String checkTime = upCase(info.getCheckTimes());
-        String state = getState(info.getState());
-        holder.paper_title.setText(checkTime+"审"+state);
+        holder.paper_title.setText(AuditUtil.getState(info.getCheckTimes(),info.getState()));
         if (info.isCheck()) {
             holder.paper_title.setBackgroundColor(Color.parseColor("#F3F3F3"));
         } else {

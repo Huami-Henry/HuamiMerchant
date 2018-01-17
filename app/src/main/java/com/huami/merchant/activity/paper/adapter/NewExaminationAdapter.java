@@ -4,12 +4,9 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
-import android.text.Layout;
-import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -20,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.huami.merchant.R;
+import com.huami.merchant.bean.QuestionSinglePostil;
 import com.huami.merchant.bean.TaskPaperAlreadyPending.TaskPaperAlreadyPendingData.TaskPaperAlreadyPendingHistoryPostil;
 import com.huami.merchant.bean.TaskPaperPendingBean;
 import com.huami.merchant.bean.TaskPaperPendingBean.TaskPaperData.TaskAnswer;
@@ -42,11 +40,13 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
     private OnRecycleItemClickListener listener;
     private List<TaskAnswer> answers;
     private List<TaskPaperAlreadyPendingHistoryPostil> postils;
-    public NewExaminationAdapter(List<ExaminationInner> examinations, List<TaskAnswer> answers,List<TaskPaperAlreadyPendingHistoryPostil> postils, OnRecycleItemClickListener listener) {
+    private boolean already;
+    public NewExaminationAdapter(List<ExaminationInner> examinations, List<TaskAnswer> answers, List<TaskPaperAlreadyPendingHistoryPostil> postils, boolean already, OnRecycleItemClickListener listener) {
         this.examinations = examinations;
         this.listener = listener;
         this.answers = answers;
         this.postils = postils;
+        this.already = already;
     }
     public NewExaminationAdapter(List<ExaminationInner> examinations, List<TaskAnswer> answers,OnRecycleItemClickListener listener) {
         this.examinations = examinations;
@@ -69,7 +69,7 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
     }
     @Override
     public void onBindViewHolder(NewExaminationHolder holder, final int position) {
-        ExaminationInner examinationInner = examinations.get(position);
+        final ExaminationInner examinationInner = examinations.get(position);
         holder.exam_title.setText((position + 1) + ":" + examinationInner.getTitle().replace("\n", "").replace("\r", ""));//题号加题目标题
         holder.templet.removeAllViews();
         List<ExaminationInner.Body> examination_body = examinationInner.getBody();
@@ -110,11 +110,33 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
                     break;
             }
         }
-        holder.postil.setText("");
-        if (postils != null) {
-            for (TaskPaperAlreadyPendingHistoryPostil postil : postils) {
-                if (examinationInner.getQId() == postil.getQuestion_id()) {
-                    holder.postil.setText(""+postil.getQuestion_content());
+        if (!already) {
+            holder.add_postil.setVisibility(View.VISIBLE);
+            holder.add_postil.setText(examinationInner.getPostil());
+            if (!TextUtils.isEmpty(examinationInner.getPostil())) {
+                holder.add_postil.setSelection(examinationInner.getPostil().length());
+            }
+            holder.add_postil.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    examinationInner.setPostil(s.toString());
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        } else {
+            holder.postil.setVisibility(View.GONE);
+            if (postils.size()!=0) {
+                for (TaskPaperAlreadyPendingHistoryPostil postil : postils) {
+                    if (examinationInner.getqId() == postil.getQuestion_id()) {
+                        holder.postil.setText(""+postil.getQuestion_content());
+                        holder.postil.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
@@ -479,12 +501,14 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
         private TextView exam_title;
         private LinearLayout templet;
         private TextView postil;
+        private EditText add_postil;
         public NewExaminationHolder(View itemView) {
             super(itemView);
             content = itemView.findViewById(R.id.content);
             exam_title = (TextView) itemView.findViewById(R.id.exam_title);
             postil = (TextView) itemView.findViewById(R.id.postil);
             templet = (LinearLayout) itemView.findViewById(R.id.templet);
+            add_postil = (EditText) itemView.findViewById(R.id.add_postil);
         }
     }
 }

@@ -1,6 +1,10 @@
 [
     {
-        "merged": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\release\\menu\\menu_main.xml",
-        "source": "F:\\HuamiMerchant\\circlerefresh\\src\\main\\res\\menu\\menu_main.xml"
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\res\\merged\\release\\menu\\menu_main.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\circlerefresh\\src\\main\\res\\menu\\menu_main.xml"
+    },
+    {
+        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/build/intermediates/res/merged/release/menu/menu_main.xml",
+        "source": "/Users/henry/Desktop/Android/HuamiMerchant/circlerefresh/src/main/res/menu/menu_main.xml"
     }
 ]

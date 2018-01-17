@@ -62,6 +62,14 @@ public class BaseConsts {
      */
     public static final String BASE_URL_TASK_ReviewResult = BASE_URL + "/bosstask/bossReviewResult";
     /**
+     * 审核通过
+     */
+    public static final String BASE_URL_TASK_PASS = BASE_URL + "/bossquestion/bossQuestionCheckPass";
+    /**
+     * 审核不通过
+     */
+    public static final String BASE_URL_TASK_NO_PASS = BASE_URL + "/bossquestion/bossQuestionNoPass";
+    /**
      * 获取待审任务详情
      */
     public static final String BASE_URL_TASK_ReviewPending = BASE_URL + "/questionnaire/selTaskPaperInfo";

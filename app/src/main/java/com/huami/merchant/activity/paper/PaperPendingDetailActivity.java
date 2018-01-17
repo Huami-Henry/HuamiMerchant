@@ -1,7 +1,10 @@
 package com.huami.merchant.activity.paper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -10,8 +13,11 @@ import com.huami.merchant.R;
 import com.huami.merchant.activity.paper.adapter.NewExaminationAdapter;
 import com.huami.merchant.activity.paper.adapter.PaperBannerAdapter;
 import com.huami.merchant.activity.task.presenter.PaperPendingPresenter;
+import com.huami.merchant.activity.user.MvpLoginActivity;
+import com.huami.merchant.bean.AuditResult;
 import com.huami.merchant.bean.PaperAlreadyAuditing;
 import com.huami.merchant.bean.PaperAlreadyAuditing.PaperAlreadyAuditingData.PaperAlreadyAuditingTaskTitle;
+import com.huami.merchant.bean.QuestionSinglePostil;
 import com.huami.merchant.bean.TaskPaperAlreadyPending;
 import com.huami.merchant.bean.TaskPaperAlreadyPending.TaskPaperAlreadyPendingData.TaskPaperAlreadyPendingTaskAnswer;
 import com.huami.merchant.bean.TaskPaperAlreadyPending.TaskPaperAlreadyPendingData.TaskPaperAlreadyPendingTaskTitle;
@@ -25,11 +31,16 @@ import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.designView.recycle.FullyLinearLayoutManager;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
+import com.huami.merchant.mvpbase.BaseApplication;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
+import com.huami.merchant.util.AuditUtil;
+import com.huami.merchant.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPresenter, PaperPendingDetailActivity> implements TaskViewInter, OnRecycleItemClickListener {
     private String usercase_id;
@@ -37,12 +48,8 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     private String uca_check_usercase_id;
     private String pass;
     private String shop_id_str,shop_name_str,shop_price_str,shop_region_str,shop_address_str;
-    @BindView(R.id.no_pass_tv)
-    TextView no_pass_tv;
     @BindView(R.id.total_postil)
     TextView total_postil;
-    @BindView(R.id.pass_tv)
-    TextView pass_tv;
     @BindView(R.id.bottom_pending)
     LinearLayout bottom_pending;
     @BindView(R.id.task_paper_recycle)
@@ -84,6 +91,8 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     private String auditDeadline;
     private int checkTimes;
     private int checkState;
+    private String taskPaperId;
+
     @Override
     protected PaperPendingPresenter getPresenter() {
         return new PaperPendingPresenter();
@@ -97,6 +106,7 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     @Override
     protected void initData() {
         usercase_id = getIntent().getStringExtra("usercase_id");
+        taskPaperId = getIntent().getStringExtra("taskPaperId");
         isHistory = getIntent().getStringExtra("isHistory");
         uca_check_usercase_id = getIntent().getStringExtra("uca_check_usercase_id");
         pass = getIntent().getStringExtra("pass");
@@ -118,13 +128,11 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
             manager_banner.setOrientation(LinearLayoutManager.HORIZONTAL);
             bannerAdapter = new PaperBannerAdapter(banner, this);
             check_time_recycle.setAdapter(bannerAdapter);
-            adapter = new NewExaminationAdapter(inners, answers, this);
+            adapter = new NewExaminationAdapter(inners, answers,postils, already,this);
         } else {
             total_postil.setVisibility(View.VISIBLE);
-            String checkTime = upCase(checkTimes);
-            String state = getState(checkState);
-            tv_paper_result.setText(checkTime+state);
-            adapter = new NewExaminationAdapter(inners, answers, postils, this);
+            tv_paper_result.setText(AuditUtil.getState(checkTimes,checkState));
+            adapter = new NewExaminationAdapter(inners, answers, postils,already, this);
         }
         manager_papaer = new FullyLinearLayoutManager(this);
         task_paper_recycle.setLayoutManager(manager_papaer);
@@ -133,56 +141,9 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
         if (already) {
             presenter.getAlreadyPendingDetail(BaseConsts.BASE_URL_TASK_ReviewResult, usercase_id, uca_check_usercase_id, pass);
         } else {
-            presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id, isHistory);
+            presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id,uca_check_usercase_id, isHistory);
         }
         setOtherContent();
-    }
-    /**
-     * 获取审核状态
-     * @param state
-     * @return
-     */
-    public String getState(int state){
-        switch (state) {
-            case 1:
-                return "待审";
-            case 2:
-                return "通过";
-            case 3:
-                return "不通过";
-            default:
-                return "错误";
-        }
-    }
-    /**
-     * 转化成大写
-     * @param number
-     * @return
-     */
-    public String upCase(int number){
-        switch (number) {
-            case 1:
-                return "一";
-            case 2:
-                return "二";
-            case 3:
-                return "三";
-            case 4:
-                return "四";
-            case 5:
-                return "五";
-            case 6:
-                return "六";
-            case 7:
-                return "七";
-            case 8:
-                return "八";
-            case 9:
-                return "九";
-            default:
-                return "N";
-
-        }
     }
     @Override
     protected void setToolBar(TextView t_name, TextView t_menu) {
@@ -196,6 +157,7 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
         try {
             if (BaseConsts.BASE_URL_TASK_ReviewPending.equals(tag)) {
                 answers.clear();
+                postils.clear();
                 if ("2".equals(isHistory)) {//当前问卷
                     TaskPaperPendingBean bean = gson.fromJson(json, TaskPaperPendingBean.class);
                     if (bean.getCode() == 0) {
@@ -209,11 +171,15 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
                 }
                 adapter.notifyDataSetChanged();
                 bannerAdapter.notifyDataSetChanged();
-            } else {
+            } else if (BaseConsts.BASE_URL_TASK_ReviewResult.equals(tag)){
                 PaperAlreadyAuditing paperAlreadyAuditing = gson.fromJson(json, PaperAlreadyAuditing.class);
                 if (paperAlreadyAuditing.getCode() == 0) {
                     setAlreadyPending(paperAlreadyAuditing);
                 }
+            } else if (BaseConsts.BASE_URL_TASK_PASS.equals(tag)) {
+
+            } else if (BaseConsts.BASE_URL_TASK_NO_PASS.equals(tag)) {
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -276,10 +242,19 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
         List<ExaminationInner> paperData = bean.getData().getTaskPaper().getPaperData();
         taskTitle = bean.getData().getTaskTitle();
         auditDeadline = taskTitle.getAuditDeadline();
-        tv_paper_result.setText(auditDeadline);
+        tv_paper_result.setText("审核截止时间：" + StringUtil.subStringTime(auditDeadline));
         setTitle(taskTitle);
+        int i = 0;
+        if (position == banner.size() - 1) {
+            banner.clear();
+            inners.clear();
+        }
         for (CheckCaseIdListInfo info : checkCaseIdList) {
+            if (i == checkCaseIdList.size()-1) {
+                info.setCheck(true);
+            }
             banner.add(info);
+            i++;
         }
         for (TaskAnswer answer : taskAnswer) {
             answers.add(answer);
@@ -288,17 +263,16 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
             inners.add(inner);
         }
     }
-
     /**
      * 其他信息
      */
     private void setOtherContent() {
-        shop_id.setText("000"+shop_id_str);
+        shop_id.setText("店铺编号:000"+shop_id_str);
         shop_name.setText(shop_name_str);
-        shop_price.setText(shop_price_str);
+        shop_price.setText("奖金:"+shop_price_str+"元");
         shop_region.setText(shop_region_str);
         shop_address.setText(shop_address_str);
-        user_case_id.setText("000"+usercase_id);
+        user_case_id.setText("问卷编号:000"+usercase_id);
     }
 
     /**
@@ -308,10 +282,14 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
      */
     public void setTitle(PaperAlreadyAuditingTaskTitle title) {
         if (title != null) {
-            sign_in_time.setText(title.getSignInTime());
-            sign_out_time.setText(title.getSignOutTime());
-            submit_time.setText(title.getSubmitTime());
-            check_time.setText(title.getAuditTime());
+            sign_in_time.setText(StringUtil.subStringTime(title.getSignInTime()));
+            sign_out_time.setText(StringUtil.subStringTime(title.getSignOutTime()));
+            submit_time.setText(StringUtil.subStringTime(title.getSubmitTime()));
+            if (title.getAuditStage() == 1) {
+                check_time.setText(StringUtil.subStringTime(title.getAuditTime()));
+            } else {
+                check_time.setText("");
+            }
         }
     }
     /**
@@ -321,10 +299,14 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
      */
     public void setTitle(TaskTitle title) {
         if (title != null) {
-            sign_in_time.setText(title.getSignInTime());
-            sign_out_time.setText(title.getSignOutTime());
-            submit_time.setText(title.getSubmitTime());
-            check_time.setText(title.getAuditTime());
+            sign_in_time.setText(StringUtil.subStringTime(title.getSignInTime()));
+            sign_out_time.setText(StringUtil.subStringTime(title.getSignOutTime()));
+            submit_time.setText(StringUtil.subStringTime(title.getSubmitTime()));
+            if (title.getAuditStage() == 1) {
+                check_time.setText(StringUtil.subStringTime(title.getAuditTime()));
+            } else {
+                check_time.setText("");
+            }
         }
     }
     /**
@@ -334,10 +316,14 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
      */
     public void setTitle(TaskPaperAlreadyPendingTaskTitle title) {
         if (title != null) {
-            sign_in_time.setText(title.getSignInTime());
-            sign_out_time.setText(title.getSignOutTime());
-            submit_time.setText(title.getSubmitTime());
-            check_time.setText(title.getAuditTime());
+            sign_in_time.setText(StringUtil.subStringTime(title.getSignInTime()));
+            sign_out_time.setText(StringUtil.subStringTime(title.getSignOutTime()));
+            submit_time.setText(StringUtil.subStringTime(title.getSubmitTime()));
+            if (title.getAuditStage() == 1) {
+                check_time.setText(StringUtil.subStringTime(title.getAuditTime()));
+            } else {
+                check_time.setText("");
+            }
         }
     }
 
@@ -346,9 +332,10 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
         endLoading();
         showToast("访问出错,请稍后尝试.");
     }
-
+    private int position;
     @Override
     public void onItemClick(View v, int position) {
+        this.position = position;
         switch (v.getId()) {
             case R.id.paper_title:
                 CheckCaseIdListInfo info = banner.get(position);
@@ -357,13 +344,12 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
                         isHistory = "2";
                         bottom_pending.setVisibility(View.VISIBLE);
                         total_postil.setVisibility(View.GONE);
-                        presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id, isHistory);
                     } else {
                         isHistory = "1";
                         bottom_pending.setVisibility(View.INVISIBLE);
                         total_postil.setVisibility(View.VISIBLE);
-                        presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id,uca_check_usercase_id,isHistory);
                     }
+                    presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id,String.valueOf(info.getCheckCaseId()),isHistory);
                     for (CheckCaseIdListInfo ch : banner) {
                         ch.setCheck(false);
                     }
@@ -371,5 +357,41 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
                 }
                 break;
         }
+    }
+    private AuditResult result=new AuditResult();
+    private List<QuestionSinglePostil> post = new ArrayList<>();
+    @OnClick(R.id.pass_tv)
+    public void taskPass(){
+        setAuditResult();
+    }
+
+    private void setAuditResult() {
+        if (TextUtils.isEmpty(BaseApplication.UU_TOKEN) || TextUtils.isEmpty(BaseApplication.UUID)) {
+            showToast("系统检测您的登陆过期。");
+            startActivity(this, MvpLoginActivity.class);
+            finish();
+            return;
+        }
+        for (ExaminationInner inner : inners) {
+            if (!TextUtils.isEmpty(inner.getPostil())) {
+                QuestionSinglePostil p = new QuestionSinglePostil();
+                p.setCheckCaseId(Integer.valueOf(uca_check_usercase_id));
+                p.setQuestionContent(inner.getPostil());
+                p.setQuestionId(inner.getqId());
+                p.setTaskPaperId(Integer.valueOf(taskPaperId));
+                p.setUserCaseId(Integer.valueOf(usercase_id));
+                post.add(p);
+            }
+
+        }
+        result.setCheckCaseId(uca_check_usercase_id);
+        result.setMerUserId(BaseApplication.UUID);
+        result.setUuid(BaseApplication.UU_TOKEN);
+        result.setPostil(post);
+    }
+
+    @OnClick(R.id.no_pass_tv)
+    public void taskNoPass(){
+        setAuditResult();
     }
 }

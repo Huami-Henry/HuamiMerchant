@@ -44,7 +44,7 @@ public class PaperPendingPresenter extends BasePresenter<PaperPendingDetailActiv
      * @param isHistory
      */
     public void getPendingDetail(String url,String usercase_id,String check_case_id, String isHistory) {
-        model.getPendingDetail(url, usercase_id, isHistory, new InterLoadListener() {
+        model.getPendingDetail(url, usercase_id,check_case_id, isHistory, new InterLoadListener() {
             @Override
             public void loadSuccess(Object tag, String json) {
                 if (isViewAttached()) {
@@ -65,7 +65,6 @@ public class PaperPendingPresenter extends BasePresenter<PaperPendingDetailActiv
      * @param userCaseId
      * @param uca_check_usercase_id
      * @param pass
-     * @param listener
      */
     public void getAlreadyPendingDetail(String url,String userCaseId, String uca_check_usercase_id, String pass) {
         model.getAlreadyPendingDetail(url, userCaseId, uca_check_usercase_id,pass, new InterLoadListener() {
