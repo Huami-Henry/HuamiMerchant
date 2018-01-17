@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/check_single_sel"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:gravity="top"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/single_selection_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:padding="3dp"
+        android:src="@mipmap/single_check"
+        />
+    <TextView
+        android:id="@+id/selection_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cancle_color"
+        />
+</LinearLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huami.merchant">
+
+    <permission
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!-- 访问网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 访问摄像头权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 获取WIFI状态 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 地理位置权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 从SD卡中读取数据的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 往SD卡中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 拨打电话呼叫客服 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 百度地图所需权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 创建和删除快捷方式权限 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:name=".mvpbase.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.user.MvpLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.main.MainActivity"
+            android:label="@string/title_activity_main" />
+        <activity android:name=".activity.task.TaskPreviewActivity" />
+        <activity android:name=".activity.task.TaskAlreadyPendingActivity" />
+        <activity android:name=".activity.task.TaskEditActivity" />
+        <activity android:name=".activity.task.TaskInfoStateActivity" />
+        <activity android:name=".activity.task.TaskPublishActivity" />
+        <activity
+            android:name=".activity.task.TaskTimeActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".imagepicker.ui.RxPickerActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/RxPicker.AppTheme" />
+        <activity
+            android:name=".imagepicker.ui.PreviewActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/RxPicker.AppTheme" />
+
+        <provider
+            android:name=".imagepicker.utils.RxPickerProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
+        <activity
+            android:name=".activity.task.TaskAttentionActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.task.TaskInfoActivity" />
+        <activity android:name=".activity.task.TaskPaperListActivity" />
+        <activity
+            android:name=".activity.task.TaskPointConfigureActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.task.TaskPointActivity" />
+        <activity android:name=".activity.paper.PaperPendingDetailActivity"></activity>
+    </application>
+
+</manifest>

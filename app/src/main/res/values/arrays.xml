@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="markArray">
+        <item>0</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="permissions">
+        <item>@string/permission_recode_audio_hint</item>
+        <item>@string/permission_get_accounts_hint</item>
+        <item>@string/permission_read_phone_hint</item>
+        <item>@string/permission_call_phone_hint</item>
+        <item>@string/permission_camera_hint</item>
+        <item>@string/permission_access_fine_location_hint</item>
+        <item>@string/permission_access_coarse_location_hint</item>
+        <item>@string/permission_read_external_hint</item>
+        <item>@string/permission_white_external_hint</item>
+    </string-array>
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="level">
+        <item>白丁</item>
+        <item>从九品</item>
+        <item>正九品</item>
+        <item>从八品</item>
+        <item>正八品</item>
+        <item>从七品</item>
+        <item>正七品</item>
+        <item>从六品</item>
+        <item>正六品</item>
+        <item>从五品</item>
+        <item>正五品</item>
+        <item>从四品</item>
+        <item>正四品</item>
+        <item>从三品</item>
+        <item>正三品</item>
+        <item>从二品</item>
+        <item>正二品</item>
+        <item>从一品</item>
+        <item>正一品</item>
+    </string-array>
+</resources>

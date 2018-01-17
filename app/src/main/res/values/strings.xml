@@ -1,0 +1,270 @@
+<resources>
+    <string name="net_sleep">您的网络睡着了,请唤醒后再尝试!</string>
+    <string name="empty_tip">暂无数据</string>
+    <string name="no_network_tip">网络异常</string>
+    <string name="error_tip">加载失败</string>
+    <string name="time_out_tip">加载超时</string>
+    <string name="no_login_tip">你还没有登录</string>
+    <string name="btn_login">登录</string>
+    <string name="loading_tip">加载中...</string>
+    <string name="retry_tip">轻触屏幕重试</string>
+
+    <string name="permission_get_accounts_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_GET_ACCOUNTS</string>
+    <string name="permission_read_phone_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_PHONE_STATE</string>
+    <string name="permission_call_phone_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_CALL_PHONE</string>
+    <string name="permission_camera_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_CAMERA</string>
+    <string name="permission_access_fine_location_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_ACCESS_FINE_LOCATION</string>
+    <string name="permission_access_coarse_location_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_ACCESS_COARSE_LOCATION</string>
+    <string name="permission_read_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_EXTERNAL_STORAGE</string>
+    <string name="permission_white_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_WRITE_EXTERNAL_STORAGE</string>
+    <string name="permission_recode_audio_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_RECORD_AUDIO</string>
+
+
+    <string name="select_confim" formatted="false">确定 (%d/%d)</string>
+    <string name="all_phone_album">全部相册</string>
+    <string name="max_select">最多选择%s张图片</string>
+    <string name="select_one_image">请选择一张照片</string>
+    <string name="min_image">请至少选择%d张照片</string>
+    <string name="permissions_error">获取权限失败</string>
+    <string name="load_image_error">获取图片失败</string>
+
+    <string name="app_name">大人来也商户端</string>
+    <string name="copyright">华米科技 版权所有</string>
+    <string name="home">首页</string>
+    <string name="topic">附近</string>
+    <string name="task">我的任务</string>
+    <string name="problem">有疑问？</string>
+    <string name="center">个人中心</string>
+
+    <string name="all">推荐</string>
+    <string name="att">关注</string>
+    <string name="cancel">取消</string>
+    <string name="name">姓名</string>
+    <string name="search">搜索</string>
+    <string name="info">个人信息</string>
+    <string name="map">地图</string>
+    <string name="task_point">任务点</string>
+    <string name="account">账户安全</string>
+    <string name="other">其他反馈</string>
+    <string name="pswd_manager">密码管理</string>
+    <string name="cash_pswd">提现密码</string>
+    <string name="login_pswd">登录密码</string>
+    <string name="add_card">添加银行卡</string>
+    <string name="live">生活服务</string>
+    <string name="common">我评价</string>
+    <string name="research">大人研究所</string>
+    <string name="pin">品牌专栏</string>
+    <string name="more">更多</string>
+    <string name="tak">任务</string>
+    <string name="phone">手机号</string>
+    <string name="clear">清除缓存</string>
+    <string name="protocol">用户协议</string>
+    <string name="contact">联系我们</string>
+    <string name="share">分享APP</string>
+    <string name="receive">接收提醒</string>
+    <string name="auto">自动保存设置</string>
+    <string name="feedback">意见反馈</string>
+    <string name="mail">邮箱</string>
+    <string name="cash_manager">提现管理</string>
+    <string name="modify_login_pswd">修改登录密码</string>
+    <string name="modify_cash_pswd">修改提现密码</string>
+    <string name="id_auth">身份认证</string>
+    <string name="sign">签到</string>
+    <string name="subject">专题精选</string>
+    <string name="avatar">  头  像</string>
+    <string name="nickname">   昵  称</string>
+    <string name="college">学历</string>
+    <string name="married">婚姻状况</string>
+    <string name="job">职业</string>
+    <string name="income">收入</string>
+    <string name="hobbit">兴趣爱好</string>
+    <string name="chang">常驻地</string>
+    <string name="input_nickname">请输入昵称</string>
+    <string name="hint_mail">请输入邮箱</string>
+    <string name="attention">我的关注</string>
+    <string name="user_help">用户帮助</string>
+    <string name="daren">大人称号</string>
+    <string name="toutiao">大人头条</string>
+    <string name="auth">专业认证</string>
+    <string name="change_phone">更换手机号</string>
+    <string name="friend">好友</string>
+    <string name="frd_auth">好友验证</string>
+    <string name="none_frd">暂无好友验证消息，您可以</string>
+    <string name="frd_invite">已推荐的好友</string>
+    <string name="invite">邀请好友</string>
+    <string name="about">关于</string>
+    <string name="hint_feed">请描述详情...</string>
+    <string name="offline_task">线下任务</string>
+    <string name="online_task">线上任务</string>
+    <string name="theme_task">专题任务</string>
+    <string name="current_phone">您的手机号：</string>
+    <string name="start">点击进入</string>
+    <string name="state_wait">待执行</string>
+    <string name="time_surplus">剩余时间</string>
+    <string name="cancel_task">取消该任务</string>
+    <string name="save">提交保存</string>
+    <string name="history">———— 点击查看历史任务 ————</string>
+    <string name="highest">最高</string>
+    <string name="get">去领取</string>
+    <string name="cancel_att">取消关注</string>
+    <string name="add_att">添加关注</string>
+    <string name="already_att">已关注</string>
+    <string name="clear_cache">清理缓存成功</string>
+    <string name="cancel_att_suc">取消关注成功</string>
+    <string name="add_att_suc">添加关注成功</string>
+    <string name="modify">修改</string>
+    <string name="cash_all">提现测算</string>
+    <string name="cash_get">提现金额</string>
+    <string name="cash_suc">申请成功</string>
+    <string name="cash_san">3个工作日内将受理提现申请</string>
+    <string name="cash_yu">可用余额</string>
+    <string name="cash_dao">提现到卡</string>
+    <string name="cash_hint">输入提现金额</string>
+    <string name="refused">拒绝</string>
+    <string name="agree">通过</string>
+    <string name="none_auth">未认证</string>
+    <string name="version">版本: V1.0.1</string>
+    <string name="high">最高</string>
+    <string name="get_cash">提现</string>
+    <string name="cash_back">返回</string>
+    <string name="yu">余额(元)</string>
+    <string name="now_get">立即领取</string>
+    <string name="money">金库</string>
+    <string name="cash">提现</string>
+    <string name="customer">联系客服</string>
+    <string name="bank">银行</string>
+    <string name="card">卡号</string>
+    <string name="kai">开户行所在地</string>
+    <string name="pufa">浦发银行</string>
+    <string name="chu">储蓄卡</string>
+    <string name="register">注册</string>
+    <string name="help">用户帮助</string>
+    <string name="tv_register">新用户注册</string>
+    <string name="login">登录</string>
+    <string name="submit">提交</string>
+    <string name="logout">退出登录</string>
+    <string name="over">完成注册</string>
+    <string name="next">下一步</string>
+    <string name="forget">忘记密码</string>
+    <string name="reset">设置新密码</string>
+    <string name="code">获取验证码</string>
+    <string name="im_hint">我是...</string>
+    <string name="config_hint">请再次输入密码</string>
+    <string name="friend_hint">输入好友手机号</string>
+    <string name="reset_hint">请设置新密码</string>
+    <string name="invitation">邀请注册码</string>
+    <string name="img_hint">图形验证码</string>
+    <string name="user_hint">请输入您的邮箱号</string>
+    <string name="new_phone_hint">输入新手机号</string>
+    <string name="pswd_hint">请输入密码</string>
+    <string name="pswd_old">请输入原密码</string>
+    <string name="pswd_new">请输入新密码</string>
+    <string name="pswd_conf">请再次输入新密码</string>
+    <string name="message_hint">短信验证码</string>
+    <string name="set">设置</string>
+    <string name="he">我要合作</string>
+    <string name="state_zhi">执行中</string>
+    <string name="button_zhi">执行</string>
+    <string name="bu">奖</string>
+    <string name="feng">俸</string>
+    <string name="tip_time">签出时间:签到10分钟后可以签出</string>
+    <string name="sign_time">签到时间：</string>
+    <string name="last_time">剩余时间：</string>
+    <string name="add_attention">添加关注</string>
+
+    <string name="succeed">修改成功</string>
+
+    <string name="company">华米信息技术(上海)有限公司</string>
+    <string name="error_empty_user">用户名或密码不能为空</string>
+    <string name="error_empty_feedback">反馈内容不能为空</string>
+    <string name="error_http">网络错误，请检查设置后重新连接</string>
+    <string name="error_interface">接口调用错误</string>
+    <string name="error_none_phone">该商家尚未登记联系方式</string>
+    <string name="error_no_more">没有更多数据</string>
+    <string name="error_phone">手机号格式不合法，请检查后重新输入</string>
+    <string name="error_location">定位失败，请检查设置后重新获取</string>
+
+    <string name="default_why">为什么签到失败？</string>
+    <string name="default_no">有任务尚未签出</string>
+    <string name="default_local">未开启定位服务</string>
+    <string name="default_fan">未到签到范围</string>
+    <string name="default_net">网络错误</string>
+    <string name="default_set">应用设置</string>
+    <string name="default_city">上海</string>
+    <string name="task_time">任务剩余时间</string>
+    <string name="default_tip">如任然签到失败，请联系我们。\n大人客服电话4009207899\n大人邮箱:darenlaiye@huami-tech.com\n微信服务号:darenlaiye</string>
+    <string name="default_search">搜索任务名称</string>
+    <string name="task_point_info">任务点信息</string>
+    <string name="task_state">任务状态</string>
+
+    <string name="activity_title_failed">签到失败</string>
+    <string name="activity_title_task">任务详情</string>
+    <string name="activity_title_preview">问卷预览</string>
+    <string name="activity_title_know">任务须知</string>
+    <string name="tip_select">点此选择好友验证注册</string>
+    <string name="tv_friend_how">如何进行好友验证注册？</string>
+    <string name="tv_money_how">如何进行邀请码注册？</string>
+    <string name="tv_sm">扫码关注</string>
+    <string name="tv_follow">+关注</string>
+    <string name="tv_have">已关注</string>
+    <string name="all_brand">全部品牌</string>
+    <string name="gao">公告</string>
+    <string name="notice">通知</string>
+    <string name="my_follow">我的关注</string>
+    <string name="all_income">总收益(元):--.--</string>
+    <string name="all_get">已提现(元):--.--</string>
+    <string name="tv_history">搜索历史</string>
+    <string name="tv_search_none">暂未搜索到相关内容</string>
+    <string name="store_phone">联系电话</string>
+    <string name="task_request">任务要求</string>
+    <string name="store_info">门店信息</string>
+    <string name="task_get">领取任务</string>
+    <string name="error_call">未能获取到相关权限，导致拨号失败，请设置后重试</string>
+
+    <string name="tip_friend_yz">填写好友验证信息注册</string>
+    <string name="tip_invitation">填写邀请码注册</string>
+
+    <string name="activity_title_brand">品牌</string>
+    <string name="activity_title_online">线上任务</string>
+    <string name="activity_title_notice">通知</string>
+    <string name="listview_loading">正在加载</string>
+    <string name="nomore_loading">加载完成</string>
+    <string name="cp_select_city">选择城市</string>
+    <string name="cp_hot_city">热门城市</string>
+    <string name="cp_located_city">定位城市</string>
+    <string name="cp_hint_search_box">请输入城市名或拼音</string>
+    <string name="cp_nothing_found">没有搜索结果~</string>
+    <string name="cp_locating">正在定位…</string>
+    <string name="cp_located_failed">定位失败</string>
+    <string name="commit">提交</string>
+
+    <string name="cash_tip">1、我们不再设提现最低要求啦！为了让各位大人随心提现，自2017年7月1日起，我们调整了提现规则，并将根据单笔金额收取提现手续费，具体如下：\n
+   \t1）单笔提现金额0—300元 手续费5元\n
+   \t2）单笔提现金额301—1000元 手续费3元\n
+   \t3）单笔提现金额1000元（不含）以上 免手续费\n
+   2、正常情况下，自提交提现申请后三个工作日内到账，非工作日提现将在下一个工作日起算，具体时效以收款银行规定为准。\n
+   3、请大人务必正确填写收款人信息，因收款行、账号等汇款信息填写错误造成退款的，将再次扣除相应手续费。\n
+   4、自2017年7月1日起，平台将根据相关税收法规对大人的当月（每月1日到每月最后一天）累计提现金额超出部分进行代扣代缴，当月提现总额不超过800元（含），无需缴纳；当月提现总额超过800以上的，扣除免征额800元后的部分按照20%的费用缴纳个税。具体请参见《中华人民共和国个人所得税法》。</string>
+    <string name="title_activity_mvp_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">邮箱(email)</string>
+    <string name="prompt_password">密码(password)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="content_color">#343434</color>
+    <color name="tip_color">#6C6C6C</color>
+    <color name="retry_color">#C0C0C0</color>
+
+    <color name="rxpicker_colorPrimary">#000000</color>
+    <color name="rxpicker_colorPrimaryDark">#ff212121</color>
+    <color name="rxpicker_colorPrimaryAlpha">#44000000</color>
+    <color name="rxpicker_colorAccent">#FF4081</color>
+    <color name="rxpicker_black">#000</color>
+    <color name="rxpicker_width">#FFF</color>
+
+    <color name="pickerview_timebtn_nor">#057dff</color>
+    <color name="pickerview_timebtn_pre">#c2daf5</color>
+    <color name="pickerview_bg_topbar">#f5f5f5</color>
+
+    <color name="pickerview_topbar_title">#000000</color>
+    <color name="pickerview_wheelview_textcolor_out">#a8a8a8</color>
+    <color name="pickerview_wheelview_textcolor_center">#2a2a2a</color>
+    <color name="pickerview_wheelview_textcolor_divider">#d5d5d5</color>
+    <color name="pickerview_bgColor_default">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="color_blue">#0000ff</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent_trans">#999999</color>
+
+    <color name="lager_red">#ff0000</color>
+    <color name="red">#A60000</color>
+    <color name="dark_red">#a32810</color>
+    <color name="orange">#FF7F00</color>
+    <color name="orange_finish">#ff6600</color>
+    <color name="orange_blue">#4EA0FF</color>
+    <color name="yellow">#FFFAC6</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#3C3C3C</color>
+    <color name="black">#000000</color>
+    <color name="dark">#FAFAFA</color>
+    <color name="blue">#4EA0FF</color>
+    <color name="theme_blue">#3500b2</color>
+
+    <color name="app_theme">#dd0012</color>
+    <color name="app_theme_black">#222222</color>
+
+    <color name="font_black">#464646</color>
+    <color name="font_theme">#666666</color>
+
+
+    <color name="font_dark">#8C8C8C</color>
+    <color name="font_bottom">#9C9C9C</color>
+    <color name="font_flow">#F1F1F1</color>
+    <color name="font_orange">#F8b65a</color>
+    <color name="font_blue">#4EA0FF</color>
+    <color name="theme_bottom">#FCFCFC</color>
+    <color name="theme_daren">#F3F3F3</color>
+
+    <color name="progress_start_color">#6BD3FF</color>
+    <color name="progress_end_color">#FFFF00</color>
+    <color name="transparent_black">#50000000</color>
+    <color name="transparent">#0000</color>
+    <color name="theme_color">#bb0012</color>
+    <color name="theme_color_red">#dd0012</color>
+    <color name="transparent_theme_color">#aaff794c</color>
+    <color name="cp_colorAccent">#F3F3F3</color>
+    <color name="cp_colorPrimary">@color/cp_colorAccent</color>
+    <color name="cp_colorPrimaryDark">@color/cp_colorAccent</color>
+    <color name="cp_divider">#E5E5E5</color>
+    <color name="cp_shadow">#AAEBEBEB</color>
+    <color name="cp_common_bg">#FAFAFA</color>
+    <color name="cp_content_bg">@color/cp_colorAccent</color>
+    <color name="cp_gray">#558c8c8c</color>
+    <color name="coupon_detail_back">#888c8c8c</color>
+    <color name="cp_gray_deep">#5c5c5c</color>
+    <color name="cp_alpha_gray">#CC646464</color>
+    <color name="cp_theme_gray">#646464</color>
+    <color name="cancle_color">#666666</color>
+    <color name="transparent_gray">#CFDDDDDD</color>
+    <color name="transparent_dialog">#cccccc</color>
+    <color name="theme_black_color">#484c50</color>
+    <color name="color_dialog_gray">#ededf3</color>
+    <color name="colorSeekBarDefault">#c3c3c3</color>
+    <color name="pickerview_bgColor_overlay">#60000000</color>
+    <color name="green">#aa0</color>
+</resources>

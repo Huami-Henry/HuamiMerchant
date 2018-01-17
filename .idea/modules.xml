@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HuamiMerchant.iml" filepath="$PROJECT_DIR$/HuamiMerchant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circlerefresh/circlerefresh.iml" filepath="$PROJECT_DIR$/circlerefresh/circlerefresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kprogresshud/kprogresshud.iml" filepath="$PROJECT_DIR$/kprogresshud/kprogresshud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vplibrary/vplibrary.iml" filepath="$PROJECT_DIR$/vplibrary/vplibrary.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/task_info"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="经过实际查询后你可以清楚的看到，iPhone 5、5S、6、6S、7系列机型的老版本固件，苹果都已经默认开启了降级通道，所以如果你愿意可以退回原来系统，告别被限制性能的窘境："
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#2000"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/icon_edit_pic"
+            android:padding="10dp"
+            />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/text_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/del_exam"
+        android:layout_gravity="right"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        />
+</FrameLayout>

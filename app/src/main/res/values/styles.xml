@@ -1,0 +1,200 @@
+<resources>
+
+
+    <declare-styleable name="RatingStarView">
+        <attr name="starMargin" format="integer|dimension" />
+        <attr name="cornerRadius" format="float|dimension" />
+        <attr name="starForegroundColor" format="color|reference" />
+        <attr name="starBackgroundColor" format="color|reference" />
+        <attr name="rat_strokeColor" format="color|reference" />
+        <attr name="strokeWidth" format="float|dimension" />
+        <attr name="starNum" format="integer" />
+        <attr name="rating" format="float" />
+        <attr name="starThickness" format="float|fraction" />
+        <attr name="drawStrokeForEmptyStar" format="boolean" />
+        <attr name="drawStrokeForFullStar" format="boolean" />
+        <attr name="drawStrokeForHalfStar" format="boolean" />
+        <attr name="enableSelectRating" format="boolean" />
+        <attr name="onlyHalfStar" format="boolean" />
+    </declare-styleable>
+
+    <!--避免第一次进来白屏或黑屏-->
+    <style name="AppTheme.Splash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="BannerDefaultStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <!-- 自定义属性在styles.xml中不需要命名空间,直接用属性名就可以了 -->
+        <!-- 开启自动轮播 -->
+        <item name="banner_pointAutoPlayAble">true</item>
+        <!-- 自动轮播的时间间隔 -->
+        <item name="banner_pointAutoPlayInterval">5000</item>
+        <!-- 指示点容器背景 -->
+        <item name="banner_pointContainerBackground">#44aaaaaa</item>
+        <!-- 指示点背景 -->
+        <item name="banner_pointDrawable">@drawable/bga_banner_selector_point_hollow</item>
+        <!-- 指示点容器左右内间距 -->
+        <item name="banner_pointContainerLeftRightPadding">10dp</item>
+        <!-- 指示点上下外间距 -->
+        <item name="banner_pointTopBottomMargin">6dp</item>
+        <!-- 指示点左右外间距 -->
+        <item name="banner_pointLeftRightMargin">3dp</item>
+        <!-- 指示器的位置 -->
+        <item name="banner_indicatorGravity">bottom|center_horizontal</item>
+        <!-- 页码切换过程的时间长度 -->
+        <item name="banner_pageChangeDuration">800</item>
+        <!-- 提示文案的文字大小 -->
+        <item name="banner_tipTextSize">10sp</item>
+        <!-- 提示文案的文字颜色 -->
+        <item name="banner_tipTextColor">@android:color/white</item>
+    </style>
+
+    <style name="AutoWrapTv" parent="AutoWrap">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_btn_test</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="AutoWrap">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="mypopwindow_anim_style" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowEnterAnimation">@anim/shared_popshow_anim</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/shared_pophidden_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="Translucent_NoTitle" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- 设置window背景透明，也就是去边框 -->
+    </style>
+
+    <style name="pickerview_dialogAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pickerview_dialog_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/pickerview_dialog_scale_out</item>
+    </style>
+
+    <style name="custom_dialog2" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog的windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否漂现在activity上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 是否半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 去除黑色边框的关键设置项 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 屏幕背景是否变暗 -->
+        <item name="android:backgroundDimAmount">0.3</item>
+    </style>
+    <declare-styleable name="core_area">
+        <attr format="color" name="underline_color"/>
+        <attr format="color" name="underline_selected_color"/>
+        <attr format="color" name="hint_color"/>
+        <attr format="color" name="text_color"/>
+        <attr format="string" name="hint_text"/>
+        <attr format="integer" name="codes"/>
+    </declare-styleable>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/gray</item>
+        <item name="colorPrimaryDark">@color/gray</item>
+        <item name="colorAccent">@color/gray</item>
+    </style>
+
+    <style name="RxPicker.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/rxpicker_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/rxpicker_colorPrimaryDark</item>
+        <item name="colorAccent">@color/rxpicker_colorAccent</item>
+    </style>
+
+    <!-- RxPickerActivity Theme-->
+    <style name="RxPicker.AppTheme.NoActionBar" parent="RxPicker.AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+
+    <style name="RxPicker.ToolbarTheme" parent="RxPicker.AppTheme.NoActionBar">
+        <item name="titleTextColor">@color/rxpicker_width</item>
+        <item name="android:textColorSecondary">@color/rxpicker_width</item>
+        <item name="android:textColor">@color/rxpicker_width</item>
+        <item name="android:background">@color/rxpicker_colorPrimaryDark</item>
+    </style>
+
+    <style name="RxPicker.PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/rxpicker_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/rxpicker_fade_out</item>
+    </style>
+
+
+    <style name="RadioButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@drawable/selector_tab_font</item>
+    </style>
+
+    <!--progress_dialog-->
+    <style name="color_dialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+    <style name="LetterIndexTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">@dimen/side_letter_bar_width</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/cp_gray</item>
+    </style>
+
+    <style name="huami_style_dialog" parent="@style/BaseDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff555555</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+    <style name="BaseDialog" parent="@android:style/Theme.Dialog" />
+</resources>

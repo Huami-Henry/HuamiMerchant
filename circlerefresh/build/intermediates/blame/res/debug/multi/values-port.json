@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "F:\\HuamiMerchant\\circlerefresh\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-port\\values-port.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 55,
+                    "endOffset": 106
+                },
+                "from": {
+                    "file": "C:\\Users\\Administrator\\.android\\build-cache\\9c62231917aa0ccc7bf78cda82333d07782b4222\\output\\res\\values-port\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 291,
+                        "endColumn": 55,
+                        "endOffset": 342
+                    }
+                }
+            }
+        ]
+    }
+]

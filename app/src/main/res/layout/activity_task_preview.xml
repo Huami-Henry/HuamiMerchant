@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.huami.merchant.activity.task.TaskPreviewActivity">
+    <include layout="@layout/include_search_bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待审核:"
+            android:padding="10dp"
+            />
+        <TextView
+            android:id="@+id/task_preview_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10单"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="协助审核"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:textColor="@color/blue"
+            />
+    </LinearLayout>
+    <com.huami.merchant.designView.recycle.XRecyclerView
+        android:id="@+id/task_preview_recycle"
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

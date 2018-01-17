@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.huami.merchant.activity.task.TaskPublishActivity">
+    <include layout="@layout/include_edit_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_height="0.5dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="任务名称"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_back"
+        >
+        <EditText
+            android:id="@+id/task_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@null"
+            />
+        <ImageView
+            android:id="@+id/del_task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/cp_ic_search_clear"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="任务LOGO"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        >
+        <ImageView
+            android:id="@+id/iv_task"
+            android:layout_width="100dp"
+            android:src="@mipmap/rectangle_seize_pic"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/change_tv"
+            android:layout_toRightOf="@+id/iv_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更换"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimary"
+            />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/task_info_iv"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@mipmap/background"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#2000"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/icon_edit_pic"
+            android:tint="@color/white"
+            />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/text_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/del_exam"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>

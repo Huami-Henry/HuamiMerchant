@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\bga_banner_point_enabled.png",
+        "source": "F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\bga_banner_point_enabled.png"
+    },
+    {
+        "merged": "F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\bga_banner_point_disabled.png",
+        "source": "F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\bga_banner_point_disabled.png"
+    }
+]

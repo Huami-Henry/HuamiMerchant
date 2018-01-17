@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:scrollbars="none"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout
+        android:id="@+id/add_select_video"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/add_video"
+            android:layout_width="58dp"
+            android:src="@mipmap/add_video"
+            android:tint="@color/app_theme"
+            android:layout_height="58dp" />
+    </LinearLayout>
+</HorizontalScrollView>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/white"
+    >
+
+    <ImageView
+        android:id="@+id/back_bar"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:clickable="true"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/arrow_left" />
+
+    <TextView
+        android:id="@+id/activity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/font_black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/activity_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        android:text="@string/commit"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:visibility="gone"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cp_gray" />
+</RelativeLayout>
