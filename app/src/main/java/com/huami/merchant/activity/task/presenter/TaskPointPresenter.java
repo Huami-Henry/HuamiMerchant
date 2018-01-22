@@ -5,7 +5,6 @@ import com.huami.merchant.activity.task.model.TaskPointModelImp;
 import com.huami.merchant.bean.TaskPointInfo;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.listener.InterLoadListener;
-import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.BasePresenter;
 
 import java.util.List;

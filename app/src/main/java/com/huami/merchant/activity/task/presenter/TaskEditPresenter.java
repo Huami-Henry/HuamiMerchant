@@ -20,7 +20,7 @@ public class TaskEditPresenter extends BasePresenter<TaskEditActivity,TaskEditMo
     protected TaskEditModelImp getModel() {
         return new TaskEditModelImp();
     }
-    public void getEditTask(String task_id){
+    public void getEditTask(String task_id) throws Exception{
         model.getEditTask(task_id,new InterLoadListener() {
             @Override
             public void loadSuccess(Object tag, String json) {

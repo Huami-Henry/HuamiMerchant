@@ -1,9 +1,14 @@
 package com.huami.merchant.fragment;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.huami.merchant.R;
@@ -14,6 +19,7 @@ import com.huami.merchant.activity.task.TaskPreviewActivity;
 import com.huami.merchant.bean.TaskBean;
 import com.huami.merchant.bean.TaskBean.TaskData.TaskInfo;
 import com.huami.merchant.code.ErrorCode;
+import com.huami.merchant.designView.recycle.XRecyclerView;
 import com.huami.merchant.designView.stateView.StateLayoutView;
 import com.huami.merchant.fragment.adapter.TaskAdapter;
 import com.huami.merchant.fragment.present.TaskListPresenter;
@@ -27,9 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
-public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragment> implements TaskViewInter,OnRecycleItemClickListener{
+public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragment> implements XRecyclerView.LoadingListener, TaskViewInter,OnRecycleItemClickListener{
     @BindView(R.id.task_search)
-    TextView task_search;//搜索框
+    EditText task_search;//搜索框
     @BindView(R.id.wait_preview)
     TextView wait_preview;//待审核个数
     @BindView(R.id.only_look_preview)
@@ -39,11 +45,9 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
     @BindView(R.id.state_layout)
     StateLayoutView state_layout;//空状态页面
     @BindView(R.id.task_preview)
-    RecyclerView task_preview;//任务列表
+    XRecyclerView task_preview;//任务列表
     private TaskAdapter adapter;
     private List<TaskInfo> tasks = new ArrayList<>();
-    @BindView(R.id.circle_refresh)
-    CircleRefreshLayout circle_refresh;
     private String checkState;
     @Override
     protected TaskListPresenter getPresenter() {
@@ -56,42 +60,53 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
 
     @Override
     protected void initData() {
+        task_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(s)) {
+                    taskName = "";
+                    getTaskList();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        task_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if ((actionId == 0 || actionId == 3) && event != null) {
+                    //写点击搜索键后的操作
+                    taskName = task_search.getText().toString();
+                    if (!TextUtils.isEmpty(taskName)) {
+                        getTaskList();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        task_preview.setLoadingListener(this);
+        task_preview.setLoadingMoreEnabled(false);
         task_preview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TaskAdapter(tasks, this);
         task_preview.setAdapter(adapter);
+        showLoading();
         getTaskList();
-        circle_refresh.setOnRefreshListener(
-                new CircleRefreshLayout.OnCircleRefreshListener() {
-                    @Override
-                    public void refreshing() {
-                        showToast("执行操作");
-                        try {
-                            getTaskList();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void completeRefresh() {
-                        showToast("结束执行");
-                        try {
-                            endLoading();
-                            adapter.notifyDataSetChanged();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
     }
 
+    private String taskName;
     /**
      * 获取任务列表
      */
-    private void getTaskList() {
+    public void getTaskList() {
         if (isNetworkConnected(getActivity())) {
-            showLoading();
-            tasks.clear();
-            presenter.getTaskList(tasks,BaseApplication.UUID,checkState,null);
+            presenter.getTaskList(tasks,BaseApplication.UUID,checkState,taskName);
         } else {
             state_layout.showNoNetworkView();
         }
@@ -105,7 +120,9 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
     public void onlyLookPreview(){
         if (TextUtils.isEmpty(checkState)) {
             checkState = "1";
+            only_look_preview.setTextColor(Color.parseColor("#bb0012"));
         } else {
+            only_look_preview.setTextColor(Color.parseColor("#464646"));
             checkState = "";
         }
         getTaskList();
@@ -113,12 +130,14 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
     @Override
     public void doSuccess(Object tag,String json) {
         if (tag.equals(BaseConsts.BASE_URL_TASK)) {
+            endLoading();
             try {
+                task_preview.refreshComplete();
                 Gson gson = new Gson();
                 TaskBean bean = gson.fromJson(json, TaskBean.class);
                 int count = bean.getData().getCount();
                 wait_preview.setText(String.valueOf(count));
-                circle_refresh.finishRefreshing();
+                adapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -126,6 +145,7 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
     }
     @Override
     public void doFailure(Object tag, ErrorCode code) {
+        endLoading();
         switch (code) {
             case ACTION_FAILURE:
                 showToast("请求异常");
@@ -160,5 +180,15 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
                 startActivity(getActivity(), TaskInfoStateActivity.class,new String[]{"task_id","check_state"},new String[]{String.valueOf(tasks.get(position).getTask_id()), String.valueOf(tasks.get(position).getCheck_state())});
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getTaskList();
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 }

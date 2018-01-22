@@ -59,6 +59,7 @@
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_main" />
         <activity android:name=".activity.task.TaskPreviewActivity" />
         <activity android:name=".activity.task.TaskAlreadyPendingActivity" />
@@ -97,7 +98,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.task.TaskPointActivity" />
         <activity android:name=".activity.paper.PaperPendingDetailActivity" />
-        <activity android:name=".activity.task.AuditLastStepActivity"></activity>
+        <activity android:name=".activity.task.AuditLastStepActivity">
+
+        </activity>
+        <activity android:name=".activity.task.AuditStarActivity"></activity>
     </application>
 
 </manifest>

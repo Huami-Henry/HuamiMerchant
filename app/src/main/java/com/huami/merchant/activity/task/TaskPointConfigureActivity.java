@@ -2,7 +2,10 @@ package com.huami.merchant.activity.task;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,7 +15,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.task.adapter.TaskPointConfigureAdapter;
+import com.huami.merchant.activity.task.presenter.TaskPointConfigurePresenter;
 import com.huami.merchant.activity.task.presenter.TaskPointPresenter;
+import com.huami.merchant.bean.AlreadyBean;
 import com.huami.merchant.bean.TaskPointInfo;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
@@ -29,7 +34,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointPresenter,TaskPointConfigureActivity> implements OnRecycleItemClickListener,TaskViewInter{
+public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointConfigurePresenter,TaskPointConfigureActivity> implements OnRecycleItemClickListener,TaskViewInter{
     @BindView(R.id.task_point_recycle)
     RecyclerView task_point_recycle;
     @BindView(R.id.task_single_count)
@@ -56,10 +61,10 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointPresent
     private TaskPointConfigureAdapter adapter;
     private final int ADD_TASK_SHOP_CODE = 1001;
     private Map<Integer, Integer> map = new HashMap<>();
-    private boolean edit;
+    private AlreadyBean edit=new AlreadyBean();
     @Override
-    protected TaskPointPresenter getPresenter() {
-        return new TaskPointPresenter();
+    protected TaskPointConfigurePresenter getPresenter() {
+        return new TaskPointConfigurePresenter();
     }
     @Override
     protected int initLayout() {
@@ -87,6 +92,40 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointPresent
         adapter = new TaskPointConfigureAdapter(shops,map,edit,this);
         task_point_recycle.setAdapter(adapter);
         getMoreShop();
+        initListener();
+    }
+
+    private void initListener() {
+        task_single_count.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                for (TaskPointInfo info : shops) {
+                    info.setTotal_num(Integer.valueOf(s.toString()));
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        task_single_price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                for (TaskPointInfo info : shops) {
+                    info.setMer_price(Integer.valueOf(s.toString()));
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     @Override
@@ -123,13 +162,13 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointPresent
     @OnClick(R.id.del_task_point)
     public void delTaskPoint(){
         map.clear();
-        if (edit) {
-            edit = false;
+        if (edit.isAlready()) {
+            edit.setAlready(false);
             del_task_point.setText("管理");
             add_task_point.setVisibility(View.VISIBLE);
             manage_shop_liner.setVisibility(View.GONE);
         } else {
-            edit = true;
+            edit.setAlready(true);
             del_task_point.setText("完成");
             add_task_point.setVisibility(View.GONE);
             manage_shop_liner.setVisibility(View.VISIBLE);
@@ -154,10 +193,11 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointPresent
     @Override
     public void doSuccess(Object tag, String json) {
         endLoading();
-
+        adapter.notifyDataSetChanged();
     }
     @Override
     public void doFailure(Object tag, ErrorCode code) {
         endLoading();
+        showToast("用户数据获取异常,请稍后再尝试。");
     }
 }

@@ -43,7 +43,7 @@ public class TaskInfo implements Serializable{
      */
 
     private String task_name;
-    private double require_shop_time;
+    private int require_shop_time;
     private int operator_id;
     private String train_name;
     private long accept_begin_date;
@@ -83,11 +83,11 @@ public class TaskInfo implements Serializable{
         this.task_name = task_name;
     }
 
-    public double getRequire_shop_time() {
+    public int getRequire_shop_time() {
         return require_shop_time;
     }
 
-    public void setRequire_shop_time(double require_shop_time) {
+    public void setRequire_shop_time(int require_shop_time) {
         this.require_shop_time = require_shop_time;
     }
 

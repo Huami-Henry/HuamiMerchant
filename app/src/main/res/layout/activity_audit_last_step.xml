@@ -1,9 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.huami.merchant.activity.task.AuditLastStepActivity">
-
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/include_activity_bar" />
+    <EditText
+        android:id="@+id/content_postil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_back"
+        android:lines="6"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/toolbar"
+        android:padding="10dp"
+        android:gravity="top"
+        android:textSize="@dimen/twelve"
+        android:hint="如果问题请在此处填写批注。"
+        />
+    <TextView
+        android:id="@+id/postil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_postil"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/cicle_back"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="3dp"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:paddingTop="3dp"
+        android:drawableRight="@mipmap/icon_little_del"
+        />
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请选择审核标签"
+        android:layout_below="@+id/postil"
+        android:padding="10dp"
+        />
+    <com.huami.merchant.designView.tagview.TagContainerLayout
+        android:layout_above="@+id/make_sure"
+        android:layout_below="@+id/tag"
+        android:id="@+id/tag_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        app:container_enable_drag="false"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_clickable="true"
+        app:tag_theme="none"
+        ></com.huami.merchant.designView.tagview.TagContainerLayout>
+    <TextView
+        android:id="@+id/make_sure"
+        android:layout_alignParentBottom="true"
+        android:text="确定"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@color/colorPrimary_tran"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

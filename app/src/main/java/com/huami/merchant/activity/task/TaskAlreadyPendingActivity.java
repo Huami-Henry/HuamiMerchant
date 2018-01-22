@@ -74,6 +74,7 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     }
     @Override
     protected void initView() {
+        task_preview_recycle.setLoadingListener(this);
         sp_check_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -107,6 +108,11 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     public void viewLoadSuccess(Object tag, String json) {
         endLoading();
         if (tag.equals(BaseConsts.BASE_URL_ALREADY_REVIEW_TASK)) {
+            if (page == 1) {
+                task_preview_recycle.refreshComplete();
+            } else {
+                task_preview_recycle.loadMoreComplete();
+            }
             adapter.notifyDataSetChanged();
         } else {
             try {
@@ -157,7 +163,6 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     @Override
     public void onRefresh(){
         page = 1;
-        datas.clear();
         presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
     }
     @Override
@@ -169,6 +174,14 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     public void onItemClick(View v, int position) {
         switch (v.getId()) {
             case R.id.pending_task:
+                break;
+            default:
+                String pass_state = "0";
+                if ("2".equals(passState)) {
+                    pass_state = "1";
+                } else {
+                    pass_state = "0";
+                }
                 TaskPreviewData data = datas.get(position);
                 startActivity(this,PaperPendingDetailActivity.class,
                         new String[]{
@@ -186,8 +199,8 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
                                 String.valueOf(data.getTaskpaper_id()),
                                 String.valueOf(data.getUsercase_id()),
                                 "2",
-                                "",
-                                "",
+                                String.valueOf(data.getUca_check_usercase_id()),
+                                pass_state,
                                 String.valueOf(data.getShop_id()),
                                 data.getShop_name(),
                                 String.valueOf(data.getPrice()),
@@ -195,8 +208,8 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
                                 data.getShop_address(),
                                 data.getCheck_times(),
                                 data.getState(),
-                                false
-                                });
+                                true
+                        });
                 break;
         }
     }

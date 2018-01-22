@@ -1,19 +1,20 @@
 package com.huami.merchant.activity.paper;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.paper.adapter.NewExaminationAdapter;
 import com.huami.merchant.activity.paper.adapter.PaperBannerAdapter;
+import com.huami.merchant.activity.task.AuditLastStepActivity;
 import com.huami.merchant.activity.task.presenter.PaperPendingPresenter;
 import com.huami.merchant.activity.user.MvpLoginActivity;
+import com.huami.merchant.bean.AlreadyBean;
 import com.huami.merchant.bean.AuditResult;
 import com.huami.merchant.bean.PaperAlreadyAuditing;
 import com.huami.merchant.bean.PaperAlreadyAuditing.PaperAlreadyAuditingData.PaperAlreadyAuditingTaskTitle;
@@ -36,12 +37,13 @@ import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 import com.huami.merchant.util.AuditUtil;
 import com.huami.merchant.util.StringUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * 待审核问卷页面
+ */
 public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPresenter, PaperPendingDetailActivity> implements TaskViewInter, OnRecycleItemClickListener {
     private String usercase_id;
     private String isHistory;//1 - 历史问卷 2 - 当前问卷
@@ -82,7 +84,6 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     private FullyLinearLayoutManager manager_banner;
     private List<CheckCaseIdListInfo> banner = new ArrayList<>();
     private PaperBannerAdapter bannerAdapter;
-    private boolean already;//已审
     private NewExaminationAdapter adapter;
     private List<ExaminationInner> inners = new ArrayList<>();
     private List<TaskAnswer> answers = new ArrayList<>();
@@ -92,7 +93,7 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     private int checkTimes;
     private int checkState;
     private String taskPaperId;
-
+    private AlreadyBean bean=new AlreadyBean();
     @Override
     protected PaperPendingPresenter getPresenter() {
         return new PaperPendingPresenter();
@@ -117,28 +118,31 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
         shop_address_str = getIntent().getStringExtra("shop_address_str");
         checkTimes = getIntent().getIntExtra("checkTimes",0);
         checkState = getIntent().getIntExtra("checkState",0);
-        already = getIntent().getBooleanExtra("already", false);
+        boolean already = getIntent().getBooleanExtra("already", false);
+        bean.setAlready(already);
     }
 
     @Override
     protected void initView() {
-        if (!already) {
+        if (!bean.isAlready()) {
             manager_banner = new FullyLinearLayoutManager(this);
             check_time_recycle.setLayoutManager(manager_banner);
             manager_banner.setOrientation(LinearLayoutManager.HORIZONTAL);
             bannerAdapter = new PaperBannerAdapter(banner, this);
             check_time_recycle.setAdapter(bannerAdapter);
-            adapter = new NewExaminationAdapter(inners, answers,postils, already,this);
+            adapter = new NewExaminationAdapter(inners, answers,postils, bean,this);
         } else {
+            check_time_recycle.setVisibility(View.GONE);
+            bottom_pending.setVisibility(View.GONE);
             total_postil.setVisibility(View.VISIBLE);
             tv_paper_result.setText(AuditUtil.getState(checkTimes,checkState));
-            adapter = new NewExaminationAdapter(inners, answers, postils,already, this);
+            adapter = new NewExaminationAdapter(inners, answers, postils,bean, this);
         }
         manager_papaer = new FullyLinearLayoutManager(this);
         task_paper_recycle.setLayoutManager(manager_papaer);
 
         task_paper_recycle.setAdapter(adapter);
-        if (already) {
+        if (bean.isAlready()) {
             presenter.getAlreadyPendingDetail(BaseConsts.BASE_URL_TASK_ReviewResult, usercase_id, uca_check_usercase_id, pass);
         } else {
             presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id,uca_check_usercase_id, isHistory);
@@ -342,9 +346,11 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
                 if (!info.isCheck()) {//已经点击了此按钮则不管
                     if (info.getState() == 1) {
                         isHistory = "2";
+                        bean.setAlready(false);
                         bottom_pending.setVisibility(View.VISIBLE);
                         total_postil.setVisibility(View.GONE);
                     } else {
+                        bean.setAlready(true);
                         isHistory = "1";
                         bottom_pending.setVisibility(View.INVISIBLE);
                         total_postil.setVisibility(View.VISIBLE);
@@ -362,10 +368,10 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     private List<QuestionSinglePostil> post = new ArrayList<>();
     @OnClick(R.id.pass_tv)
     public void taskPass(){
-        setAuditResult();
+        setAuditResult(true);
     }
 
-    private void setAuditResult() {
+    private void setAuditResult(boolean pass) {
         if (TextUtils.isEmpty(BaseApplication.UU_TOKEN) || TextUtils.isEmpty(BaseApplication.UUID)) {
             showToast("系统检测您的登陆过期。");
             startActivity(this, MvpLoginActivity.class);
@@ -384,14 +390,30 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
             }
 
         }
+        if (!pass) {
+            if (post.size() == 0) {
+                showToast("不通过至少添加一条批注");
+                return;
+            }
+        }
         result.setCheckCaseId(uca_check_usercase_id);
         result.setMerUserId(BaseApplication.UUID);
         result.setUuid(BaseApplication.UU_TOKEN);
         result.setPostil(post);
+        startActivityForResult(this, AuditLastStepActivity.class,new String[]{"auditResult","pass"},new Object[]{result,pass},10001);
     }
 
     @OnClick(R.id.no_pass_tv)
     public void taskNoPass(){
-        setAuditResult();
+        setAuditResult(false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 }

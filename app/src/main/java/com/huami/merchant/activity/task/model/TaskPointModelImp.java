@@ -1,5 +1,6 @@
 package com.huami.merchant.activity.task.model;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.huami.merchant.bean.TaskPointBean;
@@ -23,13 +24,13 @@ public class TaskPointModelImp implements TaskPointModelInter,BaseNetDataBiz.Req
     private int page;
     @Override
     public void getShop(List<TaskPointInfo> shops,String url,String uuid,String taskId, int page, InterLoadListener listener) {
-        this.shops=this.shops== null ? new ArrayList<TaskPointInfo>():shops;
+        this.shops=shops;
         this.listener = listener;
         this.page = page;
-        String[] keys = null;
-        String[] values = null;
+        String[] keys;
+        String[] values;
         if (TextUtils.isEmpty(taskId)) {
-            keys = new String[]{"uuid", "page", "number"};
+            keys = new String[]{"merUserId", "page", "number"};
             values = new String[]{BaseApplication.UUID, String.valueOf(page), "20000"};
         } else {
             keys = new String[]{"taskId"};
@@ -53,6 +54,7 @@ public class TaskPointModelImp implements TaskPointModelInter,BaseNetDataBiz.Req
                 for (TaskPointInfo in : info) {
                     shops.add(in);
                 }
+                listener.loadSuccess(tag, json);
             } else {
                 listener.loadFailure(tag, ErrorCode.ACTION_FAILURE);
             }

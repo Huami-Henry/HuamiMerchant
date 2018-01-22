@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.huami.merchant.R;
+import com.huami.merchant.activity.task.presenter.TaskPublishPresenter;
 import com.huami.merchant.bean.TaskInfo;
+import com.huami.merchant.code.ErrorCode;
+import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.imagepicker.RxPicker;
 import com.huami.merchant.imagepicker.bean.ImageItem;
 import com.huami.merchant.mvpbase.BasePresenter;
@@ -20,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-public class TaskPublishActivity extends MvpBaseActivity {
+public class TaskPublishActivity extends MvpBaseActivity<TaskPublishPresenter,TaskPublishActivity> implements TaskViewInter{
     @BindView(R.id.iv_task)
     ImageView iv_task;
     @BindView(R.id.del_task_name)
@@ -30,9 +33,10 @@ public class TaskPublishActivity extends MvpBaseActivity {
     @BindView(R.id.task_name)
     EditText task_name;
     private TaskInfo taskInfo;
+    private boolean edit;
     @Override
-    protected BasePresenter getPresenter() {
-        return null;
+    protected TaskPublishPresenter getPresenter() {
+        return new TaskPublishPresenter();
     }
 
     @Override
@@ -43,6 +47,7 @@ public class TaskPublishActivity extends MvpBaseActivity {
     @Override
     protected void initData() {
         taskInfo= (TaskInfo) getIntent().getSerializableExtra("taskInfo");
+        edit= getIntent().getBooleanExtra("edit",false);
         if (taskInfo == null) {
             taskInfo = new TaskInfo();
         }
@@ -67,11 +72,17 @@ public class TaskPublishActivity extends MvpBaseActivity {
                 .start(this)
                 .subscribe(new Consumer<List<ImageItem>>() {
                     @Override
-                    public void accept(@NonNull final List<ImageItem> imageItems) throws Exception {
+                    public void accept(@NonNull final List<ImageItem> imageItems){
                         if (imageItems.size() != 0) {
                             String path = imageItems.get(0).getPath();
                             taskInfo.setTask_icon(path);
                             Glide.with(iv_task.getContext()).load(taskInfo.getTask_icon()).asBitmap().error(R.mipmap.rectangle_seize_pic).placeholder(R.mipmap.rectangle_seize_pic).into(iv_task);
+                            try {
+                                presenter.uploadTaskIcon(path);
+                            } catch (Exception e) {
+                                showToast(e.getMessage());
+                            }
+
                         }
                     }
                 });
@@ -90,9 +101,22 @@ public class TaskPublishActivity extends MvpBaseActivity {
                 taskInfo.setTask_name(task_name.getText().toString());
                 Intent intent = new Intent(TaskPublishActivity.this, TaskEditActivity.class);
                 intent.putExtra("taskInfo", taskInfo);
-                setResult(RESULT_OK, intent);
-                finish();
+                if (edit) {
+                    setResult(RESULT_OK, intent);
+                } else {
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    @Override
+    public void doSuccess(Object tag, String json) {
+
+    }
+
+    @Override
+    public void doFailure(Object tag, ErrorCode code) {
+
     }
 }

@@ -23,15 +23,15 @@ public class TaskEditModelImp implements TaskEditModelInter,BaseNetDataBiz.Reque
     private BaseNetDataBiz biz = new BaseNetDataBiz(this);
     private InterLoadListener listener;
     @Override
-    public void getEditTask(String task_id,InterLoadListener listener) {
+    public void getEditTask(String task_id,InterLoadListener listener) throws Exception{
         this.listener = listener;
         if (TextUtils.isEmpty(task_id)) {
-            listener.loadFailure(BaseConsts.BASE_URL_PREVIEW_TASK, ErrorCode.PARAMA_EMPTY);
+            listener.loadFailure(BaseConsts.BASE_URL_TASK_DETAIL_INFO, ErrorCode.PARAMA_EMPTY);
             return;
         }
-        String[] keys = new String[]{"task_id"};
+        String[] keys = new String[]{"taskId"};
         String[] values = new String[]{task_id};
-        biz.getMainThread(BaseConsts.BASE_URL_PREVIEW_TASK,keys,values,BaseConsts.BASE_URL_PREVIEW_TASK);
+        biz.getMainThread(BaseConsts.BASE_URL_TASK_DETAIL_INFO,keys,values,BaseConsts.BASE_URL_TASK_DETAIL_INFO);
     }
     @Override
     public void onResponse(BaseNetDataBiz.Model model) {

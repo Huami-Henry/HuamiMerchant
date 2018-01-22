@@ -2,6 +2,7 @@ package com.huami.merchant.activity.task;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -114,9 +115,7 @@ public class TaskPointActivity extends MvpBaseActivity<TaskPointPresenter,TaskPo
     @Override
     public void onItemClick(View v, int position) {
         TaskPointInfo info = shops.get(position);
-        if ((int)v.getTag()==info.getShop_id()){
-            info.setCheck(!info.isCheck());
-        }
+        info.setCheck(!info.isCheck());
         adapter.notifyDataSetChanged();
     }
 

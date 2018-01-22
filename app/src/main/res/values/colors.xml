@@ -22,6 +22,7 @@
     <color name="pickerview_bgColor_default">#FFFFFFFF</color>
 
     <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary_tran">#a43F51B5</color>
     <color name="color_blue">#0000ff</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

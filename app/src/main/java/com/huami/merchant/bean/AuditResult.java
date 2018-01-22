@@ -1,12 +1,13 @@
 package com.huami.merchant.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by henry on 2018/1/17.
  */
 
-public class AuditResult {
+public class AuditResult implements Serializable{
     private String uuid;
     private String merUserId;
     private String checkCaseId;

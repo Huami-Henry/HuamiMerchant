@@ -33,10 +33,16 @@ public class TaskAlreadyPendingModelImp implements TaskAlreadyPendingModelInter,
             int code = object.getInt("code");
             if (BaseConsts.BASE_URL_ALREADY_REVIEW_TASK.equals(model.getTag())) {
                 if (code == 0) {
-                    tasks.clear();
                     TaskPreviewBean bean = gson.fromJson(json, TaskPreviewBean.class);
-                    for (TaskPreviewData data : bean.getData()) {
-                        tasks.add(data);
+                    if ("1".equals(page)) {
+                        tasks.clear();
+                        for (TaskPreviewData data : bean.getData()) {
+                            tasks.add(data);
+                        }
+                    } else {
+                        for (TaskPreviewData data : bean.getData()) {
+                            tasks.add(data);
+                        }
                     }
                 } else {
                     listener.loadFailure(model.getTag(), ErrorCode.ACTION_FAILURE);
@@ -51,9 +57,11 @@ public class TaskAlreadyPendingModelImp implements TaskAlreadyPendingModelInter,
     public void OnFailure(Request r, IOException o) {
         listener.loadFailure(r.tag(),ErrorCode.ACTION_FAILURE);
     }
+    private String page;
     @Override
     public void getPreviewTask(List<TaskPreviewData> tasks,String url, String uuid, String task_id, String page, String check_times,String task_name,String pass_state, InterLoadListener listener) {
         this.listener = listener;
+        this.page = page;
         if (TextUtils.isEmpty(uuid)) {
             listener.loadFailure(BaseConsts.BASE_URL_ALREADY_REVIEW_TASK, ErrorCode.PARAMA_EMPTY);
             return;

@@ -1,4 +1,5 @@
 package com.huami.merchant.activity.task;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -54,6 +55,7 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
         adapter = new TaskPreviewAdapter(datas,false,this);
         task_preview_recycle.setAdapter(adapter);
         showLoading();
+        task_preview_recycle.setLoadingListener(this);
         presenter.getTaskPreviewList(datas,task_id,page,task_name);
     }
     @Override
@@ -66,7 +68,6 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
     }
     @Override
     public void viewLoadSuccess(Object tag, String json) {
-        Log.e("TaskPreviewActivity", json);
         try {
             JSONObject object = new JSONObject(json);
             count = object.getInt("count");
@@ -107,7 +108,6 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
     @Override
     public void onRefresh() {
         page = 1;
-        datas.clear();
         presenter.getTaskPreviewList(datas,task_id,page,task_name);
     }
     @Override
@@ -117,33 +117,46 @@ public class TaskPreviewActivity extends MvpBaseActivity<TaskPreviewPresenter, T
     }
     @Override
     public void onItemClick(View v, int position) {
-        TaskPreviewData data = datas.get(position);
-        startActivity(this,PaperPendingDetailActivity.class,
-                new String[]{
-                        "taskPaperId",
-                        "usercase_id",
-                        "isHistory",
-                        "uca_check_usercase_id",
-                        "pass",
-                        "shop_id_str","shop_name_str",
-                        "shop_price_str",
-                        "shop_region_str",
-                        "shop_address_str",
-                        "checkTimes","checkState","already"},
-                new Object[]{
-                        String.valueOf(data.getTaskpaper_id()),
-                        String.valueOf(data.getUsercase_id()),
-                        "2",
-                        String.valueOf(data.getUca_check_usercase_id()),
-                        "",
-                        String.valueOf(data.getShop_id()),
-                        data.getShop_name(),
-                        String.valueOf(data.getPrice()),
-                        data.getRegion_name(),
-                        data.getShop_address(),
-                        data.getCheck_times(),
-                        data.getState(),
-                        false
-                });
+        switch (v.getId()) {
+            case R.id.pending_task:
+                TaskPreviewData data = datas.get(position);
+                startActivityForResult(this,PaperPendingDetailActivity.class,
+                        new String[]{
+                                "taskPaperId",
+                                "usercase_id",
+                                "isHistory",
+                                "uca_check_usercase_id",
+                                "pass",
+                                "shop_id_str","shop_name_str",
+                                "shop_price_str",
+                                "shop_region_str",
+                                "shop_address_str",
+                                "checkTimes","checkState","already"},
+                        new Object[]{
+                                String.valueOf(data.getTaskpaper_id()),
+                                String.valueOf(data.getUsercase_id()),
+                                "2",
+                                String.valueOf(data.getUca_check_usercase_id()),
+                                "",
+                                String.valueOf(data.getShop_id()),
+                                data.getShop_name(),
+                                String.valueOf(data.getPrice()),
+                                data.getRegion_name(),
+                                data.getShop_address(),
+                                data.getCheck_times(),
+                                data.getState(),
+                                false
+                        },10001);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            showLoading();
+            presenter.getTaskPreviewList(datas,task_id,page,task_name);
+        }
     }
 }

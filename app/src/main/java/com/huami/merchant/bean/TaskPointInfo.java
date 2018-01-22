@@ -19,6 +19,24 @@ public class TaskPointInfo implements Serializable{
     private boolean check;
     private int total_num;
     private int mer_price;
+    private String region_name;
+    private String addressName;
+
+    public String getAddressName() {
+        return addressName;
+    }
+
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
+    }
+
+    public String getRegion_name() {
+        return region_name;
+    }
+
+    public void setRegion_name(String region_name) {
+        this.region_name = region_name;
+    }
 
     public int getTotal_num() {
         return total_num;

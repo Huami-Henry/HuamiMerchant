@@ -1,10 +1,12 @@
 package com.huami.merchant.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by henry on 2018/1/17.
  */
 
-public class QuestionSinglePostil {
+public class QuestionSinglePostil implements Serializable{
     private int checkCaseId;
     private int userCaseId;
     private int taskPaperId;

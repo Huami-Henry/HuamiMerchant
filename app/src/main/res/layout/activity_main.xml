@@ -4,7 +4,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.huami.merchant.activity.main.MainActivity">
     <FrameLayout
         android:id="@+id/content"
@@ -62,6 +61,5 @@
         android:src="@mipmap/release_icon"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
         />
 </RelativeLayout>

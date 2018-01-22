@@ -1,4 +1,5 @@
 package com.huami.merchant.activity.main;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -7,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.huami.merchant.R;
+import com.huami.merchant.activity.task.TaskPublishActivity;
 import com.huami.merchant.fragment.CenterFragment;
 import com.huami.merchant.fragment.TaskFragment;
 import com.huami.merchant.mvpbase.BasePresenter;
@@ -47,7 +49,7 @@ public class MainActivity extends MvpBaseActivity implements BaseViewInter{
     }
     @OnClick(R.id.release_task)//发布任务
     public void releaseTask(){
-
+        startActivityForResult(this, TaskPublishActivity.class,10001);
     }
     @OnClick(R.id.tab_task)
     public void clickTask(){
@@ -86,6 +88,14 @@ public class MainActivity extends MvpBaseActivity implements BaseViewInter{
         } else {
             // 隐藏当前的fragment，显示下一个
             transaction.hide(from_first).show(to).commitAllowingStateLoss();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            taskFragment.getTaskList();
         }
     }
 }

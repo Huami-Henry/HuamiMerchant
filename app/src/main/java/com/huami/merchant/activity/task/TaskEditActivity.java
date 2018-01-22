@@ -1,6 +1,7 @@
 package com.huami.merchant.activity.task;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.task.presenter.TaskEditPresenter;
+import com.huami.merchant.bean.NetTaskBean;
 import com.huami.merchant.bean.TaskInfo;
 import com.huami.merchant.bean.TaskShop;
 import com.huami.merchant.code.ErrorCode;
@@ -24,6 +26,9 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.huami.merchant.R.id.task_info;
+
 public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEditActivity> implements TaskViewInter,View.OnClickListener{
     String json = "[\n" +
             "  {'level': 1, 'name': '白丁', 'need_exp': 1000, 'total_exp': 0},\n" +
@@ -90,13 +95,14 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
     TextView task_price;
     @BindView(R.id.task_count)
     TextView task_count;
-    private String task_info;
     private TaskInfo taskInfo;
     private List<TaskShop> shops = new ArrayList<>();
     private SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
     private final int TASK_ICON_CHANGE_REQUEST_CODE = 1001;
     private final int TASK_ATTENTION_CHANGE_REQUEST_CODE = 1002;
     private final int TASK_POINT_MANAGER_REQUEST_CODE = 1003;
+    private boolean edit;//非编辑的话要请求网络获取数据
+    private String taskId;
     @Override
     protected TaskEditPresenter getPresenter() {
         return new TaskEditPresenter();
@@ -109,9 +115,19 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
 
     @Override
     protected void initData() {
-        task_info=getIntent().getStringExtra("task_info");
-        Gson gson = new Gson();
-        taskInfo = gson.fromJson(task_info, TaskInfo.class);
+        taskInfo= (TaskInfo) getIntent().getSerializableExtra("taskInfo");
+        if (taskInfo == null) {
+            taskInfo = new TaskInfo();
+        }
+        edit=getIntent().getBooleanExtra("edit",false);
+        taskId = getIntent().getStringExtra("task_id");
+        if (!edit) {
+            try {
+                presenter.getEditTask(taskId);
+            } catch (Exception e) {
+                showToast(e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -138,9 +154,7 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
             if (taskInfo.getAccept_end_date() != 0) {
                 task_accept_end_date.setText(format.format(new Date(taskInfo.getAccept_end_date())));
             }
-            if (taskInfo.getRequire_shop_time() != 0) {
-                task_in_shop_time.setText(String.valueOf(taskInfo.getRequire_shop_time() * 60));
-            }
+            task_in_shop_time.setText((taskInfo.getRequire_shop_time() * 60)+"分钟");
             try {
                 JSONArray array = new JSONArray(json);
                 List<TaskInfo.TaskCondition> condition = taskInfo.getTaskCondition();
@@ -205,7 +219,7 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
             if (!TextUtils.isEmpty(taskInfo.getTrain_name())) {
                 train_paper_iv.setText(taskInfo.getTrain_name());
             }
-            task_set_count_price_iv.setText("" + taskInfo.getShop_count());
+            task_set_count_price_iv.setText("任务点:(" + taskInfo.getShop_count()+")");
         } else {
             taskInfo = new TaskInfo();
         }
@@ -217,7 +231,34 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
 
     @Override
     public void doSuccess(Object tag, String json) {
-
+        Log.e("根据id获取的结果", json);
+        NetTaskBean bean = new Gson().fromJson(json, NetTaskBean.class);
+        if (bean.getCode() == 0) {
+            NetTaskBean.NetTaskData data = bean.getData();
+            taskInfo.setAccept_begin_date(data.getAccept_begin_date());
+            taskInfo.setAccept_end_date(data.getAccept_end_date());
+            taskInfo.setCreate_date(data.getCreate_date());
+            taskInfo.setLast_mod(data.getLast_mod());
+            taskInfo.setMerchant_id(data.getMerchant_id());
+            taskInfo.setOperator_id(data.getOperator_id());
+            taskInfo.setShop_count(data.getShop_count());
+            taskInfo.setTrainpaper_id(data.getTrainpaper_id());
+            taskInfo.setTrain_name(data.getTrain_name());
+            taskInfo.setTaskpaper_id(data.getTaskpaper_id());
+            taskInfo.setTask_total_count(data.getTask_total_count());
+            taskInfo.setTask_price(data.getTask_price());
+            taskInfo.setTask_paper_name(data.getTask_paper_name());
+            taskInfo.setTask_name(data.getTask_name());
+            taskInfo.setTask_info(data.getTask_info());
+            taskInfo.setTask_id(data.getTask_id());
+            taskInfo.setTask_icon(data.getTask_icon());
+            taskInfo.setTask_end_date(data.getTask_end_date());
+            taskInfo.setTask_desc(data.getTask_desc());
+            taskInfo.setState(data.getState());
+            taskInfo.setRequire_shop_time(data.getRequire_shop_time());
+            taskInfo.setTaskCondition(data.getTaskCondition());
+            refreshData();
+        }
     }
 
     @Override
@@ -263,7 +304,7 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
                 startActivityForResult(this, TaskPaperListActivity.class, new String[]{"taskInfo","task"}, new Object[]{taskInfo,false},TASK_ATTENTION_CHANGE_REQUEST_CODE);
                 break;
             case R.id.task_set_count_price:
-                startActivityForResult(this, TaskPointConfigureActivity.class,new String[]{"taskId"},new String[]{""+taskInfo.getTask_id()},TASK_POINT_MANAGER_REQUEST_CODE);
+                startActivityForResult(this, TaskPointConfigureActivity.class,new String[]{"taskId"},new String[]{taskId},TASK_POINT_MANAGER_REQUEST_CODE);
                 break;
             case R.id.publish_task:
                 break;

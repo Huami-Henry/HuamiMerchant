@@ -6,6 +6,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.huami.merchant.R;
+import com.huami.merchant.bean.AlreadyBean;
 import com.huami.merchant.bean.QuestionSinglePostil;
 import com.huami.merchant.bean.TaskPaperAlreadyPending.TaskPaperAlreadyPendingData.TaskPaperAlreadyPendingHistoryPostil;
 import com.huami.merchant.bean.TaskPaperPendingBean;
@@ -40,8 +42,8 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
     private OnRecycleItemClickListener listener;
     private List<TaskAnswer> answers;
     private List<TaskPaperAlreadyPendingHistoryPostil> postils;
-    private boolean already;
-    public NewExaminationAdapter(List<ExaminationInner> examinations, List<TaskAnswer> answers, List<TaskPaperAlreadyPendingHistoryPostil> postils, boolean already, OnRecycleItemClickListener listener) {
+    private AlreadyBean already;
+    public NewExaminationAdapter(List<ExaminationInner> examinations, List<TaskAnswer> answers, List<TaskPaperAlreadyPendingHistoryPostil> postils, AlreadyBean already, OnRecycleItemClickListener listener) {
         this.examinations = examinations;
         this.listener = listener;
         this.answers = answers;
@@ -110,7 +112,8 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
                     break;
             }
         }
-        if (!already) {
+        if (!already.isAlready()) {
+            holder.postil.setVisibility(View.GONE);
             holder.add_postil.setVisibility(View.VISIBLE);
             holder.add_postil.setText(examinationInner.getPostil());
             if (!TextUtils.isEmpty(examinationInner.getPostil())) {
@@ -130,6 +133,7 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
                 }
             });
         } else {
+            holder.add_postil.setVisibility(View.GONE);
             holder.postil.setVisibility(View.GONE);
             if (postils.size()!=0) {
                 for (TaskPaperAlreadyPendingHistoryPostil postil : postils) {
@@ -333,6 +337,7 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
         TextView seek_pre= (TextView) item_seek.findViewById(R.id.seek_pre);
         TextView seek_next= (TextView) item_seek.findViewById(R.id.seek_next);
         int min = body.getMin();
+        int max = body.getMax();
         String descs = body.getDescs();
         if (!TextUtils.isEmpty(descs)) {
             String[] split = descs.split(",");
@@ -344,6 +349,7 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
             }
         }
         SeekBar play_progress = (SeekBar) item_seek.findViewById(R.id.play_progress);
+        play_progress.setEnabled(false);
         int bodyId = body.getId();
         final TaskAnswer answerInfo = getAnswerFromId(bodyId);
         int progress_pb =min;//用来设置进度
@@ -351,7 +357,8 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
             progress_pb = Integer.valueOf(answerInfo.getAnswer());
         }
         move_layout.setText(""+progress_pb);
-        play_progress.setProgress(progress_pb-min);
+        int progress = (int) (progress_pb*1.0 / (max - min + 1) * 100);
+        play_progress.setProgress(progress);
     }
     /**
      * 时间域设置

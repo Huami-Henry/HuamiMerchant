@@ -4,13 +4,14 @@
     android:layout_height="match_parent"
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
     android:background="@color/theme_daren"
     tools:context="com.huami.merchant.fragment.TaskFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="wrap_content">
-        <TextView
+        <EditText
             android:id="@+id/task_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,10 +22,10 @@
             android:layout_marginTop="6dp"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
+            android:imeOptions="actionSearch"
             android:background="@drawable/cicle_back"
-            android:text="@string/default_search"
+            android:tint="@string/default_search"
             android:lines="1"
-            android:clickable="true"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:drawablePadding="10dp"
@@ -56,8 +57,12 @@
             android:id="@+id/only_look_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_back"
-            android:padding="5dp"
+            android:background="@drawable/cicle_back"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/font_black"
             android:text="只看待审核" />
 
         <TextView
@@ -66,7 +71,6 @@
             android:layout_height="wrap_content"
             android:text="协助审核"
             android:padding="10dp"
-            android:visibility="gone"
             android:textColor="@color/color_blue" />
     </LinearLayout>
     <com.huami.merchant.designView.stateView.StateLayoutView
@@ -82,17 +86,11 @@
         sl:noNetworkText="@string/no_network_tip"
         sl:timeOutImg="@mipmap/ic_state_time_out"
         sl:timeOutText="@string/time_out_tip">
-        <com.tuesda.walker.circlerefresh.CircleRefreshLayout
-            android:id="@+id/circle_refresh"
+        <com.huami.merchant.designView.recycle.XRecyclerView
+            android:id="@+id/task_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/task_preview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/theme_daren">
-            </android.support.v7.widget.RecyclerView>
-        </com.tuesda.walker.circlerefresh.CircleRefreshLayout>
+            android:background="@color/theme_daren">
+        </com.huami.merchant.designView.recycle.XRecyclerView>
     </com.huami.merchant.designView.stateView.StateLayoutView>
 </LinearLayout>

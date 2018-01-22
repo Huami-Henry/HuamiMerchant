@@ -63,6 +63,12 @@ public class TaskPreviewAdapter extends RecyclerView.Adapter<TaskPreviewAdapter.
                 listener.onItemClick(v,position);
             }
         });
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -91,8 +97,10 @@ public class TaskPreviewAdapter extends RecyclerView.Adapter<TaskPreviewAdapter.
         TextView task_address;
         @BindView(R.id.task_end_preview_date)
         TextView task_end_preview_date;
+        View view;
         public TaskPreviewHolder(View itemView) {
             super(itemView);
+            this.view = itemView;
             ButterKnife.bind(this, itemView);
         }
     }

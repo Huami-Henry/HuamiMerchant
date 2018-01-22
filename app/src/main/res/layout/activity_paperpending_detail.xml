@@ -17,7 +17,8 @@
         />
     <com.huami.merchant.designView.MyScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_weight="1"
+        android:layout_height="0dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -218,34 +219,39 @@
                 android:visibility="gone"
                 android:padding="10dp"
                 />
-            <LinearLayout
-                android:id="@+id/bottom_pending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/shape_back"
-                >
-                <TextView
-                    android:id="@+id/pass_tv"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="通过"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/app_theme"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/no_pass_tv"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="不通过"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+
         </LinearLayout>
     </com.huami.merchant.designView.MyScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_height="0.5dp" />
+    <LinearLayout
+        android:id="@+id/bottom_pending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/pass_tv"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="通过"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/app_theme"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/no_pass_tv"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="不通过"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
 
 

@@ -1,6 +1,8 @@
 DEBUG_BASE_URl=http://www.jessica-am.com/DaRenMerchant3.0
 RELEASE_BASE_URl=http://interface.darenlaiye.com/darenlaiyeApp
 
+DEBUG_BASE_IMAGE=http://mediatest.darenlaiye.com:8080/MediaManager/media/infofile?type=1
+
 
 
 

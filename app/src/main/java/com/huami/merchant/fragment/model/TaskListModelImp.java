@@ -25,11 +25,13 @@ public class TaskListModelImp implements TaskListModelInter,BaseNetDataBiz.Reque
     @Override
     public void onResponse(BaseNetDataBiz.Model model) {
         String json = model.getJson();
+        Log.e("我的网络请求结果", json);
         Gson gson = new Gson();
         try {
             JSONObject object = new JSONObject(json);
             if (object.getInt("code") == 0) {
                 TaskBean bean = gson.fromJson(json, TaskBean.class);
+                tasks.clear();
                 for (TaskBean.TaskData.TaskInfo info : bean.getData().getTask()) {
                     tasks.add(info);
                 }
@@ -53,7 +55,8 @@ public class TaskListModelImp implements TaskListModelInter,BaseNetDataBiz.Reque
             listener.loadFailure(BaseConsts.BASE_URL_TASK, ErrorCode.PARAMA_EMPTY);
             return;
         }
-//        biz.getHomeData(BaseConsts.BASE_URL_TASK+"?merUserId="+merUserId+"&check_state="+check_state+"&task_name="+taskName,BaseConsts.BASE_URL_TASK);
-        biz.getHomeData(BaseConsts.BASE_URL_TASK+"?merUserId="+merUserId,BaseConsts.BASE_URL_TASK);
+        String[] keys = new String[]{"merUserId", "check_state", "task_name"};
+        String[] values = new String[]{merUserId,check_state,taskName};
+        biz.getMainThread(BaseConsts.BASE_URL_TASK,keys,values,BaseConsts.BASE_URL_TASK);
     }
 }

@@ -55,7 +55,7 @@ public abstract class MvpBaseActivity<T extends BasePresenter,V extends BaseView
     private long lastToastTime;
     protected TextView tv_name,tv_menu;
     protected KProgressHUD hud;
-    private ImageView back_main_bar;
+    protected ImageView back_main_bar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);

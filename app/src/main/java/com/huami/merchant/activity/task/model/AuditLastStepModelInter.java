@@ -6,5 +6,5 @@ import com.huami.merchant.mvpbase.BaseModelInter;
  */
 
 public interface AuditLastStepModelInter extends BaseModelInter{
-    void getAuditTag(String url,String type);
+    void getAuditTag(String url,String type) throws Exception;
 }

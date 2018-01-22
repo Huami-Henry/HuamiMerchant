@@ -23,12 +23,14 @@ public class BaseConsts {
             e1.printStackTrace();
         }
     }
-    private static final String DEBUG_BASE_URl=props.getProperty("DEBUG_BASE_URl");
+    private static final String DEBUG_BASE_URl=props.getProperty("DEBUG_BASE_URl");//url
+    private static final String DEBUG_BASE_IMAGE=props.getProperty("DEBUG_BASE_IMAGE");//image
 
     private static final String RELEASE_BASE_URl = props.getProperty("RELEASE_BASE_URl");
 
 
     public static final String BASE_URL = isApkDebug(BaseApplication.getContext()) == true ? DEBUG_BASE_URl : RELEASE_BASE_URl;
+    public static final String BASE_URL_IMAGE = isApkDebug(BaseApplication.getContext()) == true ? DEBUG_BASE_IMAGE : RELEASE_BASE_URl;
     /**
      * 用户登录  推出
      */
@@ -77,6 +79,14 @@ public class BaseConsts {
      * 获取最大审核次数
      */
     public static final String BASE_URL_TASK_getMaxAudit = BASE_URL + "/questionnaire/getMaxAudit";
+    /**
+     * 获取审核标签
+     */
+    public static final String BASE_URL_TASK_TAG = BASE_URL + "/questionnaire/selectUcaCheckResult";
+    /**
+     * 获取编辑任务详情
+     */
+    public static final String BASE_URL_TASK_DETAIL_INFO = BASE_URL + "/bosstask/bossTaskInfo";
     /**
      * 个人中心数据字段
      */
