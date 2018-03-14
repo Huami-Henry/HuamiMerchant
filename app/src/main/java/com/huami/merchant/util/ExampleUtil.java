@@ -114,9 +114,6 @@ public class ExampleUtil {
 
     private static boolean isReadableASCII(CharSequence string){
         if (TextUtils.isEmpty(string)) return false;
-//        Pattern p = Pattern.compile("[\\x20-\\x7E]+");
-//        return p.matcher(string).matches();
-        //TODO 待与后台确认后再改，先不过滤
         return true;
     }
 }
