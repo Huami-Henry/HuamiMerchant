@@ -30,7 +30,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     }
     @Override
     public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.e("我的viewType","-_------_"+ viewType);
         //1--待审 2--审核通过 3--审核不同过
         View view = null;
         switch (viewType) {
@@ -52,6 +51,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     @Override
     public int getItemViewType(int position) {
         TaskInfo info = tasks.get(position);
+        long endTime = info.getTask_end_date();
+        long current = System.currentTimeMillis();
+        if (current > endTime) {
+            if (info.getCheck_state() == 2) {
+                info.setCheck_state(4);
+            }
+        }
         return info.getCheck_state();
     }
     @Override
@@ -63,7 +69,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
             holder.task_id.setText(new_task_id);
             int itemViewType = getItemViewType(position);
             String task_result = "审批中";
-            Log.e("我的type", "--->"+itemViewType);
             switch (itemViewType) {
                 case 2:
                     task_result = "已发布";
@@ -76,7 +81,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
                     break;
             }
             holder.task_result.setText(task_result);
-            Glide.with(holder.task_icon.getContext()).load(info.getTask_icon()).asBitmap().into(holder.task_icon);
+            Glide.with(holder.task_icon.getContext()).load(info.getTask_icon()).asBitmap().centerCrop().into(holder.task_icon);
             setText(holder.task_name, info.getTask_name());
             setText(holder.task_count,info.getTask_total_count()+"单");
             setText(holder.task_money,info.getTask_price()+"元");
@@ -84,36 +89,46 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
             long accept_end_date = info.getAccept_end_date();
             setText(holder.accept_begin_time, format.format(new Date(accept_begin_date)));
             setText(holder.accept_end_time, format.format(new Date(accept_end_date)));
-            holder.check_result.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(v, position);
-                }
-            });
-            holder.examine.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(v, position);
-                }
-            });
-            holder.data_statistics.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(v, position);
-                }
-            });
-            holder.look_result.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(v, position);
-                }
-            });
-            holder.edit_task.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(v, position);
-                }
-            });
+            if (holder.check_result != null) {
+                holder.check_result.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick(v, position);
+                    }
+                });
+            }
+            if (holder.examine != null) {
+                holder.examine.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick(v, position);
+                    }
+                });
+            }
+            if (holder.data_statistics != null) {
+                holder.data_statistics.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick(v, position);
+                    }
+                });
+            }
+            if (holder.look_result != null) {
+                holder.look_result.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick(v, position);
+                    }
+                });
+            }
+            if (holder.edit_task != null) {
+                holder.edit_task.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick(v, position);
+                    }
+                });
+            }
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

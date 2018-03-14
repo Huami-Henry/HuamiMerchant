@@ -1,6 +1,4 @@
 package com.huami.merchant.activity.task.model;
-
-import com.huami.merchant.acceptNet.OkHttp;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.listener.InterLoadListener;
 import com.huami.merchant.mvpbase.BaseConsts;
@@ -27,7 +25,7 @@ public class TaskPublishModelImp implements TaskPublishModelInter,BaseNetDataBiz
         }
         File file = new File(path);
         if (!file.exists()) {
-            throw new Exception("没有选择问卷或者选择的文件损坏");
+            throw new Exception("没有选择图片或者选择的文件损坏");
         }
         biz.getMainThreadUploadHead(null, BaseConsts.BASE_URL_IMAGE,path,BaseConsts.BASE_URL_IMAGE);
     }

@@ -13,13 +13,23 @@ import com.google.gson.reflect.TypeToken;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.task.presenter.TaskEditPresenter;
 import com.huami.merchant.bean.NetTaskBean;
+import com.huami.merchant.bean.TaskCondition;
 import com.huami.merchant.bean.TaskInfo;
+import com.huami.merchant.bean.TaskPointInfo;
+import com.huami.merchant.bean.TaskPublishBase;
 import com.huami.merchant.bean.TaskShop;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
+import com.huami.merchant.mvpbase.BaseApplication;
+import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
+import com.huami.merchant.util.ConditionUtil;
+import com.huami.merchant.util.TimeUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,30 +37,11 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.huami.merchant.R.id.end;
+import static com.huami.merchant.R.id.number;
 import static com.huami.merchant.R.id.task_info;
 
 public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEditActivity> implements TaskViewInter,View.OnClickListener{
-    String json = "[\n" +
-            "  {'level': 1, 'name': '白丁', 'need_exp': 1000, 'total_exp': 0},\n" +
-            "  {'level': 2, 'name': '从九品', 'need_exp': 1000, 'total_exp': 1000},\n" +
-            "  {'level': 3, 'name': '正九品', 'need_exp': 2000, 'total_exp': 2000},\n" +
-            "  {'level': 4, 'name': '从八品', 'need_exp': 3000, 'total_exp': 4000},\n" +
-            "  {'level': 5, 'name': '正八品', 'need_exp': 5000, 'total_exp': 7000},\n" +
-            "  {'level': 6, 'name': '从七品', 'need_exp': 8000, 'total_exp': 12000},\n" +
-            "  {'level': 7, 'name': '正七品', 'need_exp': 13000, 'total_exp': 20000},\n" +
-            "  {'level': 8, 'name': '从六品', 'need_exp': 21000, 'total_exp': 33000},\n" +
-            "  {'level': 9, 'name': '正六品', 'need_exp': 34000, 'total_exp': 54000},\n" +
-            "  {'level': 10, 'name': '从五品', 'need_exp': 55000, 'total_exp': 88000},\n" +
-            "  {'level': 11, 'name': '正五品', 'need_exp': 89000, 'total_exp': 143000},\n" +
-            "  {'level': 12, 'name': '从四品', 'need_exp': 144000, 'total_exp': 232000},\n" +
-            "  {'level': 13, 'name': '正四品', 'need_exp': 233000, 'total_exp': 376000},\n" +
-            "  {'level': 14, 'name': '从三品', 'need_exp': 377000, 'total_exp': 609000},\n" +
-            "  {'level': 15, 'name': '正三品', 'need_exp': 610000, 'total_exp': 986000},\n" +
-            "  {'level': 16, 'name': '从二品', 'need_exp': 987000, 'total_exp': 1596000},\n" +
-            "  {'level': 17, 'name': '正二品', 'need_exp': 1597000, 'total_exp': 2583000},\n" +
-            "  {'level': 18, 'name': '从一品', 'need_exp': 2584000, 'total_exp': 4180000},\n" +
-            "  {'level': 19, 'name': '正一品', 'need_exp': 4181000, 'total_exp': 6764000}\n" +
-            "]";
     @BindView(R.id.task_icon)
     ImageView task_icon;
     @BindView(R.id.task_web_info)
@@ -101,8 +92,14 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
     private final int TASK_ICON_CHANGE_REQUEST_CODE = 1001;
     private final int TASK_ATTENTION_CHANGE_REQUEST_CODE = 1002;
     private final int TASK_POINT_MANAGER_REQUEST_CODE = 1003;
+    private final int TASK_POINT_SHOP_REQUEST_CODE = 1004;
     private boolean edit;//非编辑的话要请求网络获取数据
     private String taskId;
+    private TaskPublishBase publish = new TaskPublishBase();
+    private List<String> taskAttention = new ArrayList<>();
+    private int total_count;
+    private int total_money;
+
     @Override
     protected TaskEditPresenter getPresenter() {
         return new TaskEditPresenter();
@@ -121,11 +118,14 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
         }
         edit=getIntent().getBooleanExtra("edit",false);
         taskId = getIntent().getStringExtra("task_id");
-        if (!edit) {
+        total_count = getIntent().getIntExtra("total_count",0);
+        total_money = getIntent().getIntExtra("total_money",0);
+        if (edit) {
             try {
+                showLoading();
                 presenter.getEditTask(taskId);
             } catch (Exception e) {
-                showToast(e.getMessage());
+                showToast(""+e.getMessage());
             }
         }
     }
@@ -144,82 +144,67 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
     }
     public void refreshData(){
         if (taskInfo != null) {
-            if (!TextUtils.isEmpty(taskInfo.getTask_icon())) {
-                Glide.with(task_icon.getContext()).load(taskInfo.getTask_icon()).asBitmap().error(R.mipmap.rectangle_seize_pic).placeholder(R.mipmap.rectangle_seize_pic).into(task_icon);
-            }
-            task_name.setText(taskInfo.getTask_name());
-            if (taskInfo.getAccept_begin_date() != 0) {
-                task_accept_time.setText(format.format(new Date(taskInfo.getAccept_begin_date())));
-            }
-            if (taskInfo.getAccept_end_date() != 0) {
-                task_accept_end_date.setText(format.format(new Date(taskInfo.getAccept_end_date())));
-            }
-            task_in_shop_time.setText((taskInfo.getRequire_shop_time() * 60)+"分钟");
             try {
-                JSONArray array = new JSONArray(json);
-                List<TaskInfo.TaskCondition> condition = taskInfo.getTaskCondition();
-                if (condition != null) {
-                    List<String> condition_list = new ArrayList<>();
-                    for (TaskInfo.TaskCondition con : condition) {
-                        switch (con.getCondition_id()) {
-                            case 1:
-                                condition_list.add(con.getParam_text());
-                                break;
-                            case 2:
-                                condition_list.add(con.getParam1() + "及以上");
-                                break;
-                            case 3:
-                                condition_list.add(con.getParam1() + "及以下");
-                                break;
-                            case 4:
-                                condition_list.add(con.getParam1() + "-" + con.getParam2() + "岁");
-                                break;
-                            case 5:
-                                for (int i = 0; i < array.length(); i++) {
-                                    if (con.getParam1() == array.getJSONObject(i).getInt("level")) {
-                                        condition_list.add(array.getJSONObject(i).getString("name") + "以上");
-                                    }
-                                }
-                                break;
-                            case 6:
-                                if (con.getParam1() == 1) {
-                                    condition_list.add("男");
-                                } else if (con.getParam1() == 2) {
-                                    condition_list.add("女");
-                                }
-                                break;
+                task_count.setText(total_count+"单");
+                task_price.setText(total_money+"元");
+                if (!TextUtils.isEmpty(taskInfo.getTask_icon())) {
+                    Glide.with(task_icon.getContext()).load(taskInfo.getTask_icon()).asBitmap().error(R.mipmap.rectangle_seize_pic).placeholder(R.mipmap.rectangle_seize_pic).into(task_icon);
+                }
+                task_name.setText(taskInfo.getTask_name());
+                if (!TextUtils.isEmpty(taskInfo.getAccept_begin_date())) {
+                    task_accept_time.setText(taskInfo.getAccept_begin_date());
+                }
+                if (!TextUtils.isEmpty(taskInfo.getAccept_end_date())) {
+                    task_accept_end_date.setText(taskInfo.getAccept_end_date());
+                }
+                task_in_shop_time.setText(taskInfo.getRequire_shop_time()+"分钟");
+                try {
+                    List<TaskCondition> condition = taskInfo.getTaskCondition();
+                    if (condition != null) {
+                        StringBuffer buffer = new StringBuffer();
+                        for (TaskCondition con : condition) {
+                            String con_result = ConditionUtil.getCondition(con);
+                            buffer.append(con_result+",");
                         }
+                        String con = "";
+                        if (!TextUtils.isEmpty(buffer.toString())) {
+                            con = buffer.substring(0, buffer.length() - 1);
+                        } else {
+                            con = buffer.toString();
+                        }
+                        task_condition.setText(con);
                     }
-                    String condition_str = new Gson().toJson(condition_list);
-                    task_condition.setText(condition_str);
+                } catch (Exception e) {
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (!TextUtils.isEmpty(taskInfo.getTaskAttention())) {
-                    List<String> task_attention= new Gson().fromJson(taskInfo.getTaskAttention(),new TypeToken<List<String>>(){}.getType());
-                    String taskAtt = "";
-                    int i=1;
-                    for (String s : task_attention) {
-                        taskAtt = taskAtt+"\n"+i+":"+s ;
-                        i++;
+                try {
+                    taskAttention.clear();
+                    if (taskInfo.getTaskAttention()!=null) {
+                        List<String> task_attention= taskInfo.getTaskAttention();
+                        String taskAtt = "";
+                        int i=1;
+                        for (String s : task_attention) {
+                            taskAttention.add(s);
+                            taskAtt = taskAtt+"\n"+i+":"+s ;
+                            i++;
+                        }
+                        task_iv_attention.setText(taskAtt);
                     }
-                    task_iv_attention.setText(taskAtt);
+                } catch (Exception e) {
+                    Log.e("我的刀", e.getMessage());
+                    task_iv_attention.setText("尚未添加");
                 }
+                if (!TextUtils.isEmpty(taskInfo.getTask_info())) {
+                    task_web_info.loadDataWithBaseURL(null, taskInfo.getTask_info(), "text/html", "utf-8", null);
+                }
+                if (!TextUtils.isEmpty(taskInfo.getTask_paper_name())) {
+                    task_paper_iv.setText(taskInfo.getTask_paper_name());
+                }
+                if (!TextUtils.isEmpty(taskInfo.getTrain_name())) {
+                    train_paper_iv.setText(taskInfo.getTrain_name());
+                }
+                task_set_count_price_iv.setText("任务点:(" + taskInfo.getShop_count()+")");
             } catch (Exception e) {
-                task_iv_attention.setText("尚未添加");
             }
-            if (!TextUtils.isEmpty(taskInfo.getTask_info())) {
-                task_web_info.loadDataWithBaseURL(null, taskInfo.getTask_info(), "text/html", "utf-8", null);
-            }
-            if (!TextUtils.isEmpty(taskInfo.getTask_paper_name())) {
-                task_paper_iv.setText(taskInfo.getTask_paper_name());
-            }
-            if (!TextUtils.isEmpty(taskInfo.getTrain_name())) {
-                train_paper_iv.setText(taskInfo.getTrain_name());
-            }
-            task_set_count_price_iv.setText("任务点:(" + taskInfo.getShop_count()+")");
         } else {
             taskInfo = new TaskInfo();
         }
@@ -231,41 +216,64 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
 
     @Override
     public void doSuccess(Object tag, String json) {
-        Log.e("根据id获取的结果", json);
-        NetTaskBean bean = new Gson().fromJson(json, NetTaskBean.class);
-        if (bean.getCode() == 0) {
-            NetTaskBean.NetTaskData data = bean.getData();
-            taskInfo.setAccept_begin_date(data.getAccept_begin_date());
-            taskInfo.setAccept_end_date(data.getAccept_end_date());
-            taskInfo.setCreate_date(data.getCreate_date());
-            taskInfo.setLast_mod(data.getLast_mod());
-            taskInfo.setMerchant_id(data.getMerchant_id());
-            taskInfo.setOperator_id(data.getOperator_id());
-            taskInfo.setShop_count(data.getShop_count());
-            taskInfo.setTrainpaper_id(data.getTrainpaper_id());
-            taskInfo.setTrain_name(data.getTrain_name());
-            taskInfo.setTaskpaper_id(data.getTaskpaper_id());
-            taskInfo.setTask_total_count(data.getTask_total_count());
-            taskInfo.setTask_price(data.getTask_price());
-            taskInfo.setTask_paper_name(data.getTask_paper_name());
-            taskInfo.setTask_name(data.getTask_name());
-            taskInfo.setTask_info(data.getTask_info());
-            taskInfo.setTask_id(data.getTask_id());
-            taskInfo.setTask_icon(data.getTask_icon());
-            taskInfo.setTask_end_date(data.getTask_end_date());
-            taskInfo.setTask_desc(data.getTask_desc());
-            taskInfo.setState(data.getState());
-            taskInfo.setRequire_shop_time(data.getRequire_shop_time());
-            taskInfo.setTaskCondition(data.getTaskCondition());
-            refreshData();
+        endLoading();
+        if (BaseConsts.BASE_URL_TASK_DETAIL_INFO.equals(tag)) {
+            NetTaskBean bean = new Gson().fromJson(json, NetTaskBean.class);
+            if (bean.getCode() == 0) {
+                setTaskInfo(bean);
+            }
+        } else if (BaseConsts.BASE_URL_TASK_PUBLISH.equals(tag)) {
+            try {
+                JSONObject object = new JSONObject(json);
+                int code = object.getInt("code");
+                if (code == 0) {
+                    showToast("发布成功");
+                    startActivity(this,TaskReleaseFinishActivity.class);
+                    finish();
+                } else if (code == -666) {
+                    showToast("您的登录信息已过期或者在其他设备上登录,请重新登录。");
+                }
+            } catch (JSONException e) {
+                showToast("数据格式出错,请稍后尝试。");
+            }
         }
-    }
 
+    }
+    /**
+     * 数据转换刷新页面
+     * @param bean
+     */
+    private void setTaskInfo(NetTaskBean bean) {
+        NetTaskBean.NetTaskData data = bean.getData();
+        taskInfo.setAccept_begin_date(TimeUtil.stampToDate(data.getAccept_begin_date()));
+        taskInfo.setAccept_end_date(TimeUtil.stampToDate(data.getAccept_end_date()));
+        taskInfo.setCreate_date(data.getCreate_date());
+        taskInfo.setLast_mod(data.getLast_mod());
+        taskInfo.setMerchant_id(data.getMerchant_id());
+        taskInfo.setOperator_id(data.getOperator_id());
+        taskInfo.setShop_count(data.getShop_count());
+        taskInfo.setTrainpaper_id(data.getTrainpaper_id());
+        taskInfo.setTrain_name(data.getTrain_name());
+        taskInfo.setTask_total_count(data.getTask_total_count());
+        taskInfo.setTask_price(data.getTask_price());
+        taskInfo.setTask_name(data.getTask_name());
+        taskInfo.setTask_info(data.getTask_info());
+        taskInfo.setTask_id(data.getTask_id());
+        taskInfo.setTask_icon(data.getTask_icon());
+        taskInfo.setTask_end_date(data.getTask_end_date());
+        taskInfo.setTask_desc(data.getTask_desc());
+        taskInfo.setState(data.getState());
+        taskInfo.setRequire_shop_time(data.getRequire_shop_time());
+        taskInfo.setTaskCondition(data.getTaskCondition());
+        taskInfo.setTrain_id(data.getTrain_id());
+        taskInfo.setTaskAttention(data.getTaskAttention());
+        refreshData();
+    }
     @Override
     public void doFailure(Object tag, ErrorCode code) {
-
+        endLoading();
+        showToast("网络异常,请稍后尝试。");
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -274,8 +282,24 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
                 taskInfo = (TaskInfo) data.getSerializableExtra("taskInfo");
             } else if (requestCode == TASK_ATTENTION_CHANGE_REQUEST_CODE && resultCode == RESULT_OK) {
                 taskInfo = (TaskInfo) data.getSerializableExtra("taskInfo");
-            } else if (requestCode == TASK_POINT_MANAGER_REQUEST_CODE && resultCode == RESULT_OK) {
-
+            } else if (requestCode == TASK_POINT_SHOP_REQUEST_CODE && resultCode == RESULT_OK) {
+                String shop = data.getStringExtra("task_shop");
+                List<TaskPointInfo> taskShops = new Gson().fromJson(shop, new TypeToken<List<TaskPointInfo>>() {
+                }.getType());
+                total_count = 0;
+                total_money = 0;
+                for (TaskPointInfo info : taskShops) {
+                    TaskShop taskShop = new TaskShop();
+                    taskShop.setMer_price(info.getMer_price());
+                    taskShop.setShop_id(info.getShop_id());
+                    taskShop.setTotal_num(info.getTotal_num());
+                    taskShop.setPrice(info.getMer_price());
+                    shops.add(taskShop);
+                    total_count += info.getTotal_num();
+                    total_money += (info.getTotal_num() * info.getMer_price());
+                }
+                taskInfo.setShop_count(shops.size());
+                task_set_count_price_iv.setText("任务点:(" + taskInfo.getShop_count()+")");
             }
         }
         refreshData();
@@ -286,7 +310,7 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
             case R.id.task_set:
                 Intent intent = new Intent(this, TaskTimeActivity.class);
                 intent.putExtra("taskInfo", taskInfo);
-                startActivity(intent);
+                startActivityForResult(intent,TASK_ICON_CHANGE_REQUEST_CODE);
                 break;
             case R.id.change_task_icon:
                 startActivityForResult(this, TaskPublishActivity.class, new String[]{"taskInfo"}, new Object[]{taskInfo},TASK_ICON_CHANGE_REQUEST_CODE);
@@ -298,16 +322,70 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
                 startActivityForResult(this, TaskInfoActivity.class, new String[]{"taskInfo"}, new Object[]{taskInfo},TASK_ATTENTION_CHANGE_REQUEST_CODE);
                 break;
             case R.id.task_paper_edit:
-                startActivityForResult(this, TaskPaperListActivity.class, new String[]{"taskInfo","task"}, new Object[]{taskInfo,true},TASK_ATTENTION_CHANGE_REQUEST_CODE);
+                startActivityForResult(this, TaskPaperListActivity.class, new String[]{"taskInfo"}, new Object[]{taskInfo},TASK_ATTENTION_CHANGE_REQUEST_CODE);
                 break;
             case R.id.train_paper_edit:
-                startActivityForResult(this, TaskPaperListActivity.class, new String[]{"taskInfo","task"}, new Object[]{taskInfo,false},TASK_ATTENTION_CHANGE_REQUEST_CODE);
+                startActivityForResult(this, TrainActivity.class, new String[]{"taskInfo"}, new Object[]{taskInfo},TASK_ATTENTION_CHANGE_REQUEST_CODE);
                 break;
             case R.id.task_set_count_price:
-                startActivityForResult(this, TaskPointConfigureActivity.class,new String[]{"taskId"},new String[]{taskId},TASK_POINT_MANAGER_REQUEST_CODE);
+                startActivityForResult(this, TaskPointConfigureActivity.class,new String[]{"taskId"},new String[]{taskId},TASK_POINT_SHOP_REQUEST_CODE);
                 break;
             case R.id.publish_task:
+                publishTask();
                 break;
+        }
+    }
+    /**
+     * 发布任务
+     */
+    private void publishTask() {
+        if (TextUtils.isEmpty(taskInfo.getTask_name())) {
+            showToast("任务名称不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(taskInfo.getAccept_begin_date())) {
+            showToast("任务开始领取时间必须设置");
+            return;
+        }
+        if (TextUtils.isEmpty(taskInfo.getAccept_end_date())) {
+            showToast("任务结束领取时间必须设置");
+            return;
+        }
+        if (TextUtils.isEmpty(taskInfo.getTask_info())) {
+            showToast("任务详情必须设置");
+            return;
+        }
+        if (TextUtils.isEmpty(taskInfo.getTask_paper_name())) {
+            showToast("调研问卷必须设置");
+            return;
+        }
+        if (TextUtils.isEmpty(taskInfo.getTrain_name())) {
+            showToast("任务培训问卷必须设置");
+            return;
+        }
+        if (shops.size() == 0) {
+            showToast("任务门店必须勾选");
+            return;
+        }
+        if (TextUtils.isEmpty(BaseApplication.UU_TOKEN)) {
+            showToast("您暂时还未登录,请先登录");
+            return;
+        }
+        publish.setUuid(BaseApplication.UU_TOKEN);
+        publish.setMerUserId(Integer.valueOf(BaseApplication.UUID));
+        publish.setOldTaskId(taskId);
+        publish.setTaskPaperId(taskInfo.getTaskpaper_id());
+        publish.setTraInfoId(taskInfo.getTrain_id());
+        taskInfo.setTask_id(null);
+        publish.setTaskinfo(taskInfo);
+        publish.setTaskShop(shops);
+        publish.setTaskCondition(taskInfo.getTaskCondition());
+        publish.setTaskAttention(taskAttention);
+        showLoading();
+        try {
+            presenter.publishTask(BaseConsts.BASE_URL_TASK_PUBLISH,publish);
+        } catch (Exception e) {
+            showToast("数据格式出错。");
         }
     }
 }

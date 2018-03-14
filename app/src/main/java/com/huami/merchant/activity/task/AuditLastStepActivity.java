@@ -121,7 +121,7 @@ public class AuditLastStepActivity extends MvpBaseActivity<AuditLastStepPresente
         TaskTag.TaskTagInfo info = infos.get(position);
         int id = info.getId();
         auditResult.setResultId(String.valueOf(id));
-        startActivityForResult(this,AuditStarActivity.class,new String[]{"result"},new Object[]{auditResult},10001);
+        startActivityForResult(this,AuditStarActivity.class,new String[]{"result","pass"},new Object[]{auditResult,pass},10001);
     }
 
     private int position;

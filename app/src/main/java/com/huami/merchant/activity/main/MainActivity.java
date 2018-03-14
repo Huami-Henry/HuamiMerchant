@@ -1,11 +1,11 @@
 package com.huami.merchant.activity.main;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.task.TaskPublishActivity;
@@ -14,17 +14,17 @@ import com.huami.merchant.fragment.TaskFragment;
 import com.huami.merchant.mvpbase.BasePresenter;
 import com.huami.merchant.mvpbase.BaseViewInter;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-
 public class MainActivity extends MvpBaseActivity implements BaseViewInter{
     @BindView(R.id.content)
     FrameLayout content;
     @BindView(R.id.tab_center)
-    Button tab_center;
+    RadioButton tab_center;
     @BindView(R.id.tab_task)
-    Button tab_task;
+    RadioButton tab_task;
+    @BindView(R.id.bottom_nav)
+    RadioGroup bottom_nav;
     private TaskFragment taskFragment;
     private CenterFragment centerFragment;
     private FragmentManager manager;
@@ -49,7 +49,7 @@ public class MainActivity extends MvpBaseActivity implements BaseViewInter{
     }
     @OnClick(R.id.release_task)//发布任务
     public void releaseTask(){
-        startActivityForResult(this, TaskPublishActivity.class,10001);
+        startActivity(this, TaskPublishActivity.class,"edit",false);
     }
     @OnClick(R.id.tab_task)
     public void clickTask(){
@@ -69,12 +69,21 @@ public class MainActivity extends MvpBaseActivity implements BaseViewInter{
     }
     @Override
     protected void initView() {
-
+        bottom_nav.check(R.id.tab_task);
     }
     @Override
     protected void setToolBar(TextView t_name, TextView t_menu) {
 
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (taskFragment != null) {
+            taskFragment.getTaskList();
+        }
+    }
+
     /**
      * 切换页面的重载，优化了fragment的切换
      */
@@ -91,11 +100,4 @@ public class MainActivity extends MvpBaseActivity implements BaseViewInter{
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            taskFragment.getTaskList();
-        }
-    }
 }

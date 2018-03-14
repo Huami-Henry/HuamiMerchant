@@ -7,6 +7,7 @@ import com.huami.merchant.activity.main.MainActivity;
 import com.huami.merchant.activity.user.presenter.LoginPresenter;
 import com.huami.merchant.activity.user.viewInter.LoginViewInter;
 import com.huami.merchant.code.ErrorCode;
+import com.huami.merchant.mvpbase.BaseApplication;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 import com.huami.merchant.util.KeyBoardManager;
@@ -32,6 +33,10 @@ public class MvpLoginActivity extends MvpBaseActivity<LoginPresenter, MvpLoginAc
     @Override
     protected void initData() {
         need_jump = getIntent().getBooleanExtra("need_jump", true);
+        if (!TextUtils.isEmpty(BaseApplication.UU_TOKEN)) {
+            startActivity(this, MainActivity.class);
+            finish();
+        }
     }
 
     @Override
@@ -60,7 +65,6 @@ public class MvpLoginActivity extends MvpBaseActivity<LoginPresenter, MvpLoginAc
         }
         finish();
     }
-
     @Override
     public void doFailure(String tag, ErrorCode code) {
         endLoading();
@@ -102,5 +106,10 @@ public class MvpLoginActivity extends MvpBaseActivity<LoginPresenter, MvpLoginAc
         }
         showLoading();
         presenter.goLogin(userName, password);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

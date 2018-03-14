@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -33,26 +35,36 @@ public class TaskPaperAdapter extends RecyclerView.Adapter<TaskPaperAdapter.Task
         return holder;
     }
     @Override
-    public void onBindViewHolder(TaskPaperHolder holder, int position) {
-//        TaskPaperInfo info = papers.get(position);
-//        if (!TextUtils.isEmpty(info.getName())) {
-//            holder.task_paper_name.setText(info.getName());
-//        }
-//        if (info.isCheck()) {
-//            holder.task_paper_radio.setChecked(true);
-//        } else {
-//            holder.task_paper_radio.setChecked(false);
-//        }
+    public void onBindViewHolder(TaskPaperHolder holder, final int position) {
+        TaskPaperInfo info = papers.get(position);
+        if (!TextUtils.isEmpty(info.getName())) {
+            holder.task_paper_name.setText(info.getName());
+        }
+        holder.task_paper_radio.setImageResource(info.isCheck() ? R.mipmap.multiple_choice_sel : R.mipmap.multiple_choice);
+        holder.paper_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
+        holder.task_paper_radio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
     }
     @Override
     public int getItemCount() {
-        return 10;
+        return papers.size();
     }
     public class TaskPaperHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.task_paper_radio)
-        RadioButton task_paper_radio;
+        ImageView task_paper_radio;
         @BindView(R.id.task_paper_name)
         TextView task_paper_name;
+        @BindView(R.id.paper_content)
+        LinearLayout paper_content;
         public TaskPaperHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

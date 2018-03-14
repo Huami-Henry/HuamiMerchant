@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface TaskPaperModelInter extends BaseModelInter {
-    void getTaskPaper(List<TaskPaperInfo> papers, String uuid, int page,InterLoadListener listener);
+    void getTaskPaper(List<TaskPaperInfo> papers,String url, String uuid, int page,InterLoadListener listener);
 }

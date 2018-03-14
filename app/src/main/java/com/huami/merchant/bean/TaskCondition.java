@@ -1,10 +1,12 @@
 package com.huami.merchant.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by henry on 2018/1/19.
  */
 
-public class TaskCondition {
+public class TaskCondition implements Serializable {
     /**
      * last_mod : 1515400768000
      * expression : 3
@@ -24,7 +26,7 @@ public class TaskCondition {
     private int task_id;
     private int id;
     private int state;
-    private String param_text;
+    private String param_text="";
     private String type;
     private int condition_id;
     private int param1;

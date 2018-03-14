@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import com.huami.merchant.bean.TaskPaperPendingBean.TaskPaperData.CheckCaseIdLis
 import com.huami.merchant.bean.TaskPaperPendingBean.TaskPaperData.TaskPaper.ExaminationInner;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.designView.recycle.FullyLinearLayoutManager;
+import com.huami.merchant.designView.recycle.MyGridLayoutManager;
+import com.huami.merchant.designView.recycle.XRecyclerView;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseApplication;
@@ -37,9 +40,12 @@ import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 import com.huami.merchant.util.AuditUtil;
 import com.huami.merchant.util.StringUtil;
+import com.huami.merchant.util.TagUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 /**
  * 待审核问卷页面
@@ -55,33 +61,22 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
     @BindView(R.id.bottom_pending)
     LinearLayout bottom_pending;
     @BindView(R.id.task_paper_recycle)
-    RecyclerView task_paper_recycle;
-    @BindView(R.id.user_case_id)
-    TextView user_case_id;
-    @BindView(R.id.shop_id)
-    TextView shop_id;
+    XRecyclerView task_paper_recycle;
     @BindView(R.id.tv_paper_result)
     TextView tv_paper_result;
-    @BindView(R.id.shop_name)
+    TextView user_case_id;
+    TextView shop_id;
     TextView shop_name;
-    @BindView(R.id.shop_price)
     TextView shop_price;
-    @BindView(R.id.shop_region)
     TextView shop_region;
-    @BindView(R.id.shop_address)
     TextView shop_address;
-    @BindView(R.id.check_time_recycle)
-    RecyclerView check_time_recycle;
-    @BindView(R.id.sign_in_time)
     TextView sign_in_time;
-    @BindView(R.id.sign_out_time)
     TextView sign_out_time;
-    @BindView(R.id.submit_time)
     TextView submit_time;
-    @BindView(R.id.check_time)
     TextView check_time;
-    private FullyLinearLayoutManager manager_papaer;
-    private FullyLinearLayoutManager manager_banner;
+    RecyclerView check_time_recycle;
+    private LinearLayoutManager manager_paper;
+    private LinearLayoutManager manager_banner;
     private List<CheckCaseIdListInfo> banner = new ArrayList<>();
     private PaperBannerAdapter bannerAdapter;
     private NewExaminationAdapter adapter;
@@ -124,10 +119,16 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
 
     @Override
     protected void initView() {
+        manager_paper = new LinearLayoutManager(this);
+        task_paper_recycle.setLayoutManager(manager_paper);
+        task_paper_recycle.setPullRefreshEnabled(false);
+        task_paper_recycle.setLoadingMoreEnabled(false);
+        View view = LayoutInflater.from(this).inflate(R.layout.pending_header, task_paper_recycle, false);
+        initHeader(view);
         if (!bean.isAlready()) {
-            manager_banner = new FullyLinearLayoutManager(this);
-            check_time_recycle.setLayoutManager(manager_banner);
+            manager_banner = new LinearLayoutManager(this);
             manager_banner.setOrientation(LinearLayoutManager.HORIZONTAL);
+            check_time_recycle.setLayoutManager(manager_banner);
             bannerAdapter = new PaperBannerAdapter(banner, this);
             check_time_recycle.setAdapter(bannerAdapter);
             adapter = new NewExaminationAdapter(inners, answers,postils, bean,this);
@@ -138,17 +139,34 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
             tv_paper_result.setText(AuditUtil.getState(checkTimes,checkState));
             adapter = new NewExaminationAdapter(inners, answers, postils,bean, this);
         }
-        manager_papaer = new FullyLinearLayoutManager(this);
-        task_paper_recycle.setLayoutManager(manager_papaer);
 
+        task_paper_recycle.addHeaderView(view);
         task_paper_recycle.setAdapter(adapter);
+        showLoading();
         if (bean.isAlready()) {
             presenter.getAlreadyPendingDetail(BaseConsts.BASE_URL_TASK_ReviewResult, usercase_id, uca_check_usercase_id, pass);
         } else {
             presenter.getPendingDetail(BaseConsts.BASE_URL_TASK_ReviewPending, usercase_id,uca_check_usercase_id, isHistory);
         }
-        setOtherContent();
     }
+    /**
+     * 初始化头部
+     * @param view
+     */
+    private void initHeader(View view) {
+        user_case_id= (TextView) view.findViewById(R.id.user_case_id);
+        shop_id= (TextView) view.findViewById(R.id.shop_id);
+        shop_name= (TextView) view.findViewById(R.id.shop_name);
+        shop_price= (TextView) view.findViewById(R.id.shop_price);
+        shop_region= (TextView) view.findViewById(R.id.shop_region);
+        shop_address= (TextView) view.findViewById(R.id.shop_address);
+        sign_in_time= (TextView) view.findViewById(R.id.sign_in_time);
+        sign_out_time= (TextView) view.findViewById(R.id.sign_out_time);
+        submit_time= (TextView) view.findViewById(R.id.submit_time);
+        check_time= (TextView) view.findViewById(R.id.check_time);
+        check_time_recycle= (RecyclerView) view.findViewById(R.id.check_time_recycle);
+    }
+
     @Override
     protected void setToolBar(TextView t_name, TextView t_menu) {
         t_name.setText("问卷");
@@ -180,13 +198,9 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
                 if (paperAlreadyAuditing.getCode() == 0) {
                     setAlreadyPending(paperAlreadyAuditing);
                 }
-            } else if (BaseConsts.BASE_URL_TASK_PASS.equals(tag)) {
-
-            } else if (BaseConsts.BASE_URL_TASK_NO_PASS.equals(tag)) {
-
             }
+            setOtherContent();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

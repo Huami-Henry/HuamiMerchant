@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huami.merchant.R;
@@ -35,7 +36,7 @@ public class TaskPointAdapter extends RecyclerView.Adapter<TaskPointAdapter.Task
     @Override
     public void onBindViewHolder(final TaskPointHolder holder, final int position) {
         final TaskPointInfo info = shops.get(position);
-        holder.shop_cb.setChecked(info.isCheck());
+        holder.shop_cb.setImageResource(info.isCheck()?R.mipmap.multiple_choice_sel:R.mipmap.multiple_choice);
         holder.shop_num.setText(info.getShop_num());
         holder.shop_region.setText(info.getRegion());
         holder.shop_name.setText(info.getShort_name());
@@ -54,7 +55,7 @@ public class TaskPointAdapter extends RecyclerView.Adapter<TaskPointAdapter.Task
     }
     public class TaskPointHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.shop_cb)
-        CheckBox shop_cb;
+        ImageView shop_cb;
         @BindView(R.id.shop_num)
         TextView shop_num;
         @BindView(R.id.shop_name)

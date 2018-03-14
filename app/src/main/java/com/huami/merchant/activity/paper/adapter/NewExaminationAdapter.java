@@ -71,6 +71,7 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
     }
     @Override
     public void onBindViewHolder(NewExaminationHolder holder, final int position) {
+        Log.e("我的size", "--->"+examinations.size());
         final ExaminationInner examinationInner = examinations.get(position);
         holder.exam_title.setText((position + 1) + ":" + examinationInner.getTitle().replace("\n", "").replace("\r", ""));//题号加题目标题
         holder.templet.removeAllViews();

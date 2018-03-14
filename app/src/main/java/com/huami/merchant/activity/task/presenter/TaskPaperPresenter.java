@@ -17,8 +17,8 @@ public class TaskPaperPresenter extends BasePresenter<TaskPaperListActivity,Task
     protected TaskPaperModelImp getModel() {
         return new TaskPaperModelImp();
     }
-    public void getTaskPaper(List<TaskPaperInfo> papers, String uuid, int page){
-        model.getTaskPaper(papers, uuid, page, new InterLoadListener() {
+    public void getTaskPaper(List<TaskPaperInfo> papers,String url, String uuid, int page){
+        model.getTaskPaper(papers, url,uuid, page, new InterLoadListener() {
             @Override
             public void loadSuccess(Object tag, String json) {
                 if (isViewAttached()) {

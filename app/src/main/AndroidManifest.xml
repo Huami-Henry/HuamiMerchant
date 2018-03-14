@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.huami.merchant">
 
-    <permission
-        android:name="${applicationId}.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-    <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Optional for location -->
@@ -23,7 +19,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 获取WIFI状态 -->
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 地理位置权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -31,17 +26,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 往SD卡中写入数据的权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 拨打电话呼叫客服 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- 百度地图所需权限 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 创建和删除快捷方式权限 -->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".mvpbase.BaseApplication"
@@ -49,7 +33,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="label,allowBackup">
         <activity android:name=".activity.user.MvpLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,8 +44,8 @@
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_main" />
+            android:label="@string/title_activity_main"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.task.TaskPreviewActivity" />
         <activity android:name=".activity.task.TaskAlreadyPendingActivity" />
         <activity android:name=".activity.task.TaskEditActivity" />
@@ -98,10 +83,22 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.task.TaskPointActivity" />
         <activity android:name=".activity.paper.PaperPendingDetailActivity" />
-        <activity android:name=".activity.task.AuditLastStepActivity">
-
-        </activity>
-        <activity android:name=".activity.task.AuditStarActivity"></activity>
+        <activity android:name=".activity.task.AuditLastStepActivity" />
+        <activity android:name=".activity.task.AuditStarActivity" />
+        <activity android:name=".activity.service.ValueServiceActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.task.TrainActivity" />
+        <activity android:name=".activity.web.AgentWebActivity" />
+        <activity android:name=".activity.task.TaskFailureReasonActivity" />
+        <activity android:name=".activity.service.SingleValueActivity" />
+        <activity android:name=".activity.task.DataStatisticsActivity" />
+        <activity android:name=".activity.task.TaskReleaseFinishActivity" />
+        <activity android:name=".activity.task.TaskPaperPreviewActivity" />
+        <activity android:name=".activity.service.ValueDetailActivity" />
+        <activity android:name=".activity.service.PurchaseActivity" />
+        <activity android:name=".activity.task.TaskPointReviewActivity" />
+        <activity android:name=".activity.web.HtmlActivity" />
+        <activity android:name=".activity.task.AlreadyBuyActivity"></activity>
     </application>
 
 </manifest>

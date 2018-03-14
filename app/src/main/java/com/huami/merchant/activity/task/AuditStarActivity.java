@@ -1,5 +1,4 @@
 package com.huami.merchant.activity.task;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -8,19 +7,16 @@ import com.huami.merchant.activity.task.presenter.AuditSubmitPresenter;
 import com.huami.merchant.bean.AuditResult;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
-import com.huami.merchant.mvpbase.AppManager;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import butterknife.BindView;
-
 public class AuditStarActivity extends MvpBaseActivity<AuditSubmitPresenter,AuditStarActivity> implements TaskViewInter{
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
     private AuditResult result;
+    private boolean pass;
     @Override
     protected AuditSubmitPresenter getPresenter() {
         return new AuditSubmitPresenter();
@@ -34,6 +30,7 @@ public class AuditStarActivity extends MvpBaseActivity<AuditSubmitPresenter,Audi
     @Override
     protected void initData() {
         result = (AuditResult) getIntent().getSerializableExtra("result");
+        pass = getIntent().getBooleanExtra("pass",false);
     }
 
     @Override
@@ -53,7 +50,11 @@ public class AuditStarActivity extends MvpBaseActivity<AuditSubmitPresenter,Audi
                 } else {
                     try {
                         showLoading();
-                        presenter.submitAudit(BaseConsts.BASE_URL_TASK_PASS, result);
+                        if (pass) {
+                            presenter.submitAudit(BaseConsts.BASE_URL_TASK_PASS, result);
+                        } else {
+                            presenter.submitAudit(BaseConsts.BASE_URL_TASK_NO_PASS, result);
+                        }
                     } catch (Exception e) {
                         showToast("" + e.getMessage());
                         endLoading();

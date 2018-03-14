@@ -15,14 +15,21 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.task.adapter.TaskInfoAdapter;
+import com.huami.merchant.activity.task.presenter.TaskInfoPresenter;
 import com.huami.merchant.bean.TaskInfo;
 import com.huami.merchant.bean.TaskInfoHtml;
+import com.huami.merchant.code.ErrorCode;
+import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.imagepicker.RxPicker;
 import com.huami.merchant.imagepicker.bean.ImageItem;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BasePresenter;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +37,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-public class TaskInfoActivity extends MvpBaseActivity implements OnRecycleItemClickListener{
+public class TaskInfoActivity extends MvpBaseActivity<TaskInfoPresenter,TaskInfoActivity> implements OnRecycleItemClickListener,TaskViewInter{
     @BindView(R.id.html_recycle)
     RecyclerView html_recycle;
     @BindView(R.id.text_edit)
@@ -46,8 +53,8 @@ public class TaskInfoActivity extends MvpBaseActivity implements OnRecycleItemCl
     private LinearLayoutManager manager;
     private TaskInfoAdapter adapter;
     @Override
-    protected BasePresenter getPresenter() {
-        return null;
+    protected TaskInfoPresenter getPresenter() {
+        return new TaskInfoPresenter();
     }
     @Override
     protected int initLayout() {
@@ -81,14 +88,13 @@ public class TaskInfoActivity extends MvpBaseActivity implements OnRecycleItemCl
         });
     }
 
-    private String test = "https://article-fd.zol-img.com.cn/t_s640x2000/g5/M00/01/0F/ChMkJlpYCUWIOOI4AAB_FJPfOsEAAkCegAr8x4AAH8s393.jpg";
     public String createHtml(){
         String htmlStr = "";
         for (TaskInfoHtml html : taskInfoHtmls) {
             if (!TextUtils.isEmpty(html.getText())) {
                 htmlStr += ("<p>" + html.getText() + "</p>");
             } else {
-                htmlStr += ("<p><img src='" + test + "'/></p>");
+                htmlStr += ("<p><img src='" + html.getUrl() + "'/></p>");
             }
         }
         return htmlStr;
@@ -101,23 +107,30 @@ public class TaskInfoActivity extends MvpBaseActivity implements OnRecycleItemCl
     }
     @OnClick(R.id.link_edit)
     public void editLink(){
-       showToast("暂未开放");
+        showToast("暂未开放");
     }
     @OnClick(R.id.photo_edit)
     public void editPhoto(){
         RxPicker.of()
-                .single(false)
+                .single(true)
                 .camera(true)
-                .limit(1,5)
+                .limit(1,1)
                 .start(this)
                 .subscribe(new Consumer<List<ImageItem>>() {
                     @Override
                     public void accept(@NonNull final List<ImageItem> imageItems) throws Exception {
                         if (imageItems.size() != 0) {
+                            showLoading();
                             for (ImageItem imageItem : imageItems) {
-                                html = new TaskInfoHtml();
-                                html.setUrl(imageItem.getPath());
-                                taskInfoHtmls.add(html);
+                                String path = imageItem.getPath();
+                                File file = new File(path);
+                                if (file != null) {
+                                    if (file.length() > 0) {
+                                        presenter.updateTaskInfoImage(imageItem.getPath());
+                                    } else {
+                                        showToast("图片损坏或不存在.");
+                                    }
+                                }
                             }
                             adapter.notifyDataSetChanged();
                         }
@@ -127,18 +140,17 @@ public class TaskInfoActivity extends MvpBaseActivity implements OnRecycleItemCl
     @OnClick(R.id.camera_edit)
     public void editCamera(){
         RxPicker.of()
-                .single(false)
+                .single(true)
                 .camera(true)
-                .limit(1,5)
+                .limit(1,1)
                 .start(this)
                 .subscribe(new Consumer<List<ImageItem>>() {
                     @Override
                     public void accept(@NonNull final List<ImageItem> imageItems) throws Exception {
                         if (imageItems.size() != 0) {
+                            showLoading();
                             for (ImageItem imageItem : imageItems) {
-                                html = new TaskInfoHtml();
-                                html.setUrl(imageItem.getPath());
-                                taskInfoHtmls.add(html);
+                                presenter.updateTaskInfoImage(imageItem.getPath());
                             }
                             adapter.notifyDataSetChanged();
                         }
@@ -215,5 +227,25 @@ public class TaskInfoActivity extends MvpBaseActivity implements OnRecycleItemCl
                 }
                 break;
         }
+    }
+
+    @Override
+    public void doSuccess(Object tag, String json) {
+        endLoading();
+        try {
+            JSONObject object = new JSONObject(json);
+            String picPath = object.getString("picPath");
+            html = new TaskInfoHtml();
+            html.setUrl(picPath);
+            taskInfoHtmls.add(html);
+        } catch (JSONException e) {
+           showToast("上传失败.");
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void doFailure(Object tag, ErrorCode code) {
+        showToast("上传失败");
     }
 }

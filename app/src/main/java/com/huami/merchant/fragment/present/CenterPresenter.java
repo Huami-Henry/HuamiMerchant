@@ -12,8 +12,8 @@ public class CenterPresenter extends BasePresenter<CenterFragment,CenterModelImp
     protected CenterModelImp getModel() {
         return new CenterModelImp();
     }
-    public void getCenterInfo(String uuid){
-        model.getCenterInfo(uuid, new InterLoadListener() {
+    public void getCenterInfo(String uuid,String merUserId){
+        model.getCenterInfo(uuid,merUserId, new InterLoadListener() {
             @Override
             public void loadSuccess(Object tag, String json) {
                 if (isViewAttached()) {

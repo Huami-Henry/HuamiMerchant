@@ -6,13 +6,5 @@
     {
         "merged": "/Users/henry/Desktop/Android/HuamiMerchant/vplibrary/build/intermediates/res/merged/androidTest/debug/drawable/bga_banner_selector_point_hollow.xml",
         "source": "/Users/henry/Desktop/Android/HuamiMerchant/vplibrary/build/intermediates/bundles/debug/res/drawable/bga_banner_selector_point_hollow.xml"
-    },
-    {
-        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bga_banner_selector_point_hollow.xml",
-        "source": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\bga_banner_selector_point_hollow.xml"
-    },
-    {
-        "merged": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bga_banner_selector_point_solid.xml",
-        "source": "/Users/henry/Desktop/Android/HuamiMerchant/F:\\HuamiMerchant\\vplibrary\\build\\intermediates\\bundles\\debug\\res\\drawable\\bga_banner_selector_point_solid.xml"
     }
 ]

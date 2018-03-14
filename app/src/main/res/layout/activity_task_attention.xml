@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/theme_daren"
     tools:context="com.huami.merchant.activity.task.TaskAttentionActivity">
     <include layout="@layout/include_edit_bar" />
     <TextView
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="5dp">
                 <LinearLayout
@@ -44,6 +44,7 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
                         android:paddingLeft="20dp"
+                        android:layout_marginTop="15dp"
                         >
                         <EditText
                             android:id="@+id/task_attention_ed"
@@ -52,7 +53,7 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:maxLength="30"
-                            android:textColor="@color/white"
+                            android:textColor="@color/font_black"
                             />
                         <ImageView
                             android:id="@+id/clear_attention"
@@ -60,7 +61,7 @@
                             android:layout_height="wrap_content"
                             android:src="@mipmap/dismiss_icon"
                             android:padding="10dp"
-                            android:tint="@color/white"
+                            android:tint="@color/colorPrimary"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -69,6 +70,8 @@
                         android:orientation="horizontal"
                         android:paddingRight="10dp"
                         android:paddingLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         >
                         <TextView
                             android:id="@+id/use_template"
@@ -76,7 +79,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="使用模板"
-                            android:textColor="@color/white"
+                            android:textColor="@color/colorPrimary"
                             android:padding="10dp"
                             android:autoLink="all"
                             />
@@ -85,7 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="完成"
-                            android:textColor="@color/white"
+                            android:textColor="@color/colorPrimary"
                             android:padding="10dp"
                             android:autoLink="all"
                             />
@@ -97,7 +100,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                app:cardBackgroundColor="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="10dp">
                 <android.support.v7.widget.RecyclerView

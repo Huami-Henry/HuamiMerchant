@@ -9,8 +9,8 @@ import android.support.multidex.MultiDexApplication;
 import com.huami.merchant.imagepicker.RxPicker;
 import com.huami.merchant.util.GlideImageLoader;
 import com.huami.merchant.util.SPCache;
-
-import cn.jpush.android.api.JPushInterface;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 public class BaseApplication extends MultiDexApplication {
     private static Context context;
@@ -22,17 +22,12 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Logger.addLogAdapter(new AndroidLogAdapter());
         context = this;
         getVersion();
         initSpCache();
         initUser();
         RxPicker.init(new GlideImageLoader());
-        initJPush();
-    }
-
-    private void initJPush() {
-        JPushInterface.setDebugMode(false); 	// 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);     		// 初始化 JPush
     }
 
     /**
@@ -64,11 +59,5 @@ public class BaseApplication extends MultiDexApplication {
     //数据存储的初始化操作
     private void initSpCache() {
         SPCache.init(this);
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 }

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.huami.merchant.R;
 import com.huami.merchant.listener.OnTimePickListener;
 import com.huami.merchant.mvpbase.BaseToast;
+import com.huami.merchant.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -96,7 +98,7 @@ public class DateTimePicker implements View.OnClickListener{
                 if (second.length() == 1) {
                     second = "0" + second;
                 }
-                String time = year + "年" + month + "月" + day + "日 " + hour + ":" + minute + ":" + second;
+                String time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
                 listener.timePick(time);
                 dialog.dismiss();
 
@@ -280,7 +282,7 @@ public class DateTimePicker implements View.OnClickListener{
      * @param mSecond
      * @param dialog
      */
-    private void setTimerPickEdit(String mYear, String mMonth, String mDay, String mHour, String mMinute, String mSecond, AlertDialog dialog) {
+    private void setTimerPickEdit(String mYear, String mMonth, final String mDay, String mHour, String mMinute, String mSecond, AlertDialog dialog) {
         year_show = getView(R.id.year_show,dialog);
         year_show.setText(mYear);
         year_show.setSelection(mYear.length());
@@ -296,6 +298,19 @@ public class DateTimePicker implements View.OnClickListener{
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s)) {
                     year_show.setSelection(s.length());
+                } else {
+                    year_show.setText(String.valueOf(c.get(Calendar.YEAR)));
+                }
+                int year = Integer.parseInt(year_show.getText().toString());
+                int dayShow = Integer.parseInt(day_show.getText().toString());
+                if (year % 4 == 0) {
+                    if (dayShow > 29) {
+                        day_show.setText(dayShow+"");
+                    }
+                } else {
+                    if (dayShow > 28) {
+                        day_show.setText(dayShow+"");
+                    }
                 }
             }
         });
@@ -319,10 +334,68 @@ public class DateTimePicker implements View.OnClickListener{
                     } else {
                         int content = Integer.valueOf(s.toString());
                         if (s.length() > 2) {
-                            month_show.setText(""+content);
+                            month_show.setText("" + content);
+                        }
+                        switch (content) {
+                            case 1:
+                            case 3:
+                            case 5:
+                            case 7:
+                            case 8:
+                            case 10:
+                            case 12:
+                                String day_content = day_show.getText().toString();
+                                if (!TextUtils.isEmpty(day_content)) {
+                                    int day_number = Integer.valueOf(day_content);
+                                    if (day_number > 31) {
+                                        day_number = 31;
+                                        day_show.setText(day_number + "");
+                                    }
+                                }
+                                break;
+                            case 4:
+                            case 6:
+                            case 9:
+                            case 11:
+                                String day_content_ = day_show.getText().toString();
+                                if (!TextUtils.isEmpty(day_content_)) {
+                                    int day_number = Integer.valueOf(day_content_);
+                                    if (day_number > 30) {
+                                        day_number = 30;
+                                        day_show.setText(day_number + "");
+                                    }
+                                }
+                                break;
+                            case 2:
+                                String year_ = year_show.getText().toString();
+                                if (!TextUtils.isEmpty(year_)) {
+                                    int year_remainder = Integer.valueOf(year_) % 4;
+                                    if (year_remainder == 0) {//闰年
+                                        String day_content_sep = day_show.getText().toString();
+                                        if (!TextUtils.isEmpty(day_content_sep)) {
+                                            int day_number = Integer.valueOf(day_content_sep);
+                                            if (day_number > 29) {
+                                                day_number = 29;
+                                                day_show.setText(day_number + "");
+                                            }
+                                        }
+                                    } else {
+                                        String day_content_sep = day_show.getText().toString();
+                                        if (!TextUtils.isEmpty(day_content_sep)) {
+                                            int day_number = Integer.valueOf(day_content_sep);
+                                            if (day_number > 28) {
+                                                day_number = 28;
+                                                day_show.setText(day_number + "");
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
                         }
                     }
                     month_show.setSelection(month_show.getText().toString().length());
+                } else {
+                    month_show.setText(String.valueOf(c.get(Calendar.MONTH)+1));
                 }
             }
         });
@@ -342,16 +415,55 @@ public class DateTimePicker implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s)) {
-                    if (Integer.valueOf(s.toString()) > 31) {
-                        day_show.setText("31");
+                    Integer day = Integer.valueOf(s.toString());
+                    Integer month = Integer.valueOf(month_show.getText().toString());
+                    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                        if (Integer.valueOf(s.toString()) > 31) {
+                            day_show.setText("31");
+                        } else {
+                            int content = Integer.valueOf(s.toString());
+                            if (s.length() > 2) {
+                                day_show.setText("" + content);
+                            }
+                        }
+                    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                        if (Integer.valueOf(s.toString()) > 30) {
+                            day_show.setText("30");
+                        } else {
+                            int content = Integer.valueOf(s.toString());
+                            if (s.length() > 2) {
+                                day_show.setText("" + content);
+                            }
+                        }
                     } else {
-                        int content = Integer.valueOf(s.toString());
-                        if (s.length() > 2) {
-                            day_show.setText(""+content);
+                        String year_ = year_show.getText().toString();
+                        if (!TextUtils.isEmpty(year_)) {
+                            int year_remainder = Integer.valueOf(year_) % 4;
+                            if (year_remainder == 0) {//闰年
+                                String day_content_sep = day_show.getText().toString();
+                                if (!TextUtils.isEmpty(day_content_sep)) {
+                                    int day_number = Integer.valueOf(day_content_sep);
+                                    if (day_number > 29) {
+                                        day_number = 29;
+                                        day_show.setText(day_number + "");
+                                    }
+                                }
+                            } else {
+                                String day_content_sep = day_show.getText().toString();
+                                if (!TextUtils.isEmpty(day_content_sep)) {
+                                    int day_number = Integer.valueOf(day_content_sep);
+                                    if (day_number > 28) {
+                                        day_number = 28;
+                                        day_show.setText(day_number + "");
+                                    }
+                                }
+                            }
                         }
                     }
-                    day_show.setSelection(day_show.getText().toString().length());
+                } else {
+                    day_show.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
                 }
+                day_show.setSelection(day_show.getText().toString().length());
             }
         });
         hour_show = getView(R.id.hour_show,dialog);

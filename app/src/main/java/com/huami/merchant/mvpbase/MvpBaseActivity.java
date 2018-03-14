@@ -1,7 +1,5 @@
 package com.huami.merchant.mvpbase;
-
 import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -41,11 +39,11 @@ import android.widget.Toast;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.huami.merchant.R;
 import com.huami.merchant.util.DisplayUtil;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.io.Serializable;
-
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 public abstract class MvpBaseActivity<T extends BasePresenter,V extends BaseViewInter> extends AppCompatActivity {
     protected T presenter;
     private View progress;
@@ -62,7 +60,7 @@ public abstract class MvpBaseActivity<T extends BasePresenter,V extends BaseView
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        AppManager.Instance.addActivity(this);
+        ActivityManager.Instance.addActivity(this);
         inflater = LayoutInflater.from(this);
         setContentView(initLayout());
         ButterKnife.bind(this);
@@ -98,6 +96,13 @@ public abstract class MvpBaseActivity<T extends BasePresenter,V extends BaseView
         if (presenter != null) {
             presenter.deAttach();
         }
+    }
+    public void finishActivity(Activity activity){
+        ActivityManager.Instance.finishActivity(activity);
+    }
+
+    public void finishActivity(Class cla) {
+        ActivityManager.Instance.finishActivity(cla);
     }
     /**
      * 检查网络和id是否为空
@@ -365,12 +370,10 @@ public abstract class MvpBaseActivity<T extends BasePresenter,V extends BaseView
     @Override
     protected void onResume() {
         super.onResume();
-        JPushInterface.onResume(this);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        JPushInterface.onPause(this);
     }
 
     private String lastToast=null;

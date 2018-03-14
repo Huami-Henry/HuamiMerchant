@@ -48,7 +48,7 @@ public class TaskPreviewAdapter extends RecyclerView.Adapter<TaskPreviewAdapter.
         holder.user_case_id.setText("000"+data.getUsercase_id()+"");
         holder.shop_id.setText("000"+position);
         holder.shop_name.setText(data.getShop_name());
-        holder.task_price.setText(""+data.getPrice()+"元");
+        holder.task_price.setText(""+data.getMer_price()+"元");
         holder.task_address.setText(""+data.getShop_address());
         holder.task_region.setText(data.getRegion_name());
         if (data.getLast_mod() != 0) {

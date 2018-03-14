@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.huami.merchant.activity.paper.PaperPendingDetailActivity">
     <include layout="@layout/include_activity_bar" />
     <TextView
@@ -15,223 +14,24 @@
         android:padding="10dp"
         android:background="@color/white"
         />
-    <com.huami.merchant.designView.MyScrollView
+    <com.huami.merchant.designView.recycle.XRecyclerView
+        android:id="@+id/task_paper_recycle"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_height="0dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="8dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@color/white"
-                        >
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-                            <TextView
-                                android:text="00001"
-                                android:id="@+id/user_case_id"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:padding="10dp"
-                                android:layout_height="wrap_content" />
-                            <TextView
-                                android:id="@+id/shop_price"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="right"
-                                android:paddingRight="10dp"
-                                android:text="0元" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-                            <TextView
-                                android:id="@+id/shop_id"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0001"
-                                android:layout_marginLeft="10dp"
-                                />
-                        </LinearLayout>
-                        <TextView
-                            android:id="@+id/shop_region"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="上海"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="10dp"
-                            />
-                        <TextView
-                            android:id="@+id/shop_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="华山路一店"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="10dp"
-                            />
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            >
-                            <TextView
-                                android:id="@+id/shop_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="徐汇区华山路1号"
-                                android:paddingRight="10dp"
-                                android:layout_marginLeft="10dp"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:background="@color/theme_daren"
-                        android:layout_height="0.5dp" />
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/check_time_recycle"
-                        android:layout_width="match_parent"
-                        android:background="@color/white"
-                        android:layout_marginTop="0.5dp"
-                        android:layout_height="40dp"></android.support.v7.widget.RecyclerView>
-                    <View
-                        android:layout_width="match_parent"
-                        android:background="@color/theme_daren"
-                        android:layout_height="0.5dp" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@color/white"
-                        >
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="签到时间:"
-                                />
-                            <TextView
-                                android:id="@+id/sign_in_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0000.00.00 00:00:00"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="签出时间:"
-                                />
-                            <TextView
-                                android:id="@+id/sign_out_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0000.00.00 00:00:00"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="提交时间:"
-                                />
-                            <TextView
-                                android:id="@+id/submit_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0000.00.00 00:00:00"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="审核时间:"
-                                />
-                            <TextView
-                                android:id="@+id/check_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0000.00.00 00:00:00"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/task_paper_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/total_postil"
-                android:visibility="gone"
-                android:padding="10dp"
-                />
-
-        </LinearLayout>
-    </com.huami.merchant.designView.MyScrollView>
-
-    <View
+        android:layout_height="0dp"/>
+    <TextView
         android:layout_width="match_parent"
-        android:background="@color/theme_daren"
-        android:layout_height="0.5dp" />
+        android:layout_height="wrap_content"
+        android:id="@+id/total_postil"
+        android:visibility="gone"
+        android:padding="10dp"
+        />
     <LinearLayout
         android:id="@+id/bottom_pending"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/shape_back"
         >
         <TextView
             android:id="@+id/pass_tv"

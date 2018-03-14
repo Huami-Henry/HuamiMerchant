@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/theme_daren"
     tools:context="com.huami.merchant.activity.task.TaskPublishActivity">
     <include layout="@layout/include_edit_bar" />
 
@@ -13,70 +13,104 @@
         android:layout_width="match_parent"
         android:background="@color/theme_daren"
         android:layout_height="0.5dp" />
-    <TextView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="任务名称"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="20dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/shape_back"
-        >
-        <EditText
-            android:id="@+id/task_name"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@null"
-            />
-        <ImageView
-            android:id="@+id/del_task_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cp_ic_search_clear"
-            android:padding="10dp"
-            />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="任务LOGO"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="5dp"
         >
-        <ImageView
-            android:id="@+id/iv_task"
-            android:layout_width="100dp"
-            android:src="@mipmap/rectangle_seize_pic"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:id="@+id/change_tv"
-            android:layout_toRightOf="@+id/iv_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="更换"
-            android:padding="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/colorPrimary"
-            />
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="任务名称"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_back"
+                >
+                <EditText
+                    android:id="@+id/task_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@null"
+                    />
+                <ImageView
+                    android:id="@+id/del_task_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/cp_ic_search_clear"
+                    android:padding="10dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="任务LOGO"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_task"
+                    android:layout_width="100dp"
+                    android:src="@mipmap/rectangle_seize_pic"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+                <TextView
+                    android:id="@+id/change_tv"
+                    android:layout_toRightOf="@+id/iv_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更换"
+                    android:padding="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorPrimary"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/value_search"
+        android:padding="10dp"
+        android:textColor="@color/colorPrimary"
+        android:text="调研方案咨询"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/value_proxy"
+        android:padding="10dp"
+        android:text="代理发布任务"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

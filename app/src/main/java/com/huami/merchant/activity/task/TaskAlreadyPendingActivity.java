@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.paper.PaperPendingDetailActivity;
+import com.huami.merchant.activity.service.SingleValueActivity;
 import com.huami.merchant.activity.task.adapter.TaskPreviewAdapter;
 import com.huami.merchant.activity.task.presenter.TaskAlreadyPresenter;
 import com.huami.merchant.activity.task.viewInter.TaskPreviewInter;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
+import butterknife.OnClick;
+
 public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPresenter,TaskAlreadyPendingActivity> implements TaskPreviewInter,XRecyclerView.LoadingListener,OnRecycleItemClickListener{
     private List<TaskPreviewData> datas = new ArrayList<>();
     private LinearLayoutManager manager;
@@ -212,5 +215,9 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
                         });
                 break;
         }
+    }
+    @OnClick(R.id.export_result)
+    public void exportResult(){
+        startActivity(this, SingleValueActivity.class,"entryId","4");
     }
 }

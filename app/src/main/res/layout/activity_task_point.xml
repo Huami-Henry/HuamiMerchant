@@ -20,15 +20,18 @@
             android:text="需要配置的任务点很多?"
             />
         <TextView
+            android:id="@+id/configure_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="配置任务"
+            android:textColor="@color/app_theme"
+            android:textStyle="bold"
             android:background="@drawable/shape_back"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             />
     </LinearLayout>
     <com.huami.merchant.designView.recycle.XRecyclerView

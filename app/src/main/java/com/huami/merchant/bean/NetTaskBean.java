@@ -1,9 +1,5 @@
 package com.huami.merchant.bean;
-
 import java.util.List;
-
-import com.huami.merchant.bean.TaskInfo.TaskCondition;
-
 /**
  * Created by henry on 2018/1/19.
  */
@@ -69,6 +65,7 @@ public class NetTaskBean {
         private int shop_count;
         private long show_date;
         private int trainpaper_id;
+        private int train_id;
         private int task_type;
         private List<TaskCondition> taskCondition;
         private List<String> taskAttention;
@@ -80,7 +77,13 @@ public class NetTaskBean {
         public void setTaskAttention(List<String> taskAttention) {
             this.taskAttention = taskAttention;
         }
+        public int getTrain_id() {
+            return train_id;
+        }
 
+        public void setTrain_id(int train_id) {
+            this.train_id = train_id;
+        }
         public String getTask_name() {
             return task_name;
         }

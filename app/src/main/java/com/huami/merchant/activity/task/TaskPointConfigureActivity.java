@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,10 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.task.adapter.TaskPointConfigureAdapter;
 import com.huami.merchant.activity.task.presenter.TaskPointConfigurePresenter;
-import com.huami.merchant.activity.task.presenter.TaskPointPresenter;
 import com.huami.merchant.bean.AlreadyBean;
 import com.huami.merchant.bean.TaskPointInfo;
 import com.huami.merchant.code.ErrorCode;
@@ -24,7 +23,6 @@ import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseApplication;
 import com.huami.merchant.mvpbase.BaseConsts;
-import com.huami.merchant.mvpbase.BasePresenter;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 
 import java.util.ArrayList;
@@ -60,7 +58,6 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointConfigu
     private LinearLayoutManager manager;
     private TaskPointConfigureAdapter adapter;
     private final int ADD_TASK_SHOP_CODE = 1001;
-    private Map<Integer, Integer> map = new HashMap<>();
     private AlreadyBean edit=new AlreadyBean();
     @Override
     protected TaskPointConfigurePresenter getPresenter() {
@@ -89,7 +86,7 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointConfigu
     protected void initView() {
         manager = new LinearLayoutManager(this);
         task_point_recycle.setLayoutManager(manager);
-        adapter = new TaskPointConfigureAdapter(shops,map,edit,this);
+        adapter = new TaskPointConfigureAdapter(shops,edit,this);
         task_point_recycle.setAdapter(adapter);
         getMoreShop();
         initListener();
@@ -103,9 +100,13 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointConfigu
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 for (TaskPointInfo info : shops) {
-                    info.setTotal_num(Integer.valueOf(s.toString()));
+                    if (TextUtils.isEmpty(s)) {
+                        info.setTotal_num(0);
+                    } else {
+                        info.setTotal_num(Integer.valueOf(s.toString()));
+                    }
                 }
-                adapter.notifyDataSetChanged();
+                notifyData();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -118,9 +119,15 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointConfigu
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 for (TaskPointInfo info : shops) {
-                    info.setMer_price(Integer.valueOf(s.toString()));
+                    if (TextUtils.isEmpty(s)) {
+                        info.setMer_price(0);
+                        info.setPrice(0);
+                    } else {
+                        info.setMer_price(Integer.valueOf(s.toString()));
+                        info.setPrice(Integer.valueOf(s.toString()));
+                    }
                 }
-                adapter.notifyDataSetChanged();
+                notifyData();
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -137,63 +144,108 @@ public class TaskPointConfigureActivity extends MvpBaseActivity<TaskPointConfigu
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
-
+            task_single_price.setText("");
+            task_single_count.setText("");
+            String taskPoint = data.getStringExtra("taskPointInfoStr");
+            List<TaskPointInfo> taskPointInfo=new Gson().fromJson(taskPoint,new TypeToken<List<TaskPointInfo>>(){}.getType());
+            shops.clear();
+            for (TaskPointInfo in : taskPointInfo) {
+                shops.add(in);
+            }
+            notifyData();
         }
     }
-    @OnClick(R.id.make_sure_task)
-    public void makeSureTask(){
 
+    @OnClick(R.id.make_sure_task)
+    public void makeSureTask() {
+        String count = task_single_count.getText().toString();
+        String price = task_single_price.getText().toString();
+        if (TextUtils.isEmpty(count)) {
+            showToast("请先设置每个门店的任务单数");
+            return;
+        }
+        if (TextUtils.isEmpty(price)) {
+            showToast("请先设置每个门店的任务价格");
+            return;
+        }
+        if (shops.size() == 0) {
+            showToast("请先选择门店");
+            return;
+        }
+        String shop = new Gson().toJson(shops);
+        Intent intent = new Intent(this, TaskEditActivity.class);
+        intent.putExtra("task_shop", shop);
+        setResult(RESULT_OK,intent);
+        finish();
     }
     @Override
     public void onItemClick(View v, int position) {
-        if (map.containsKey(position)) {
-            map.remove(position);
-        } else {
-            map.put(position, position);
+        if (manage_shop_cb.isChecked()) {
+            for (TaskPointInfo info : shops) {
+                if (!info.isCheck()) {
+                    manage_shop_cb.setChecked(false);
+                    break;
+                }
+            }
         }
-        adapter.notifyDataSetChanged();
+        notifyData();
     }
     @OnClick(R.id.add_task_point)
     public void addTaskPoint(){
-        map.clear();
         String json = new Gson().toJson(shops);
         startActivityForResult(this,TaskPointActivity.class,new String[]{"taskPointInfoStr"},new String[]{json},ADD_TASK_SHOP_CODE);
     }
     @OnClick(R.id.del_task_point)
     public void delTaskPoint(){
-        map.clear();
         if (edit.isAlready()) {
             edit.setAlready(false);
             del_task_point.setText("管理");
             add_task_point.setVisibility(View.VISIBLE);
             manage_shop_liner.setVisibility(View.GONE);
+            for (TaskPointInfo info : shops) {
+                info.setCheck(false);
+            }
         } else {
             edit.setAlready(true);
             del_task_point.setText("完成");
             add_task_point.setVisibility(View.GONE);
             manage_shop_liner.setVisibility(View.VISIBLE);
         }
+        notifyData();
+    }
+    public void notifyData(){
+        int count=0;
+        long money=0;
+        for (TaskPointInfo info : shops) {
+            count += info.getTotal_num();
+            money += (info.getMer_price()*info.getTotal_num());
+        }
+        shop_count.setText(count+"单");
+        total_money.setText(money+"元");
         adapter.notifyDataSetChanged();
     }
     @OnClick(R.id.manage_shop_del)
     public void delCheckShop(){
-        for (int index : map.keySet()) {
-            shops.remove(index);
+        for (int i=0;i<shops.size();i++) {
+            TaskPointInfo info = shops.get(i);
+            if (info.isCheck()) {
+                shops.remove(i);
+            }
         }
+        notifyData();
     }
     @OnClick(R.id.manage_shop_cb)
     public void checkAll(){
-        int i=0;
+        boolean checked = manage_shop_cb.isChecked();
         for (TaskPointInfo info : shops) {
-            map.put(i, i);
-            i++;
+            info.setCheck(checked);
         }
         adapter.notifyDataSetChanged();
     }
     @Override
     public void doSuccess(Object tag, String json) {
         endLoading();
-        adapter.notifyDataSetChanged();
+        notifyData();
     }
     @Override
     public void doFailure(Object tag, ErrorCode code) {

@@ -55,7 +55,6 @@ public class TaskAttentionActivity extends MvpBaseActivity implements OnRecycleI
     @BindView(R.id.task_attention_ed)
     EditText task_attention_ed;
     private TaskInfo taskInfo;
-    private String taskAttention;
     private List<String> task_attention = new ArrayList<>();
     private MyGridLayoutManager manager;
     private TaskAttentionAdapter adapter;
@@ -74,9 +73,8 @@ public class TaskAttentionActivity extends MvpBaseActivity implements OnRecycleI
             taskInfo = new TaskInfo();
         }
         try {
-            taskAttention = taskInfo.getTaskAttention();
-            if (!TextUtils.isEmpty(taskAttention)) {
-                task_attention= new Gson().fromJson(taskAttention,new TypeToken<List<String>>(){}.getType());
+            if (taskInfo.getTaskAttention()!=null) {
+                task_attention= taskInfo.getTaskAttention();
             }
         } catch (Exception e) {
         }
@@ -176,7 +174,7 @@ public class TaskAttentionActivity extends MvpBaseActivity implements OnRecycleI
         t_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskInfo.setTaskAttention(new Gson().toJson(task_attention));
+                taskInfo.setTaskAttention(task_attention);
                 Intent intent = new Intent(TaskAttentionActivity.this, TaskEditActivity.class);
                 intent.putExtra("taskInfo", taskInfo);
                 setResult(RESULT_OK, intent);

@@ -22,20 +22,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/white"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
         >
         <LinearLayout
             android:id="@+id/text_edit"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="20dp"
+                android:src="@mipmap/icon_character"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/icon_character"
                 android:text="文本"
-                android:drawablePadding="3dp"
                 android:textSize="@dimen/twelve"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -43,13 +51,18 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="20dp"
+                android:src="@mipmap/icon_link"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/icon_link"
-                android:drawablePadding="3dp"
                 android:text="链接"
+                android:layout_marginTop="5dp"
                 android:textSize="@dimen/twelve"
                 />
         </LinearLayout>
@@ -58,13 +71,18 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="20dp"
+                android:src="@mipmap/icon_picture"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
-                android:drawableTop="@mipmap/icon_picture"
                 android:text="图片"
+                android:layout_marginTop="5dp"
                 android:textSize="@dimen/twelve"
                 />
         </LinearLayout>
@@ -73,15 +91,20 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="20dp"
+                android:src="@mipmap/icon_camera"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@mipmap/icon_camera"
-                android:drawablePadding="6dp"
+                android:layout_marginTop="5dp"
                 android:text="拍照"
                 android:textSize="@dimen/twelve"
-                android:drawableTop="@mipmap/icon_camera"
                 />
         </LinearLayout>
     </LinearLayout>

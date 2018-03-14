@@ -1,19 +1,20 @@
 package com.huami.merchant.fragment;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.huami.merchant.R;
+import com.huami.merchant.activity.service.SingleValueActivity;
+import com.huami.merchant.activity.task.DataStatisticsActivity;
 import com.huami.merchant.activity.task.TaskAlreadyPendingActivity;
 import com.huami.merchant.activity.task.TaskEditActivity;
+import com.huami.merchant.activity.task.TaskFailureReasonActivity;
 import com.huami.merchant.activity.task.TaskInfoStateActivity;
 import com.huami.merchant.activity.task.TaskPreviewActivity;
 import com.huami.merchant.bean.TaskBean;
@@ -28,7 +29,6 @@ import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseApplication;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseFragment;
-import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -96,7 +96,7 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
         task_preview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TaskAdapter(tasks, this);
         task_preview.setAdapter(adapter);
-        showLoading();
+        state_layout.showLoadingView();
         getTaskList();
     }
 
@@ -114,7 +114,7 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
 
     @OnClick(R.id.help_review)
     public void helpReview(){
-//        startActivity(this,);
+        startActivity(getActivity(), SingleValueActivity.class,"entryId","1");
     }
     @OnClick(R.id.only_look_preview)//待审核
     public void onlyLookPreview(){
@@ -130,7 +130,6 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
     @Override
     public void doSuccess(Object tag,String json) {
         if (tag.equals(BaseConsts.BASE_URL_TASK)) {
-            endLoading();
             try {
                 task_preview.refreshComplete();
                 Gson gson = new Gson();
@@ -138,8 +137,13 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
                 int count = bean.getData().getCount();
                 wait_preview.setText(String.valueOf(count));
                 adapter.notifyDataSetChanged();
+                if (tasks.size() == 0) {
+                    state_layout.showEmptyView("暂时没有数据", R.mipmap.empty_view);
+                } else {
+                    state_layout.showContentView();
+                }
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
         }
     }
@@ -170,14 +174,32 @@ public class TaskFragment extends MvpBaseFragment<TaskListPresenter, TaskFragmen
             case R.id.check_result:
                 startActivity(getActivity(), TaskAlreadyPendingActivity.class,new String[]{"task_id"},new String[]{String.valueOf(tasks.get(position).getTask_id())});
                 break;
+            case R.id.look_result:
+                startActivity(getActivity(), TaskFailureReasonActivity.class,new String[]{"task_id"},new String[]{String.valueOf(tasks.get(position).getTask_id())});
+                break;
             case R.id.data_statistics:
-                startActivity(getActivity(), TaskEditActivity.class,new String[]{"task_id"},new String[]{String.valueOf(tasks.get(position).getTask_id())});
+                startActivity(getActivity(), DataStatisticsActivity.class,new String[]{"task_id"},new String[]{String.valueOf(tasks.get(position).getTask_id())});
                 break;
             case R.id.edit_task:
-                startActivity(getActivity(), TaskEditActivity.class,new String[]{"task_id"},new String[]{String.valueOf(tasks.get(position).getTask_id())});
+                startActivity(getActivity(),
+                        TaskEditActivity.class,
+                        new String[]{"task_id","total_count","total_money","edit"},
+                        new Object[]{
+                                String.valueOf(tasks.get(position).getTask_id()),
+                                tasks.get(position).getTask_total_count(),
+                                tasks.get(position).getTask_price(),
+                                true});
                 break;
             default:
-                startActivity(getActivity(), TaskInfoStateActivity.class,new String[]{"task_id","check_state"},new String[]{String.valueOf(tasks.get(position).getTask_id()), String.valueOf(tasks.get(position).getCheck_state())});
+                startActivity(getActivity(),
+                        TaskInfoStateActivity.class,
+                        new String[]{"task_id","check_state","total_count","total_money"},
+                        new Object[]{
+                                String.valueOf(tasks.get(position).getTask_id()),
+                                tasks.get(position).getCheck_state(),
+                                tasks.get(position).getTask_total_count(),
+                                tasks.get(position).getTask_price()
+                        });
                 break;
         }
     }

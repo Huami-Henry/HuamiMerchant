@@ -1,4 +1,5 @@
 package com.huami.merchant.activity.task.model;
+import com.huami.merchant.bean.TaskPublishBase;
 import com.huami.merchant.fragment.listener.InterLoadListener;
 import com.huami.merchant.mvpbase.BaseModelInter;
 /**
@@ -6,4 +7,5 @@ import com.huami.merchant.mvpbase.BaseModelInter;
  */
 public interface TaskEditModelInter extends BaseModelInter {
     void getEditTask(String task_id,InterLoadListener listener) throws Exception;
+    void publishTask(String url, TaskPublishBase publish,InterLoadListener listener) throws Exception;
 }

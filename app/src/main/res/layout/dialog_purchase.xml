@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/dialog_purchase"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入购买数量"
+            android:padding="20dp"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/minus_purchase"
+            android:src="@mipmap/minus_purchase"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            />
+        <EditText
+            android:id="@+id/purchase_count"
+            android:background="@drawable/cicle_back_theme_fram"
+            android:layout_width="80dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:inputType="phone"
+            android:text="0"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/plus_purchase"
+            android:src="@mipmap/plus_purchase"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_height="0.5dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="right"
+        >
+        <TextView
+            android:id="@+id/go_purchase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去支付"
+            android:paddingLeft="15dp"
+            android:layout_margin="10dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/cicle_back_theme_fram"
+            />
+    </LinearLayout>
+</LinearLayout>

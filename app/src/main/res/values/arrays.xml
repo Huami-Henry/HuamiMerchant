@@ -20,6 +20,7 @@
         <item>@string/permission_white_external_hint</item>
     </string-array>
     <string-array name="sex">
+        <item>全部</item>
         <item>男</item>
         <item>女</item>
     </string-array>

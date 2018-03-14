@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huami.merchant.R;
@@ -24,12 +27,10 @@ import butterknife.ButterKnife;
 public class TaskPointConfigureAdapter extends RecyclerView.Adapter<TaskPointConfigureAdapter.TaskPointHolder> {
     private List<TaskPointInfo> shops;
     private OnRecycleItemClickListener listener;
-    private Map<Integer, Integer> map;
     private AlreadyBean edit;
-    public TaskPointConfigureAdapter(List<TaskPointInfo> shops, Map<Integer, Integer> map,AlreadyBean edit, OnRecycleItemClickListener listener) {
+    public TaskPointConfigureAdapter(List<TaskPointInfo> shops,AlreadyBean edit, OnRecycleItemClickListener listener) {
         this.shops = shops;
         this.listener = listener;
-        this.map = map;
         this.edit = edit;
     }
     @Override
@@ -42,27 +43,25 @@ public class TaskPointConfigureAdapter extends RecyclerView.Adapter<TaskPointCon
     @Override
     public void onBindViewHolder(final TaskPointHolder holder, final int position) {
         final TaskPointInfo info = shops.get(position);
-        holder.shop_cb.setChecked(info.isCheck());
+        holder.shop_cb.setImageResource(info.isCheck()?R.mipmap.multiple_choice_sel:R.mipmap.multiple_choice);
         holder.shop_num.setText(info.getShop_num());
         holder.shop_region.setText(info.getRegion_name());
         holder.shop_name.setText(info.getAddressName());
         holder.shop_address.setText(info.getShop_address());
-        holder.task_shop.setTag(info.getShop_id());
         holder.task_shop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                info.setCheck(!info.isCheck());
                 listener.onItemClick(v,position);
             }
         });
+
         holder.task_count.setText(""+info.getTotal_num()+"单");
         holder.task_price.setText(""+info.getMer_price()+"元");
         if (edit.isAlready()) {
             holder.shop_cb.setVisibility(View.VISIBLE);
-            if (map.containsKey(position)) {
-                holder.shop_cb.setChecked(true);
-            } else {
-                holder.shop_cb.setChecked(false);
-            }
+        } else {
+            holder.shop_cb.setVisibility(View.GONE);
         }
     }
     @Override
@@ -71,7 +70,7 @@ public class TaskPointConfigureAdapter extends RecyclerView.Adapter<TaskPointCon
     }
     public class TaskPointHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.shop_cb)
-        CheckBox shop_cb;
+        ImageView shop_cb;
         @BindView(R.id.shop_num)
         TextView shop_num;
         @BindView(R.id.shop_name)
@@ -85,7 +84,7 @@ public class TaskPointConfigureAdapter extends RecyclerView.Adapter<TaskPointCon
         @BindView(R.id.task_count)
         TextView task_count;
         @BindView(R.id.task_shop)
-        View task_shop;
+        LinearLayout task_shop;
         public TaskPointHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

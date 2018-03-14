@@ -1,4 +1,6 @@
 package com.huami.merchant.activity.task.model;
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.huami.merchant.bean.TaskPaperInfo;
@@ -25,7 +27,7 @@ public class TaskPaperModelImp implements TaskPaperModelInter,BaseNetDataBiz.Req
     private List<TaskPaperInfo> papers;
     private int page;
     @Override
-    public void getTaskPaper(List<TaskPaperInfo> papers, String uuid, int page, InterLoadListener listener) {
+    public void getTaskPaper(List<TaskPaperInfo> papers,String url, String uuid, int page, InterLoadListener listener) {
         this.page = page;
         this.papers = papers;
         this.listener = listener;
@@ -33,9 +35,9 @@ public class TaskPaperModelImp implements TaskPaperModelInter,BaseNetDataBiz.Req
             this.papers = new ArrayList<>();
         }
         try {
-            String[] keys = new String[]{"uuid", "page", "number"};
-            String[] values = new String[]{BaseApplication.UUID,String.valueOf(page), "100"};
-            biz.getMainThread(BaseConsts.BASE_URL_TASK_PAPER_LIST,keys,values,BaseConsts.BASE_URL_TASK_PAPER_LIST);
+            String[] keys = new String[]{"merUserId", "page", "number"};
+            String[] values = new String[]{BaseApplication.UUID,String.valueOf(page), "1000"};
+            biz.getMainThread(url,keys,values,url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,6 +47,7 @@ public class TaskPaperModelImp implements TaskPaperModelInter,BaseNetDataBiz.Req
     @Override
     public void onResponse(BaseNetDataBiz.Model model) {
         String json = model.getJson();
+        Log.e("我的问卷是啥", json);
         Gson gson = new Gson();
         try {
             JSONObject object = new JSONObject(json);

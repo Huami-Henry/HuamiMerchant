@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/theme_daren"
     tools:context="com.huami.merchant.activity.task.TaskPointConfigureActivity">
     <include layout="@layout/include_activity_bar" />
 
@@ -13,9 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="0dp"
-        app:cardElevation="8dp">
+        app:cardElevation="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +83,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="3dp"
                     android:text="管理"
-                    android:textColor="@color/color_blue" />
+                    android:textColor="@color/app_theme" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -98,14 +100,14 @@
                     android:paddingRight="10dp"
                     android:paddingTop="3dp"
                     android:text="添加门店"
-                    android:textColor="@color/color_blue" />
+                    android:textColor="@color/app_theme" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/task_point_recycle"
-        android:background="@color/white"
+        android:background="@color/theme_daren"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -117,15 +119,16 @@
         android:layout_height="0.5dp" />
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -137,6 +140,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0单"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 />
@@ -157,44 +162,47 @@
             <TextView
                 android:id="@+id/make_sure_task"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="确定"
-                android:background="@drawable/shape_back"
+                android:background="@color/app_theme"
                 android:paddingLeft="20dp"
+                android:gravity="center"
+                android:textColor="@color/white"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
                 />
         </LinearLayout>
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/manage_shop_liner"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_gravity="center_vertical"
             android:background="@color/white"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:visibility="gone"
             android:layout_height="wrap_content">
             <CheckBox
                 android:id="@+id/manage_shop_cb"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="全选"
+                android:paddingRight="10dp"
                 />
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/manage_shop_del"
                 android:text="删除"
-                android:background="@drawable/shape_back"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+                android:gravity="center"
+                android:background="@color/app_theme"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.huami.merchant.bean;
 
+import android.widget.LinearLayout;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -46,8 +48,8 @@ public class TaskInfo implements Serializable{
     private int require_shop_time;
     private int operator_id;
     private String train_name;
-    private long accept_begin_date;
-    private int task_id;
+    private String accept_begin_date;
+    private Integer task_id;
     private String task_desc;
     private int merchant_id;
     private long task_begin_date;
@@ -60,7 +62,7 @@ public class TaskInfo implements Serializable{
     private String task_icon;
     private long create_date;
     private int over_time;
-    private long accept_end_date;
+    private String accept_end_date;
     private int sign_dis;
     private int is_automatically_add;
     private int is_issuebysystem;
@@ -71,8 +73,17 @@ public class TaskInfo implements Serializable{
     private int shop_count;
     private long show_date;
     private int trainpaper_id;
-    private int task_type;
-    private String taskAttention;
+    private int task_type=1;
+    private List<String> taskAttention;
+    private int train_id;
+    public int getTrain_id() {
+        return train_id;
+    }
+
+    public void setTrain_id(int train_id) {
+        this.train_id = train_id;
+    }
+
     private List<TaskCondition> taskCondition;
 
     public String getTask_name() {
@@ -107,19 +118,19 @@ public class TaskInfo implements Serializable{
         this.train_name = train_name;
     }
 
-    public long getAccept_begin_date() {
+    public String getAccept_begin_date() {
         return accept_begin_date;
     }
 
-    public void setAccept_begin_date(long accept_begin_date) {
+    public void setAccept_begin_date(String accept_begin_date) {
         this.accept_begin_date = accept_begin_date;
     }
 
-    public int getTask_id() {
+    public Integer getTask_id() {
         return task_id;
     }
 
-    public void setTask_id(int task_id) {
+    public void setTask_id(Integer task_id) {
         this.task_id = task_id;
     }
 
@@ -219,11 +230,11 @@ public class TaskInfo implements Serializable{
         this.over_time = over_time;
     }
 
-    public long getAccept_end_date() {
+    public String getAccept_end_date() {
         return accept_end_date;
     }
 
-    public void setAccept_end_date(long accept_end_date) {
+    public void setAccept_end_date(String accept_end_date) {
         this.accept_end_date = accept_end_date;
     }
 
@@ -323,137 +334,12 @@ public class TaskInfo implements Serializable{
         this.taskCondition = taskCondition;
     }
 
-    public String getTaskAttention() {
+    public List<String> getTaskAttention() {
         return taskAttention;
     }
 
-    public void setTaskAttention(String taskAttention) {
+    public void setTaskAttention(List<String> taskAttention) {
         this.taskAttention = taskAttention;
     }
 
-    public static class TaskCondition {
-        /**
-         * last_mod : 1515400768000
-         * expression : 3
-         * task_id : 447
-         * id : 507
-         * state : 1
-         * param_text :
-         * create_date : 1515400768000
-         * type : age
-         * condition_id : 4
-         * param1 : 16
-         * param2 : 18
-         * param_num : 2
-         */
-
-        private long last_mod;
-        private int expression;
-        private int task_id;
-        private int id;
-        private int state;
-        private String param_text;
-        private long create_date;
-        private String type;
-        private int condition_id;
-        private int param1;
-        private int param2;
-        private int param_num;
-
-        public long getLast_mod() {
-            return last_mod;
-        }
-
-        public void setLast_mod(long last_mod) {
-            this.last_mod = last_mod;
-        }
-
-        public int getExpression() {
-            return expression;
-        }
-
-        public void setExpression(int expression) {
-            this.expression = expression;
-        }
-
-        public int getTask_id() {
-            return task_id;
-        }
-
-        public void setTask_id(int task_id) {
-            this.task_id = task_id;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getState() {
-            return state;
-        }
-
-        public void setState(int state) {
-            this.state = state;
-        }
-
-        public String getParam_text() {
-            return param_text;
-        }
-
-        public void setParam_text(String param_text) {
-            this.param_text = param_text;
-        }
-
-        public long getCreate_date() {
-            return create_date;
-        }
-
-        public void setCreate_date(long create_date) {
-            this.create_date = create_date;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public int getCondition_id() {
-            return condition_id;
-        }
-
-        public void setCondition_id(int condition_id) {
-            this.condition_id = condition_id;
-        }
-
-        public int getParam1() {
-            return param1;
-        }
-
-        public void setParam1(int param1) {
-            this.param1 = param1;
-        }
-
-        public int getParam2() {
-            return param2;
-        }
-
-        public void setParam2(int param2) {
-            this.param2 = param2;
-        }
-
-        public int getParam_num() {
-            return param_num;
-        }
-
-        public void setParam_num(int param_num) {
-            this.param_num = param_num;
-        }
-    }
 }

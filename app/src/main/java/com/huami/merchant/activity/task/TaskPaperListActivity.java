@@ -8,13 +8,14 @@ import com.huami.merchant.R;
 import com.huami.merchant.activity.task.adapter.TaskPaperAdapter;
 import com.huami.merchant.activity.task.presenter.TaskPaperPresenter;
 import com.huami.merchant.activity.task.viewInter.TaskPreviewInter;
-import com.huami.merchant.activity.user.MvpLoginActivity;
+import com.huami.merchant.activity.web.AgentWebActivity;
 import com.huami.merchant.bean.TaskInfo;
 import com.huami.merchant.bean.TaskPaperInfo;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.designView.recycle.XRecyclerView;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseApplication;
+import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 
 import java.util.ArrayList;
@@ -30,9 +31,7 @@ public class TaskPaperListActivity extends MvpBaseActivity<TaskPaperPresenter,Ta
     private List<TaskPaperInfo> papers=new ArrayList<>();
     private TaskInfo taskInfo;
     private int taskpaper_id;
-    private int trainpaper_id;
     private int page=1;
-    private boolean task;
     @Override
     protected TaskPaperPresenter getPresenter() {
         return new TaskPaperPresenter();
@@ -48,9 +47,7 @@ public class TaskPaperListActivity extends MvpBaseActivity<TaskPaperPresenter,Ta
         taskInfo = (TaskInfo) getIntent().getSerializableExtra("taskInfo");
         if (taskInfo != null) {
             taskpaper_id = taskInfo.getTaskpaper_id();
-            trainpaper_id = taskInfo.getTrainpaper_id();
         }
-        task = getIntent().getBooleanExtra("task", false);
     }
     @Override
     protected void initView() {
@@ -58,16 +55,35 @@ public class TaskPaperListActivity extends MvpBaseActivity<TaskPaperPresenter,Ta
         task_paper_recycle.setLayoutManager(manager);
         adapter = new TaskPaperAdapter(papers, this);
         task_paper_recycle.setAdapter(adapter);
+        task_paper_recycle.setLoadingListener(this);
         if (isNetworkConnected(this)) {
             if (!TextUtils.isEmpty(BaseApplication.UUID)) {
                 showLoading();
-                presenter.getTaskPaper(papers, BaseApplication.UUID, page);
+                getMoreData();
             }
         }
     }
+    public void getMoreData(){
+        presenter.getTaskPaper(papers, BaseConsts.BASE_URL_TASK_PAPER_LIST, BaseApplication.UUID, page);
+    }
+
+    private int position;
     @Override
     protected void setToolBar(TextView t_name, TextView t_menu) {
         t_name.setText("问卷选择");
+        t_menu.setText("确定");
+        t_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TaskPaperInfo info = papers.get(position);
+                taskInfo.setTaskpaper_id(info.getTaskpaper_id());
+                taskInfo.setTask_paper_name(info.getName());
+                Intent intent = new Intent(TaskPaperListActivity.this, TaskEditActivity.class);
+                intent.putExtra("taskInfo", taskInfo);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
     @Override
     public void viewLoadSuccess(Object tag, String json) {
@@ -77,17 +93,9 @@ public class TaskPaperListActivity extends MvpBaseActivity<TaskPaperPresenter,Ta
         } else {
             task_paper_recycle.loadMoreComplete();
         }
-        if (taskpaper_id != 0||trainpaper_id!=0) {
-            for (TaskPaperInfo info : papers) {
-                if (task) {
-                    if (info.getTaskpaper_id() == taskpaper_id) {
-                        info.setCheck(true);
-                    }
-                } else {
-                    if (info.getTrainpaper_id() == trainpaper_id) {
-                        info.setCheck(true);
-                    }
-                }
+        for (TaskPaperInfo info : papers) {
+            if (info.getTaskpaper_id() == taskpaper_id) {
+                info.setCheck(true);
             }
         }
         adapter.notifyDataSetChanged();
@@ -101,29 +109,31 @@ public class TaskPaperListActivity extends MvpBaseActivity<TaskPaperPresenter,Ta
 
     @Override
     public void onItemClick(View v, int position) {
-        TaskPaperInfo info = papers.get(position);
-        if (task) {
-            taskInfo.setTaskpaper_id(info.getTaskpaper_id());
-            taskInfo.setTask_paper_name(info.getName());
-        } else {
-            taskInfo.setTrainpaper_id(info.getTrainpaper_id());
-            taskInfo.setTrain_name(info.getName());
+        switch (v.getId()) {
+            case R.id.paper_content:
+                startActivity(this, AgentWebActivity.class,"url",BaseConsts.TASK_PAPER_PREVIEW +papers.get(position).getTaskpaper_id()+"&temp=1");
+                break;
+            case R.id.task_paper_radio:
+                this.position = position;
+                for (TaskPaperInfo info : papers) {
+                    info.setCheck(false);
+                }
+                TaskPaperInfo info = papers.get(position);
+                info.setCheck(!info.isCheck());
+                adapter.notifyDataSetChanged();
+                break;
         }
-        Intent intent = new Intent(this, TaskEditActivity.class);
-        intent.putExtra("taskInfo", taskInfo);
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.getTaskPaper(papers,BaseApplication.UUID,page);
+        getMoreData();
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.getTaskPaper(papers,BaseApplication.UUID,page);
+        getMoreData();
     }
 }

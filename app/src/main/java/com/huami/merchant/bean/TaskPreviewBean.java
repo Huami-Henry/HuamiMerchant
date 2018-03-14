@@ -83,6 +83,15 @@ public class TaskPreviewBean {
         private String shop_address;
         private int price;
         private int taskpaper_id;
+        private int mer_price;
+
+        public int getMer_price() {
+            return mer_price;
+        }
+
+        public void setMer_price(int mer_price) {
+            this.mer_price = mer_price;
+        }
 
         public int getTaskpaper_id() {
             return taskpaper_id;

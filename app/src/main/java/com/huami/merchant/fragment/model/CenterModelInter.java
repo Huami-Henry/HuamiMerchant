@@ -8,5 +8,5 @@ import com.huami.merchant.mvpbase.BaseModelInter;
  */
 
 public interface CenterModelInter extends BaseModelInter {
-    void getCenterInfo(String uuid,InterLoadListener listener);
+    void getCenterInfo(String uuid,String merUserId,InterLoadListener listener);
 }

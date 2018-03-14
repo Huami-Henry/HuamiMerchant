@@ -24,17 +24,27 @@ public class BaseConsts {
         }
     }
     private static final String DEBUG_BASE_URl=props.getProperty("DEBUG_BASE_URl");//url
+    private static final String BASE_HTML_URL=props.getProperty("BASE_HTML_URL");//url
     private static final String DEBUG_BASE_IMAGE=props.getProperty("DEBUG_BASE_IMAGE");//image
+    private static final String RELEASE_BASE_IMAGE=props.getProperty("RELEASE_BASE_IMAGE");//image
 
     private static final String RELEASE_BASE_URl = props.getProperty("RELEASE_BASE_URl");
 
 
     public static final String BASE_URL = isApkDebug(BaseApplication.getContext()) == true ? DEBUG_BASE_URl : RELEASE_BASE_URl;
-    public static final String BASE_URL_IMAGE = isApkDebug(BaseApplication.getContext()) == true ? DEBUG_BASE_IMAGE : RELEASE_BASE_URl;
+    public static final String BASE_URL_IMAGE = isApkDebug(BaseApplication.getContext()) == true ? DEBUG_BASE_IMAGE : RELEASE_BASE_IMAGE;
     /**
      * 用户登录  推出
      */
     public static final String BASE_URL_USER = BASE_URL+"/mine/login"; //email  password
+    /**
+     * 用户 推出
+     */
+    public static final String BASE_URL_LOGIN_OUT = BASE_URL+"/mine/loginOut";
+    /**
+     * 个人信息
+     */
+    public static final String BASE_URL_USER_CENTER = BASE_URL+"/mine/userInfo"; //email  password
     /**
      * 获取商户任务列表
      */
@@ -50,7 +60,15 @@ public class BaseConsts {
     /**
      * 获取调研问卷列表
      */
-    public static final String BASE_URL_TASK_PAPER_LIST = BASE_URL + "/bosstask/selTaskPaperListTemp";
+    public static final String BASE_URL_TASK_PAPER_LIST = BASE_URL + "/bossquestion/selTaskPaperListTemp";
+    /**
+     * 获取培训列表
+     */
+    public static final String BASE_URL_TRAIN_LIST = BASE_URL + "/bosstask/selPublishTraList";
+    /**
+     * 获取培训问卷列表
+     */
+    public static final String BASE_URL_TRAIN_PAPER_LIST = BASE_URL + "/bossquestion/selTraPaperList";
     /**
      * 获取商户门店
      */
@@ -72,6 +90,10 @@ public class BaseConsts {
      */
     public static final String BASE_URL_TASK_NO_PASS = BASE_URL + "/bossquestion/bossQuestionNoPass";
     /**
+     * 审核不通过原因
+     */
+    public static final String BASE_URL_TASK_FAILURE_REASON = BASE_URL + "/bosstask/checkTaskFailure";
+    /**
      * 获取待审任务详情
      */
     public static final String BASE_URL_TASK_ReviewPending = BASE_URL + "/questionnaire/selTaskPaperInfo";
@@ -88,8 +110,61 @@ public class BaseConsts {
      */
     public static final String BASE_URL_TASK_DETAIL_INFO = BASE_URL + "/bosstask/bossTaskInfo";
     /**
+     * (编辑)发布任务
+     */
+    public static final String BASE_URL_TASK_PUBLISH = BASE_URL + "/bosstask/publishTaskInfo";
+    /**
+     * 增值服务类别
+     */
+    public static final String BASE_URL_VALUE_SERVICE_TYPE = BASE_URL + "/appreciation/selectServPackageTypeList";
+    /**
+     * 增值服务
+     */
+    public static final String BASE_URL_VALUE_SERVICE = BASE_URL + "/appreciation/selectIncrementList";
+    /**
+     * 购买增值服务
+     */
+    public static final String BASE_URL_VALUE_SERVICE_PURCHASE = BASE_URL + "/bosstask/purchaseServPackage";
+    /**
+     * 增值服务详情
+     */
+    public static final String BASE_URL_VALUE_SERVICE_DETAIL = BASE_URL + "/appreciation/selectServPackageInfo?packageId=";
+    /**
+     * 增值单项服务包
+     */
+    public static final String BASE_URL_SINGLE_VALUE_SERVICE = BASE_URL + "/appreciation/selectEntryPackageList";
+    /**
+     * 计算购买金额
+     */
+    public static final String BASE_URL_SINGLE_VALUE_SERVICE_PRICE = BASE_URL + "/bosstask/getTotallAmount";//packageId  number  merUserId uuid
+    /**
+     * 问卷预览
+     */
+    public static final String TASK_PAPER_PREVIEW = BASE_URL + "/taskpaper/paperPreview.html?taskPaperId=";
+    /**
+     * 培训预览
+     */
+    public static final String TRAIN_PREVIEW = BASE_URL + "/trainpaper/trainPreview.html?trainId=";
+    /**
+     * 数据统计
+     */
+    public static final String DATA_STATISTICS = BASE_URL + "/data/count.html?taskId=";
+    /**
+     * 付款增值服务
+     */
+    public static final String PAY_SERVICE = BASE_URL + "/bosstask/purchaseServPackage";//packageId number cellPhone  contact merUserId
+    /**
+     * 获取已购买增值服务
+     */
+    public static final String ALREADY_BUY = BASE_URL + "/bosstask/selectMerServPackageList";//merUserId  uuid
+    /**
+     * 使用帮助
+     */
+    public static final String USER_HELP = "http://media.darenlaiye.com/darenlaiye/appExt/cooperation/cooperation.html";
+    /**
      * 个人中心数据字段
      */
+
     public class USER_CENTER{
         public static final String USER_ID ="USER_ID";
         public static final String USER_EMAIL ="USER_EMAIL";

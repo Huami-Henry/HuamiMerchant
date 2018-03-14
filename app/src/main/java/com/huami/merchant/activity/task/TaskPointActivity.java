@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.huami.merchant.R;
+import com.huami.merchant.activity.service.SingleValueActivity;
 import com.huami.merchant.activity.task.adapter.TaskPointAdapter;
 import com.huami.merchant.activity.task.presenter.TaskPointPresenter;
 import com.huami.merchant.bean.TaskPointInfo;
@@ -23,6 +24,8 @@ import com.huami.merchant.mvpbase.MvpBaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
+import butterknife.OnClick;
+
 public class TaskPointActivity extends MvpBaseActivity<TaskPointPresenter,TaskPointActivity> implements XRecyclerView.LoadingListener,TaskViewInter,OnRecycleItemClickListener{
     @BindView(R.id.task_shop_recycle)
     XRecyclerView task_shop_recycle;
@@ -58,6 +61,7 @@ public class TaskPointActivity extends MvpBaseActivity<TaskPointPresenter,TaskPo
         task_shop_recycle.setLayoutManager(manager);
         adapter = new TaskPointAdapter(shops, this);
         task_shop_recycle.setAdapter(adapter);
+        task_shop_recycle.setLoadingListener(this);
         getMoreShop();
     }
     public void getMoreShop(){
@@ -129,5 +133,9 @@ public class TaskPointActivity extends MvpBaseActivity<TaskPointPresenter,TaskPo
     public void onLoadMore() {
         page++;
         getMoreShop();
+    }
+    @OnClick(R.id.configure_task)
+    public void configureTask(){
+        startActivity(this, SingleValueActivity.class, "entryId", "9");
     }
 }
