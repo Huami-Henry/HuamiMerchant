@@ -164,6 +164,12 @@ public class BaseConsts {
     /**
      * 个人中心数据字段
      */
+    /**
+     * 首页的轮播图  发布的时候需要改
+     */
+    public static final String MAIN_TOPIC="http://interface.darenlaiye.com/darenlaiyeApp/home/topicRecommendWopingjia";
+
+
 
     public class USER_CENTER{
         public static final String USER_ID ="USER_ID";

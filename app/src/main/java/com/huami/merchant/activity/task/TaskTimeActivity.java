@@ -12,10 +12,7 @@ import com.huami.merchant.bean.TaskInfo;
 import com.huami.merchant.mvpbase.BasePresenter;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 import com.huami.merchant.util.TimeUtil;
-import com.orhanobut.logger.Logger;
-
 import org.feezu.liuli.timeselector.TimeSelector;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

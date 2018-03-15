@@ -1,25 +1,16 @@
 package com.huami.merchant.activity.task.model;
 import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.huami.merchant.bean.TaskPreviewBean;
-import com.huami.merchant.bean.TaskPreviewBean.TaskPreviewData;
 import com.huami.merchant.bean.TaskPublishBase;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.listener.InterLoadListener;
 import com.huami.merchant.mvpbase.BaseApplication;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.BaseNetDataBiz;
-import com.orhanobut.logger.Logger;
 import com.squareup.okhttp.Request;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.List;
-
 /**
  * Created by Henry on 2018/1/8.
  */
@@ -69,7 +60,6 @@ public class TaskEditModelImp implements TaskEditModelInter,BaseNetDataBiz.Reque
     @Override
     public void onResponse(BaseNetDataBiz.Model model) {
         String json = model.getJson();
-        Logger.json(json);
         try {
             JSONObject object = new JSONObject(json);
             int code = object.getInt("code");
@@ -79,7 +69,6 @@ public class TaskEditModelImp implements TaskEditModelInter,BaseNetDataBiz.Reque
                 listener.loadFailure(model.getTag(), ErrorCode.CODE_ERROR);
             }
         } catch (JSONException e) {
-            Logger.d("我的tag",e.getMessage());
             listener.loadFailure(model.getTag(), ErrorCode.TRY_CATCH);
         }
     }

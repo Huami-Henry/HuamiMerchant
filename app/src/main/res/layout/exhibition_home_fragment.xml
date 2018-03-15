@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <cn.bingoogolapple.bgabanner.BGABanner
@@ -10,22 +11,123 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         style="@style/BannerDefaultStyle"
-        app:banner_indicatorGravity="bottom|right"
+        app:banner_indicatorGravity="bottom|center_horizontal"
         app:banner_transitionEffect="fade"/>
     <LinearLayout
+        android:id="@+id/order_now"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="现在下单"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="ORDER NOW"
+                />
         </LinearLayout>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/exhibition_place_order"
+            android:src="@mipmap/exhibition_order_icon"
             />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:id="@+id/value_service"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="增值服务"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="VALUE_ADDED SERVICE"
+                />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/exhibition_service_icon"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:id="@+id/sheet_form"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="报表"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="REPORT FORM"
+                />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/exhibition_sheet_icon"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/theme_daren"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="1dp" />
 </LinearLayout>

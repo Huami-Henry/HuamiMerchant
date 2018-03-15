@@ -27,6 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.huami.merchant.R;
 import com.kaopiz.kprogresshud.KProgressHUD;
+
+import java.lang.reflect.Field;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -53,7 +56,23 @@ public abstract class MvpBaseFragment<T extends BasePresenter,V extends BaseView
         unbinder = ButterKnife.bind(this,mRootView);
         return mRootView;
     }
-
+    /**
+     * 通过反射的方式获取状态栏高度
+     *
+     * @return
+     */
+    protected int getStatusBarHeight() {
+        try {
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object obj = c.newInstance();
+            Field field = c.getField("status_bar_height");
+            int x = Integer.parseInt(field.get(obj).toString());
+            return getResources().getDimensionPixelSize(x);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -70,7 +89,6 @@ public abstract class MvpBaseFragment<T extends BasePresenter,V extends BaseView
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.e("我的执行", "onDestroyView");
         if (presenter != null) {
             presenter.deAttach();
         }

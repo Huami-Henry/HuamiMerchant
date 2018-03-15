@@ -28,8 +28,6 @@ import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
 import com.huami.merchant.util.ConditionUtil;
 import com.huami.merchant.util.TimeUtil;
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -3,6 +3,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.huami.merchant.R;
+import com.huami.merchant.activity.exhibition.ExhibitionMainActivity;
 import com.huami.merchant.activity.main.MainActivity;
 import com.huami.merchant.activity.user.presenter.LoginPresenter;
 import com.huami.merchant.activity.user.viewInter.LoginViewInter;
@@ -34,7 +35,7 @@ public class MvpLoginActivity extends MvpBaseActivity<LoginPresenter, MvpLoginAc
     protected void initData() {
         need_jump = getIntent().getBooleanExtra("need_jump", true);
         if (!TextUtils.isEmpty(BaseApplication.UU_TOKEN)) {
-            startActivity(this, MainActivity.class);
+            startActivity(this, ExhibitionMainActivity.class);
             finish();
         }
     }
@@ -59,7 +60,7 @@ public class MvpLoginActivity extends MvpBaseActivity<LoginPresenter, MvpLoginAc
         showToast("登录成功");
         KeyBoardManager.hideSoftInputKeyBoard(this, login_edt_user.getWindowToken());
         if (need_jump) {
-            startActivity(this, MainActivity.class);
+            startActivity(this, ExhibitionMainActivity.class);
         } else {
             setResult(RESULT_OK);
         }

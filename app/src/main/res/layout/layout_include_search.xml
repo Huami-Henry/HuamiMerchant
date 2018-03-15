@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/search_ll"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/circle_back_base"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/search_icon"
+        />
+    <EditText
+        android:id="@+id/task_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="搜索任务名称"
+        android:textSize="@dimen/font_default"
+        android:background="@null"
+        android:textColor="@color/font_black"
+        android:layout_marginLeft="5dp"
+        />
+</LinearLayout>

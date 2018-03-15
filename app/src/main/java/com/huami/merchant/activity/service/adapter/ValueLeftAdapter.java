@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.huami.merchant.R;
@@ -30,7 +31,7 @@ public class ValueLeftAdapter extends RecyclerView.Adapter<ValueLeftAdapter.Valu
     }
     @Override
     public ValueLeftAdapter.ValueLeftHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_value, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_left_value, parent, false);
         ValueLeftHolder holder = new ValueLeftHolder(view);
         return holder;
     }
@@ -40,11 +41,10 @@ public class ValueLeftAdapter extends RecyclerView.Adapter<ValueLeftAdapter.Valu
         ValueLeftData data = values.get(position);
         holder.value_name.setText(data.getName());
         holder.value_name.setTag("left");
-        holder.value_name.setTextColor(Color.parseColor("#000000"));
         if (data.isCheck()) {
-            holder.value_name.setBackgroundColor(Color.parseColor("#F3F3F3"));
+            holder.value_name.setSelected(true);
         } else {
-            holder.value_name.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.value_name.setSelected(false);
         }
         holder.value_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,6 @@ public class ValueLeftAdapter extends RecyclerView.Adapter<ValueLeftAdapter.Valu
                 listener.onItemClick(v,position);
             }
         });
-        holder.description.setVisibility(View.GONE);
     }
 
     @Override
@@ -62,8 +61,6 @@ public class ValueLeftAdapter extends RecyclerView.Adapter<ValueLeftAdapter.Valu
     public class ValueLeftHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.value_name)
         TextView value_name;
-        @BindView(R.id.description)
-        TextView description;
         public ValueLeftHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

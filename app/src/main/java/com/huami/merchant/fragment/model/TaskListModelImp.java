@@ -25,7 +25,6 @@ public class TaskListModelImp implements TaskListModelInter,BaseNetDataBiz.Reque
     @Override
     public void onResponse(BaseNetDataBiz.Model model) {
         String json = model.getJson();
-        Log.e("我的网络请求结果", json);
         Gson gson = new Gson();
         try {
             JSONObject object = new JSONObject(json);

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:layout_height="match_parent">
+    <include layout="@layout/top_view"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/app_theme"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_include_search" />
+    </LinearLayout>
+    <RadioGroup
+        android:id="@+id/task_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/circle_back_base"
+        >
+        <RadioButton
+            android:id="@+id/wait_preview"
+            android:padding="10dp"
+            android:text="待审核"
+            android:gravity="center"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@drawable/selector_tab_font"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="1dp"
+            android:background="@color/theme_daren"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:id="@+id/only_wait_preview"
+            android:padding="10dp"
+            android:text="只看待审"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@drawable/selector_tab_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/theme_daren"
+            android:layout_height="match_parent" />
+        <RadioButton
+            android:id="@+id/help_preview"
+            android:padding="10dp"
+            android:text="协助审核"
+            android:gravity="center"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@drawable/selector_tab_font"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/task_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

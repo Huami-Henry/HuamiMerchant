@@ -8,15 +8,12 @@ import com.huami.merchant.R;
 import com.huami.merchant.activity.service.adapter.ValueRightAdapter;
 import com.huami.merchant.activity.service.presenter.SingleValuePresenter;
 import com.huami.merchant.bean.SingleValueBean;
-import com.huami.merchant.bean.ValueRight;
 import com.huami.merchant.bean.ValueRightInfo;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -63,7 +60,6 @@ public class SingleValueActivity extends MvpBaseActivity<SingleValuePresenter,Si
     @Override
     public void doSuccess(Object tag, String json) {
         Gson gson = new Gson();
-        Logger.json(json);
         SingleValueBean left = gson.fromJson(json, SingleValueBean.class);
         List<ValueRightInfo> data = left.getData();
         valueRight.clear();

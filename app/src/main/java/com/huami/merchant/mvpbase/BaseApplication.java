@@ -3,15 +3,11 @@ package com.huami.merchant.mvpbase;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.huami.merchant.imagepicker.RxPicker;
 import com.huami.merchant.util.GlideImageLoader;
 import com.huami.merchant.util.SPCache;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-
 public class BaseApplication extends MultiDexApplication {
     private static Context context;
     public static String UUID;
@@ -22,7 +18,6 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Logger.addLogAdapter(new AndroidLogAdapter());
         context = this;
         getVersion();
         initSpCache();
