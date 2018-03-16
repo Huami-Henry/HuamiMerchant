@@ -66,7 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
             TaskInfo info = tasks.get(position);
             int taskId = info.getTask_id();
             String new_task_id = generate(String.valueOf(taskId));
-            holder.task_id.setText(new_task_id);
+            holder.task_id.setText("NO:"+new_task_id);
             int itemViewType = getItemViewType(position);
             String task_result = "审批中";
             switch (itemViewType) {
@@ -160,19 +160,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
         public TaskHolder(View itemView) {
             super(itemView);
             this.view = itemView;
-            task_id = (TextView) itemView.findViewById(R.id.task_id);
-            task_name = (TextView) itemView.findViewById(R.id.task_name);
-            task_result = (TextView) itemView.findViewById(R.id.task_result);
-            task_count = (TextView) itemView.findViewById(R.id.task_count);
-            task_money = (TextView) itemView.findViewById(R.id.task_money);
-            accept_begin_time = (TextView) itemView.findViewById(R.id.accept_begin_time);
-            accept_end_time = (TextView) itemView.findViewById(R.id.accept_end_time);
-            data_statistics = (TextView) itemView.findViewById(R.id.data_statistics);
-            check_result = (TextView) itemView.findViewById(R.id.check_result);
-            look_result = (TextView) itemView.findViewById(R.id.look_result);
-            edit_task = (TextView) itemView.findViewById(R.id.edit_task);
-            examine = (TextView) itemView.findViewById(R.id.examine);
-            task_icon = (ImageView) itemView.findViewById(R.id.task_icon);
+            task_id =  itemView.findViewById(R.id.task_id);
+            task_name = itemView.findViewById(R.id.task_name);
+            task_result =  itemView.findViewById(R.id.task_result);
+            task_count = itemView.findViewById(R.id.task_count);
+            task_money = itemView.findViewById(R.id.task_money);
+            accept_begin_time =  itemView.findViewById(R.id.accept_begin_time);
+            accept_end_time = itemView.findViewById(R.id.accept_end_time);
+            data_statistics = itemView.findViewById(R.id.data_statistics);
+            check_result = itemView.findViewById(R.id.check_result);
+            look_result =  itemView.findViewById(R.id.look_result);
+            edit_task =  itemView.findViewById(R.id.edit_task);
+            examine =  itemView.findViewById(R.id.examine);
+            task_icon =  itemView.findViewById(R.id.task_icon);
         }
     }
     /**

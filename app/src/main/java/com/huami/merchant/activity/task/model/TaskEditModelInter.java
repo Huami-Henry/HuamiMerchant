@@ -8,4 +8,5 @@ import com.huami.merchant.mvpbase.BaseModelInter;
 public interface TaskEditModelInter extends BaseModelInter {
     void getEditTask(String task_id,InterLoadListener listener) throws Exception;
     void publishTask(String url, TaskPublishBase publish,InterLoadListener listener) throws Exception;
+    void uploadTaskIcon(String path,InterLoadListener listener) throws Exception;
 }

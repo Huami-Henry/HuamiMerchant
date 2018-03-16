@@ -1,9 +1,11 @@
 package com.huami.merchant.activity.task;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import com.huami.merchant.bean.TaskPublishBase;
 import com.huami.merchant.bean.TaskShop;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
+import com.huami.merchant.imagepicker.RxPicker;
+import com.huami.merchant.imagepicker.bean.ImageItem;
 import com.huami.merchant.mvpbase.BaseApplication;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
@@ -30,12 +34,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 import static com.huami.merchant.R.id.end;
 import static com.huami.merchant.R.id.number;
@@ -55,9 +62,7 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
     @BindView(R.id.train_paper_iv)
     TextView train_paper_iv;
     @BindView(R.id.task_name)
-    TextView task_name;
-    @BindView(R.id.change_task_icon)
-    TextView change_task_icon;
+    EditText task_name;
     @BindView(R.id.task_set)
     TextView task_set;
     @BindView(R.id.task_attention_edit)
@@ -133,7 +138,6 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
     @Override
     protected void initView() {
         task_set.setOnClickListener(this);
-        change_task_icon.setOnClickListener(this);
         task_attention_edit.setOnClickListener(this);
         task_info_edit.setOnClickListener(this);
         task_paper_edit.setOnClickListener(this);
@@ -190,7 +194,6 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
                         task_iv_attention.setText(taskAtt);
                     }
                 } catch (Exception e) {
-                    Log.e("我的刀", e.getMessage());
                     task_iv_attention.setText("尚未添加");
                 }
                 if (!TextUtils.isEmpty(taskInfo.getTask_info())) {
@@ -236,8 +239,15 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
             } catch (JSONException e) {
                 showToast("数据格式出错,请稍后尝试。");
             }
+        } else if ("image_upload".equals(tag)) {
+            try {
+                JSONObject object = new JSONObject(json);
+                String picPath = object.getString("picPath");
+                taskInfo.setTask_icon(picPath);
+            } catch (JSONException e) {
+                showToast("图片上传失败");
+            }
         }
-
     }
     /**
      * 数据转换刷新页面
@@ -272,7 +282,14 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
     @Override
     public void doFailure(Object tag, ErrorCode code) {
         endLoading();
-        showToast("网络异常,请稍后尝试。");
+        switch ((String)tag) {
+            case "image_upload":
+                showToast("图片上传失败");
+                break;
+            default:
+                showToast("网络异常,请稍后尝试。");
+                break;
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -312,9 +329,6 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
                 intent.putExtra("taskInfo", taskInfo);
                 startActivityForResult(intent,TASK_ICON_CHANGE_REQUEST_CODE);
                 break;
-            case R.id.change_task_icon:
-                startActivityForResult(this, TaskPublishActivity.class, new String[]{"taskInfo"}, new Object[]{taskInfo},TASK_ICON_CHANGE_REQUEST_CODE);
-                break;
             case R.id.task_attention_edit:
                 startActivityForResult(this, TaskAttentionActivity.class, new String[]{"taskInfo"}, new Object[]{taskInfo},TASK_ATTENTION_CHANGE_REQUEST_CODE);
                 break;
@@ -339,10 +353,13 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
      * 发布任务
      */
     private void publishTask() {
-        if (TextUtils.isEmpty(taskInfo.getTask_name())) {
+        String task_name_str = task_name.getText().toString();
+        if (TextUtils.isDigitsOnly(task_name_str)) {
             showToast("任务名称不能为空");
             return;
         }
+        taskInfo.setTask_name(task_name_str);
+
         if (TextUtils.isEmpty(taskInfo.getAccept_begin_date())) {
             showToast("任务开始领取时间必须设置");
             return;
@@ -387,5 +404,35 @@ public class TaskEditActivity extends MvpBaseActivity<TaskEditPresenter,TaskEdit
         } catch (Exception e) {
             showToast("数据格式出错。");
         }
+    }
+    @OnClick(R.id.task_icon)
+    public void changeTaskIcon(){
+        RxPicker.of()
+                .single(true)
+                .camera(true)
+                .limit(1, 1)
+                .start(this)
+                .subscribe(new Consumer<List<ImageItem>>() {
+                    @Override
+                    public void accept(@NonNull final List<ImageItem> imageItems){
+                        if (imageItems.size() != 0) {
+                            String path = imageItems.get(0).getPath();
+                            File file = new File(path);
+                            long length = file.length();
+                            if (length > 0) {
+                                taskInfo.setTask_icon(path);
+                                Glide.with(task_icon.getContext()).load(taskInfo.getTask_icon()).asBitmap().error(R.mipmap.exhibition_publish_icon).placeholder(R.mipmap.exhibition_publish_icon).into(task_icon);
+                                try {
+                                    showLoading();
+                                    presenter.uploadTaskIcon(path);
+                                } catch (Exception e) {
+                                    showToast(e.getMessage());
+                                }
+                            } else {
+                                showToast("文件损坏,或不存在.");
+                            }
+                        }
+                    }
+                });
     }
 }

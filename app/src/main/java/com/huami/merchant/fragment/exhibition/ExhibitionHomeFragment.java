@@ -1,17 +1,13 @@
 package com.huami.merchant.fragment.exhibition;
-
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
 import com.bumptech.glide.Glide;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.exhibition.ExhibitionMainActivity;
+import com.huami.merchant.activity.task.TaskEditActivity;
 import com.huami.merchant.fragment.exhibition.presenter.ExhibitionPresenter;
 import com.huami.merchant.fragment.exhibition.view.BannerViewInter;
 import com.huami.merchant.mvpbase.BaseConsts;
-import com.huami.merchant.mvpbase.BasePresenter;
 import com.huami.merchant.mvpbase.MvpBaseFragment;
 import com.huami.merchant.util.DisplayUtil;
 
@@ -89,6 +85,6 @@ public class ExhibitionHomeFragment extends MvpBaseFragment<ExhibitionPresenter,
     }
     @OnClick(R.id.order_now)
     public void goOrder(){
-
+        startActivity(getActivity(), TaskEditActivity.class);
     }
 }

@@ -20,6 +20,7 @@ import com.huami.merchant.bean.AuditTime;
 import com.huami.merchant.bean.TaskPreviewBean.TaskPreviewData;
 import com.huami.merchant.code.ErrorCode;
 import com.huami.merchant.designView.recycle.XRecyclerView;
+import com.huami.merchant.designView.stateView.StateLayoutView;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
 import com.huami.merchant.mvpbase.BaseConsts;
 import com.huami.merchant.mvpbase.MvpBaseActivity;
@@ -52,6 +53,8 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     private ArrayAdapter<String> adapter_pass;
     private List<String> auditTimes=new ArrayList<>();
     private List<String> pass=new ArrayList<>();
+    @BindView(R.id.state_layout)
+    StateLayoutView state_layout;
     @Override
     protected TaskAlreadyPresenter getPresenter() {
         return new TaskAlreadyPresenter();
@@ -71,37 +74,41 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
         task_preview_recycle.setLayoutManager(manager);
         adapter = new TaskPreviewAdapter(datas,true,this);
         task_preview_recycle.setAdapter(adapter);
-        showLoading();
-        presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
-        presenter.getMaxAudit(BaseConsts.BASE_URL_TASK_getMaxAudit);
+        if (isNetworkConnected(this)) {
+            state_layout.showLoadingView();
+            presenter.getTaskAlreadyPending(datas, BaseConsts.BASE_URL_ALREADY_REVIEW_TASK, task_id, page, checkTimes, passState, task_name);
+            presenter.getMaxAudit(BaseConsts.BASE_URL_TASK_getMaxAudit);
+        } else {
+            showToast("网络异常。");
+        }
     }
     @Override
     protected void initView() {
         task_preview_recycle.setLoadingListener(this);
-        sp_check_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showLoading();
-                checkTimes = String.valueOf(position + 1);
-                presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        sp_check_result.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showLoading();
-                passState = String.valueOf(position + 2);
-                presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        sp_check_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                showLoading();
+//                checkTimes = String.valueOf(position + 1);
+//                presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        sp_check_result.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                showLoading();
+//                passState = String.valueOf(position + 2);
+//                presenter.getTaskAlreadyPending(datas,BaseConsts.BASE_URL_ALREADY_REVIEW_TASK,task_id,page,checkTimes,passState,task_name);
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
     @Override
     protected void setToolBar(TextView t_name, TextView t_menu) {
@@ -109,7 +116,6 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
     }
     @Override
     public void viewLoadSuccess(Object tag, String json) {
-        endLoading();
         if (tag.equals(BaseConsts.BASE_URL_ALREADY_REVIEW_TASK)) {
             if (page == 1) {
                 task_preview_recycle.refreshComplete();
@@ -117,25 +123,30 @@ public class TaskAlreadyPendingActivity extends MvpBaseActivity<TaskAlreadyPrese
                 task_preview_recycle.loadMoreComplete();
             }
             adapter.notifyDataSetChanged();
+            if (datas.size() > 0) {
+                state_layout.showContentView();
+            } else {
+                state_layout.showEmptyView("暂时没有数据哦",R.mipmap.empty_view);
+            }
         } else {
             try {
                 JSONObject object = new JSONObject(json);
                 int code = object.getInt("code");
                 if (code == 0) {
-                    int maxAudit = object.getInt("maxAudit");
-                    for (int i=0;i<maxAudit;i++) {
-                        String s = AuditUtil.upCase(i+1);
-                        auditTimes.add(s);
-                    }
-                    pass.add("通过");
-                    pass.add("不通过");
-                    adapter_audit = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,auditTimes);
-                    adapter_audit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    sp_check_time.setAdapter(adapter_audit);
-
-                    adapter_pass = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,pass);
-                    adapter_pass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    sp_check_result.setAdapter(adapter_pass);
+//                    int maxAudit = object.getInt("maxAudit");
+//                    for (int i=0;i<maxAudit;i++) {
+//                        String s = AuditUtil.upCase(i+1);
+//                        auditTimes.add(s);
+//                    }
+//                    pass.add("通过");
+//                    pass.add("不通过");
+//                    adapter_audit = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,auditTimes);
+//                    adapter_audit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    sp_check_time.setAdapter(adapter_audit);
+//
+//                    adapter_pass = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,pass);
+//                    adapter_pass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    sp_check_result.setAdapter(adapter_pass);
 
                 }
             } catch (JSONException e) {

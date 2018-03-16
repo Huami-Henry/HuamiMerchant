@@ -2,8 +2,10 @@ package com.huami.merchant.activity.task.presenter;
 
 import com.huami.merchant.activity.task.TaskEditActivity;
 import com.huami.merchant.activity.task.TaskPreviewActivity;
+import com.huami.merchant.activity.task.TaskPublishActivity;
 import com.huami.merchant.activity.task.model.TaskEditModelImp;
 import com.huami.merchant.activity.task.model.TaskPreviewModelImp;
+import com.huami.merchant.activity.task.model.TaskPublishModelImp;
 import com.huami.merchant.bean.TaskPreviewBean.TaskPreviewData;
 import com.huami.merchant.bean.TaskPublishBase;
 import com.huami.merchant.code.ErrorCode;
@@ -21,6 +23,27 @@ public class TaskEditPresenter extends BasePresenter<TaskEditActivity,TaskEditMo
     protected TaskEditModelImp getModel() {
         return new TaskEditModelImp();
     }
+        /**
+         * 上传图片
+         */
+    public void uploadTaskIcon(String path) throws Exception{
+        model.uploadTaskIcon(path, new InterLoadListener() {
+            @Override
+            public void loadSuccess(Object tag, String json) {
+                if (isViewAttached()) {
+                    getView().doSuccess(tag,json);
+                }
+            }
+            @Override
+            public void loadFailure(Object tag, ErrorCode error_code) {
+                if (isViewAttached()) {
+                    getView().doFailure(tag,error_code);
+                }
+            }
+        });
+    }
+
+
 
     /**
      * 获取任务详情

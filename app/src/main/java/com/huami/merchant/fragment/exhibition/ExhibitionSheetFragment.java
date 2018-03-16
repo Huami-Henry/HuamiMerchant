@@ -40,6 +40,7 @@ public class ExhibitionSheetFragment extends MvpBaseFragment<ExhibitionSheetPres
     RecyclerView task_recycle;
     private TaskAdapter adapter;
     private List<TaskInfo> tasks = new ArrayList<>();
+    private List<TaskInfo> task_copy = new ArrayList<>();
     private String checkState;
     private String taskName;
     @BindView(R.id.wait_preview)
@@ -62,31 +63,44 @@ public class ExhibitionSheetFragment extends MvpBaseFragment<ExhibitionSheetPres
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (TextUtils.isEmpty(s)) {
-                    taskName = "";
-                    getTaskList();
+//                    taskName = "";
+//                    getTaskList();
+                    tasks.clear();
+                    for (TaskInfo info : task_copy) {
+                        tasks.add(info);
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    tasks.clear();
+                    for (TaskInfo info : task_copy) {
+                        if (info.getTask_name().contains(s.toString())) {
+                            tasks.add(info);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-        task_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId,
-                                          KeyEvent event) {
-                if ((actionId == 0 || actionId == 3) && event != null) {
-                    //写点击搜索键后的操作
-                    taskName = task_search.getText().toString();
-                    if (!TextUtils.isEmpty(taskName)) {
-                        //搜索本地数据
-
-
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
+//        task_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId,
+//                                          KeyEvent event) {
+//                if ((actionId == 0 || actionId == 3) && event != null) {
+//                    //写点击搜索键后的操作
+//                    taskName = task_search.getText().toString();
+//                    if (!TextUtils.isEmpty(taskName)) {
+//                        //搜索本地数据
+//
+//
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         task_recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TaskAdapter(tasks, this);
         task_recycle.setAdapter(adapter);
@@ -128,6 +142,10 @@ public class ExhibitionSheetFragment extends MvpBaseFragment<ExhibitionSheetPres
     private int i = -1;
     @Override
     public void taskSuccess() {
+        task_copy.clear();
+        for (TaskInfo info : tasks) {
+            task_copy.add(info);
+        }
         endLoading();
         adapter.notifyDataSetChanged();
         //获取本地数据的待审核数量

@@ -45,8 +45,8 @@ public class TaskPreviewAdapter extends RecyclerView.Adapter<TaskPreviewAdapter.
         TaskPreviewData data = datas.get(position);
         String check_state= AuditUtil.getState(data.getCheck_times(),data.getState());
         holder.task_preview_count.setText(check_state);
-        holder.user_case_id.setText("000"+data.getUsercase_id()+"");
-        holder.shop_id.setText("000"+position);
+        holder.user_case_id.setText("NO:"+data.getUsercase_id()+"");
+        holder.shop_id.setText("NO:"+position);
         holder.shop_name.setText(data.getShop_name());
         holder.task_price.setText(""+data.getMer_price()+"元");
         holder.task_address.setText(""+data.getShop_address());

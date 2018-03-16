@@ -1,6 +1,9 @@
 package com.huami.merchant.fragment.exhibition;
 
+import android.graphics.Bitmap;
 import android.os.Build;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
 import com.huami.merchant.R;
 import com.huami.merchant.activity.SettingActivity;
@@ -85,7 +89,15 @@ public class ExhibitionCenterFragment extends MvpBaseFragment<ExhibitionCenterPr
         try {
             UserInfo.UserData.UserDetail detail = info.getData().getUserInfo();
             if (!TextUtils.isEmpty(detail.getIcon())) {
-                Glide.with(user_icon.getContext()).load(detail.getIcon()).asBitmap().placeholder(R.mipmap.icon_user).error(R.mipmap.icon_user).into(user_icon);
+                Glide.with(user_icon.getContext()).load(detail.getIcon()).asBitmap().placeholder(R.mipmap.icon_user).error(R.mipmap.icon_user).centerCrop().into(new BitmapImageViewTarget(user_icon) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        user_icon.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
             }
             user_company.setText(detail.getName());
             company_des.setText(detail.getMerchar_desc());

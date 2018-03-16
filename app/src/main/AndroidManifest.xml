@@ -99,7 +99,8 @@
         <activity android:name=".activity.task.TaskPointReviewActivity" />
         <activity android:name=".activity.web.HtmlActivity" />
         <activity android:name=".activity.task.AlreadyBuyActivity" />
-        <activity android:name=".activity.exhibition.ExhibitionMainActivity"></activity>
+        <activity android:name=".activity.exhibition.ExhibitionMainActivity" />
+        <activity android:name=".activity.exhibition.ExhibitionPublishActivity"></activity>
     </application>
 
 </manifest>

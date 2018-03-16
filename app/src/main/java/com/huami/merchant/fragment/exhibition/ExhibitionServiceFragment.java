@@ -19,6 +19,7 @@ import com.huami.merchant.bean.ValueLeftData;
 import com.huami.merchant.bean.ValueRight;
 import com.huami.merchant.bean.ValueRightInfo;
 import com.huami.merchant.code.ErrorCode;
+import com.huami.merchant.designView.stateView.StateLayoutView;
 import com.huami.merchant.fragment.present.ExhibitionServicePresenter;
 import com.huami.merchant.fragment.viewInter.TaskViewInter;
 import com.huami.merchant.listener.OnRecycleItemClickListener;
@@ -49,6 +50,8 @@ public class ExhibitionServiceFragment extends MvpBaseFragment<ExhibitionService
     private boolean first=true;
     @BindView(R.id.top_bar)
     TextView top_bar;
+    @BindView(R.id.state_layout)
+    StateLayoutView state_layout;
     @Override
     protected ExhibitionServicePresenter getPresenter() {
         return new ExhibitionServicePresenter();
@@ -98,6 +101,7 @@ public class ExhibitionServiceFragment extends MvpBaseFragment<ExhibitionService
                         presenter.getRightValue(BaseConsts.BASE_URL_VALUE_SERVICE,String.valueOf(id));
                     }
                 }
+
             } catch (Exception e) {
                 showToast("网络数据出错。");
             }
@@ -112,6 +116,9 @@ public class ExhibitionServiceFragment extends MvpBaseFragment<ExhibitionService
         }
         adapter_left.notifyDataSetChanged();
         first = false;
+        if (valueLeft.size() == 0 && valueRight.size() == 0) {
+            state_layout.showEmptyView("暂时没有数据.",R.mipmap.empty_view);
+        }
     }
 
     @Override

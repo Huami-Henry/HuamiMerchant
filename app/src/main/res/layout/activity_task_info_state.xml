@@ -262,6 +262,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:text="任务详情"
+                            android:drawableRight="@mipmap/exhibition_center_right_inner"
                             android:padding="10dp"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -305,7 +306,7 @@
                         android:padding="10dp"
                         android:layout_margin="3dp"
                         android:layout_width="match_parent"
-                        android:background="@drawable/shape_back_border"
+                        android:drawableRight="@mipmap/exhibition_center_right_inner"
                         android:layout_height="match_parent"></TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -336,8 +337,8 @@
                         android:id="@+id/train_paper_iv"
                         android:padding="10dp"
                         android:layout_width="match_parent"
-                        android:background="@drawable/shape_back_border"
                         android:layout_margin="3dp"
+                        android:drawableRight="@mipmap/exhibition_center_right_inner"
                         android:layout_height="match_parent"></TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -369,7 +370,7 @@
                         android:id="@+id/task_set_count_price_iv"
                         android:padding="10dp"
                         android:layout_margin="3dp"
-                        android:background="@drawable/shape_back_border"
+                        android:drawableRight="@mipmap/exhibition_center_right_inner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"></TextView>
                 </LinearLayout>

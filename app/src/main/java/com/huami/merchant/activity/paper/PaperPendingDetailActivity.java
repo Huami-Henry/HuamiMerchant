@@ -174,6 +174,7 @@ public class PaperPendingDetailActivity extends MvpBaseActivity<PaperPendingPres
 
     @Override
     public void doSuccess(Object tag, String json) {
+        Log.e("我的结过", json);
         endLoading();
         Gson gson = new Gson();
         try {

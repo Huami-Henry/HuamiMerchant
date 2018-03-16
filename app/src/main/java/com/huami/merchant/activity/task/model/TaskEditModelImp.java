@@ -10,6 +10,8 @@ import com.huami.merchant.mvpbase.BaseNetDataBiz;
 import com.squareup.okhttp.Request;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 /**
  * Created by Henry on 2018/1/8.
@@ -57,6 +59,19 @@ public class TaskEditModelImp implements TaskEditModelInter,BaseNetDataBiz.Reque
                 taskAttention, "0"};
         biz.getMainThread(url, keys, values, url);
     }
+
+    @Override
+    public void uploadTaskIcon(String path,InterLoadListener listener) throws Exception {
+        if (listener == null) {
+            throw new Exception("CallBack is null!");
+        }
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new Exception("没有选择图片或者选择的文件损坏");
+        }
+        biz.getMainThreadUploadHead(null, BaseConsts.BASE_URL_IMAGE,path,"image_upload");
+    }
+
     @Override
     public void onResponse(BaseNetDataBiz.Model model) {
         String json = model.getJson();

@@ -79,37 +79,81 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
         for (ExaminationInner.Body body : examination_body) {
             switch (body.getType()) {
                 case "radio":
-                    inspectSingleRadio(holder, position, body);
+                    try {
+                        inspectSingleRadio(holder, position, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "textarea":
-                    inspectTextArea(holder, position, body);
+                    try {
+                        inspectTextArea(holder, position, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "photo":
-                    inspectPhoto(holder, position, body);
+                    try {
+                        inspectPhoto(holder, position, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "number":
-                    inspectNumber(holder,body);
+                    try {
+                        inspectNumber(holder, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "datetime":
-                    inspectTime(holder, position, body);
+                    try {
+                        inspectTime(holder, position, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "date":
-                    inspectDate(holder, position, body);
+                    try {
+                        inspectDate(holder, position, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "star":
-                    inspectStar(holder,body);
+                    try {
+                        inspectStar(holder, body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "checkbox":
-                    inspectCheckBox(holder,position,body);
-                    break;
+                    try {
+                        inspectCheckBox(holder,position,body);
+                        break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 case "sort":
-                    inspectSort(holder,position,body);
+                    try {
+                        inspectSort(holder,position,body);
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "audio":
-                    inspectAudio(holder,position,body);
+                    try {
+                        inspectAudio(holder,position,body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "video":
-                    inspectVideo(holder,position,body);
+                    try {
+                        inspectVideo(holder,position,body);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }
@@ -463,14 +507,19 @@ public class NewExaminationAdapter extends RecyclerView.Adapter<NewExaminationAd
         View item_textArea = LayoutInflater.from(holder.exam_title.getContext()).inflate(R.layout.item_textarea, null);
         holder.templet.addView(item_textArea);
 
-        final TextView content_tv = (TextView) item_textArea.findViewById(R.id.input_area);
-        final TextView tip_count = (TextView) item_textArea.findViewById(R.id.tip_count);
+        final TextView content_tv = item_textArea.findViewById(R.id.input_area);
+        final TextView tip_count = item_textArea.findViewById(R.id.tip_count);
         content_tv.setTag(body.getId());
-        if (!TextUtils.isEmpty(answerInfo.getAnswer())) {
-            content_tv.setText(answerInfo.getAnswer());
-            tip_count.setText(answerInfo.getAnswer().length()+"/"+body.getMin());
-        } else {
-            tip_count.setText("0/"+body.getMin());
+        try {
+            if (answerInfo != null) {
+                if (!TextUtils.isEmpty(answerInfo.getAnswer())) {
+                    content_tv.setText(answerInfo.getAnswer());
+                    tip_count.setText(answerInfo.getAnswer().length()+"/"+body.getMin());
+                } else {
+                    tip_count.setText("0/"+body.getMin());
+                }
+            }
+        } catch (Exception e) {
         }
     }
     /**
